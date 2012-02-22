@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,6 +32,8 @@
     NSString                         *userAgent;
     AmazonCredentials                *credentials;
     NSURLConnection                  *urlConnection;
+
+    NSString                         *requestTag;
 }
 
 /** Request specific credentials. */
@@ -57,6 +59,12 @@
 @property (nonatomic, retain) NSMutableDictionary *parameters;
 @property (nonatomic, retain) NSString            *endpoint;
 @property (nonatomic, retain) NSString            *userAgent;
+
+/**
+ * Open property that enables user to distinquish various requests.
+ */
+
+@property (nonatomic, retain) NSString *requestTag;
 
 -(AmazonURLRequest *)configureURLRequest;
 
@@ -149,10 +157,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
  */
 -(void)request:(AmazonServiceRequest *)request didFailWithError:(NSError *)error;
 
-/** Sent when the service responded with an error message.
- *
- * This is a convenience method. The exception can also be retrieved by from the response sent to
- * response:didCompleteWithResponse.
+/** Sent when the service responded with an exception.
  *
  * @param request   The AmazonServiceRequest sending the message.
  * @param exception The AmazonClientException that would have been thrown in the absence of a delegate.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@
     AmazonServiceRequest *request = [[EC2Request alloc] init];
 
     [request setParameterValue:@"DescribeSpotPriceHistory"           forKey:@"Action"];
-    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-12-15"   forKey:@"Version"];
 
     [request setDelegate:[describeSpotPriceHistoryRequest delegate]];
     [request setCredentials:[describeSpotPriceHistoryRequest credentials]];
     [request setEndpoint:[describeSpotPriceHistoryRequest requestEndpoint]];
+    [request setRequestTag:[describeSpotPriceHistoryRequest requestTag]];
 
     if (describeSpotPriceHistoryRequest != nil) {
         if (describeSpotPriceHistoryRequest.startTime != nil) {
@@ -38,21 +39,25 @@
             [request setParameterValue:[describeSpotPriceHistoryRequest.endTime stringWithISO8061Format] forKey:[NSString stringWithFormat:@"%@", @"EndTime"]];
         }
     }
+
     if (describeSpotPriceHistoryRequest != nil) {
         int instanceTypesListIndex = 1;
         for (NSString *instanceTypesListValue in describeSpotPriceHistoryRequest.instanceTypes) {
             if (instanceTypesListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", instanceTypesListValue] forKey:[NSString stringWithFormat:@"%@.%d", @"InstanceType", instanceTypesListIndex]];
             }
+
             instanceTypesListIndex++;
         }
     }
+
     if (describeSpotPriceHistoryRequest != nil) {
         int productDescriptionsListIndex = 1;
         for (NSString *productDescriptionsListValue in describeSpotPriceHistoryRequest.productDescriptions) {
             if (productDescriptionsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", productDescriptionsListValue] forKey:[NSString stringWithFormat:@"%@.%d", @"ProductDescription", productDescriptionsListIndex]];
             }
+
             productDescriptionsListIndex++;
         }
     }
@@ -65,17 +70,34 @@
                     [request setParameterValue:[NSString stringWithFormat:@"%@", filtersListValue.name] forKey:[NSString stringWithFormat:@"%@.%d.%@", @"Filter", filtersListIndex, @"Name"]];
                 }
             }
+
             if (filtersListValue != nil) {
                 int valuesListIndex = 1;
                 for (NSString *valuesListValue in filtersListValue.values) {
                     if (valuesListValue != nil) {
                         [request setParameterValue:[NSString stringWithFormat:@"%@", valuesListValue] forKey:[NSString stringWithFormat:@"%@.%d.%@.%d", @"Filter", filtersListIndex, @"Value", valuesListIndex]];
                     }
+
                     valuesListIndex++;
                 }
             }
 
             filtersListIndex++;
+        }
+    }
+    if (describeSpotPriceHistoryRequest != nil) {
+        if (describeSpotPriceHistoryRequest.availabilityZone != nil) {
+            [request setParameterValue:[NSString stringWithFormat:@"%@", describeSpotPriceHistoryRequest.availabilityZone] forKey:[NSString stringWithFormat:@"%@", @"AvailabilityZone"]];
+        }
+    }
+    if (describeSpotPriceHistoryRequest != nil) {
+        if (describeSpotPriceHistoryRequest.maxResults != nil) {
+            [request setParameterValue:[NSString stringWithFormat:@"%@", describeSpotPriceHistoryRequest.maxResults] forKey:[NSString stringWithFormat:@"%@", @"MaxResults"]];
+        }
+    }
+    if (describeSpotPriceHistoryRequest != nil) {
+        if (describeSpotPriceHistoryRequest.nextToken != nil) {
+            [request setParameterValue:[NSString stringWithFormat:@"%@", describeSpotPriceHistoryRequest.nextToken] forKey:[NSString stringWithFormat:@"%@", @"NextToken"]];
         }
     }
 

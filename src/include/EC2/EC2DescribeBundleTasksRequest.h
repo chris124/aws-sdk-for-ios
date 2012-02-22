@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@
 
 
 
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -55,10 +56,16 @@
 @property (nonatomic, retain) NSMutableArray *filters;
 
 /**
+ * Adds a single object to bundleIds.
+ * This function will alloc and init bundleIds if not already done.
+ */
+-(void)addBundleId:(NSString *)bundleIdObject;
+
+/**
  * Adds a single object to filters.
  * This function will alloc and init filters if not already done.
  */
--(void)addFilter:(EC2Filter *)filter;
+-(void)addFilter:(EC2Filter *)filterObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

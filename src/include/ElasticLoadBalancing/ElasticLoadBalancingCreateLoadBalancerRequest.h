@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,15 +31,15 @@
     NSString       *loadBalancerName;
     NSMutableArray *listeners;
     NSMutableArray *availabilityZones;
+    NSMutableArray *subnets;
+    NSMutableArray *securityGroups;
 }
+
 
 
 /**
  * The name associated with the LoadBalancer. The name must be unique
- * within your set of LoadBalancers requests on the specified protocol
- * and received by Elastic Load Balancing on the LoadBalancerPort are
- * load balanced across the registered instances and sent to port
- * InstancePort.
+ * within your set of LoadBalancers.
  */
 @property (nonatomic, retain) NSString *loadBalancerName;
 
@@ -58,6 +58,16 @@
  */
 @property (nonatomic, retain) NSMutableArray *availabilityZones;
 
+/**
+ * A list of subnet IDs in your VPC to attach to your LoadBalancer.
+ */
+@property (nonatomic, retain) NSMutableArray *subnets;
+
+/**
+ * The security groups assigned to your LoadBalancer within your VPC.
+ */
+@property (nonatomic, retain) NSMutableArray *securityGroups;
+
 
 /**
  * Default constructor for a new CreateLoadBalancerRequest object.  Callers should use the
@@ -70,10 +80,7 @@
  * Callers should use properties to initialize any additional object members.
  *
  * @param theLoadBalancerName The name associated with the LoadBalancer.
- * The name must be unique within your set of LoadBalancers requests on
- * the specified protocol and received by Elastic Load Balancing on the
- * LoadBalancerPort are load balanced across the registered instances and
- * sent to port InstancePort.
+ * The name must be unique within your set of LoadBalancers.
  */
 -(id)initWithLoadBalancerName:(NSString *)theLoadBalancerName;
 
@@ -82,10 +89,7 @@
  * Callers should use properties to initialize any additional object members.
  *
  * @param theLoadBalancerName The name associated with the LoadBalancer.
- * The name must be unique within your set of LoadBalancers requests on
- * the specified protocol and received by Elastic Load Balancing on the
- * LoadBalancerPort are load balanced across the registered instances and
- * sent to port InstancePort.
+ * The name must be unique within your set of LoadBalancers.
  * @param theListeners A list of the following tuples: LoadBalancerPort,
  * InstancePort, and Protocol.
  * @param theAvailabilityZones A list of Availability Zones. <p> At least
@@ -100,7 +104,25 @@
  * Adds a single object to listeners.
  * This function will alloc and init listeners if not already done.
  */
--(void)addListener:(ElasticLoadBalancingListener *)listener;
+-(void)addListener:(ElasticLoadBalancingListener *)listenerObject;
+
+/**
+ * Adds a single object to availabilityZones.
+ * This function will alloc and init availabilityZones if not already done.
+ */
+-(void)addAvailabilityZone:(NSString *)availabilityZoneObject;
+
+/**
+ * Adds a single object to subnets.
+ * This function will alloc and init subnets if not already done.
+ */
+-(void)addSubnet:(NSString *)subnetObject;
+
+/**
+ * Adds a single object to securityGroups.
+ * This function will alloc and init securityGroups if not already done.
+ */
+-(void)addSecurityGroup:(NSString *)securityGroupObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

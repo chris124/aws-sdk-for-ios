@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -49,6 +49,7 @@
     NSNumber       *threshold;
     NSString       *comparisonOperator;
 }
+
 
 
 
@@ -234,10 +235,28 @@
 @property (nonatomic, retain) NSString *comparisonOperator;
 
 /**
+ * Adds a single object to oKActions.
+ * This function will alloc and init oKActions if not already done.
+ */
+-(void)addOKAction:(NSString *)oKActionObject;
+
+/**
+ * Adds a single object to alarmActions.
+ * This function will alloc and init alarmActions if not already done.
+ */
+-(void)addAlarmAction:(NSString *)alarmActionObject;
+
+/**
+ * Adds a single object to insufficientDataActions.
+ * This function will alloc and init insufficientDataActions if not already done.
+ */
+-(void)addInsufficientDataAction:(NSString *)insufficientDataActionObject;
+
+/**
  * Adds a single object to dimensions.
  * This function will alloc and init dimensions if not already done.
  */
--(void)addDimension:(CloudWatchDimension *)dimension;
+-(void)addDimension:(CloudWatchDimension *)dimensionObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

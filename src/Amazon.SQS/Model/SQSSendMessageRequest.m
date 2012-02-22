@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,13 +20,15 @@
 
 @synthesize queueUrl;
 @synthesize messageBody;
+@synthesize delaySeconds;
 
 
 -(id)init
 {
     if (self = [super init]) {
-        queueUrl    = nil;
-        messageBody = nil;
+        queueUrl     = nil;
+        messageBody  = nil;
+        delaySeconds = nil;
     }
 
     return self;
@@ -51,6 +53,7 @@
     [buffer appendString:@"{"];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"QueueUrl: %@,", queueUrl] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"MessageBody: %@,", messageBody] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"DelaySeconds: %@,", delaySeconds] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -63,6 +66,7 @@
 {
     [queueUrl release];
     [messageBody release];
+    [delaySeconds release];
 
     [super dealloc];
 }

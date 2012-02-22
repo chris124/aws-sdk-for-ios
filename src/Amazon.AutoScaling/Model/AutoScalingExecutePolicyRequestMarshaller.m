@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@
     AmazonServiceRequest *request = [[AutoScalingRequest alloc] init];
 
     [request setParameterValue:@"ExecutePolicy"           forKey:@"Action"];
-    [request setParameterValue:@"2010-08-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
 
     [request setDelegate:[executePolicyRequest delegate]];
     [request setCredentials:[executePolicyRequest credentials]];
     [request setEndpoint:[executePolicyRequest requestEndpoint]];
+    [request setRequestTag:[executePolicyRequest requestTag]];
 
     if (executePolicyRequest != nil) {
         if (executePolicyRequest.autoScalingGroupName != nil) {
@@ -40,7 +41,7 @@
     }
     if (executePolicyRequest != nil) {
         if (executePolicyRequest.honorCooldownIsSet) {
-            [request setParameterValue:(executePolicyRequest.honorCooldown ? @"true":@"false")forKey:[NSString stringWithFormat:@"%@", @"HonorCooldown"]];
+            [request setParameterValue:(executePolicyRequest.honorCooldown ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@", @"HonorCooldown"]];
         }
     }
 

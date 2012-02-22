@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,9 @@
 
 
 
+-(void)setException:(AmazonServiceException *)theException;
+
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -40,10 +43,16 @@
 -(id)init;
 
 /**
- * A list of queue URLs for queues. The response can contain up to 1000
- * QueueUrl elements.
+ * A list of queue URLs, up to 1000 entries.
  */
 @property (nonatomic, retain) NSMutableArray *queueUrls;
+
+
+
+/**
+ * Returns a value from the queueUrls array for the specified index
+ */
+-(NSString *)queueUrlsObjectAtIndex:(int)index;
 
 /**
  * Returns a string representation of this object; useful for testing and

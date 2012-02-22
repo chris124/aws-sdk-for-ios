@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,6 +36,9 @@
 
 
 
+-(void)setException:(AmazonServiceException *)theException;
+
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -43,9 +46,16 @@
 -(id)init;
 
 /**
- *
+ * The value of the SpotInstanceRequests property for this object.
  */
 @property (nonatomic, retain) NSMutableArray *spotInstanceRequests;
+
+
+
+/**
+ * Returns a value from the spotInstanceRequests array for the specified index
+ */
+-(EC2SpotInstanceRequest *)spotInstanceRequestsObjectAtIndex:(int)index;
 
 /**
  * Returns a string representation of this object; useful for testing and

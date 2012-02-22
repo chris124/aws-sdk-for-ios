@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -42,13 +42,22 @@
 }
 
 
--(void)addTag:(EC2Tag *)tag
+-(void)addResource:(NSString *)resourceObject
+{
+    if (resources == nil) {
+        resources = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [resources addObject:resourceObject];
+}
+
+-(void)addTag:(EC2Tag *)tagObject
 {
     if (tags == nil) {
         tags = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [tags addObject:tag];
+    [tags addObject:tagObject];
 }
 
 

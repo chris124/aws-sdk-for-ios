@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,8 @@
     int      expires;
     bool     expiresSet;
 }
+
+-(id)initWithKey:(NSString *)aKey inBucket:(NSString *)aBucket;
 
 /** Can be used to specify caching behavior along the request/reply chain.
  * For more information, go to http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.

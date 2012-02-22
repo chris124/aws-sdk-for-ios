@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 
 /**
  * <p>
- * The quota for the number of load balancers has already been reached.
+ * The quota for the number of LoadBalancers has already been reached.
  * </p>
  *
  * \ingroup ElasticLoadBalancing

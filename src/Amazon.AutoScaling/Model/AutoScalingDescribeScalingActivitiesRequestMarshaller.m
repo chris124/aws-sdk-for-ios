@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,13 @@
     AmazonServiceRequest *request = [[AutoScalingRequest alloc] init];
 
     [request setParameterValue:@"DescribeScalingActivities"           forKey:@"Action"];
-    [request setParameterValue:@"2010-08-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
 
     [request setDelegate:[describeScalingActivitiesRequest delegate]];
     [request setCredentials:[describeScalingActivitiesRequest credentials]];
     [request setEndpoint:[describeScalingActivitiesRequest requestEndpoint]];
+    [request setRequestTag:[describeScalingActivitiesRequest requestTag]];
+
 
     if (describeScalingActivitiesRequest != nil) {
         int activityIdsListIndex = 1;
@@ -34,6 +36,7 @@
             if (activityIdsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", activityIdsListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"ActivityIds", activityIdsListIndex]];
             }
+
             activityIdsListIndex++;
         }
     }

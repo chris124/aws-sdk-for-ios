@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -61,13 +61,40 @@
 }
 
 
--(void)addDimension:(CloudWatchDimension *)dimension
+-(void)addOKAction:(NSString *)oKActionObject
+{
+    if (oKActions == nil) {
+        oKActions = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [oKActions addObject:oKActionObject];
+}
+
+-(void)addAlarmAction:(NSString *)alarmActionObject
+{
+    if (alarmActions == nil) {
+        alarmActions = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [alarmActions addObject:alarmActionObject];
+}
+
+-(void)addInsufficientDataAction:(NSString *)insufficientDataActionObject
+{
+    if (insufficientDataActions == nil) {
+        insufficientDataActions = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [insufficientDataActions addObject:insufficientDataActionObject];
+}
+
+-(void)addDimension:(CloudWatchDimension *)dimensionObject
 {
     if (dimensions == nil) {
         dimensions = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [dimensions addObject:dimension];
+    [dimensions addObject:dimensionObject];
 }
 
 

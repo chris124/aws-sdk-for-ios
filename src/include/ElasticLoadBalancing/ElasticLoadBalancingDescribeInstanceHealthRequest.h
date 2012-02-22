@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@
 }
 
 
+
 /**
  * The name associated with the LoadBalancer. The name must be unique
  * within the client AWS account.
@@ -64,7 +65,7 @@
  * Adds a single object to instances.
  * This function will alloc and init instances if not already done.
  */
--(void)addInstance:(ElasticLoadBalancingInstance *)instance;
+-(void)addInstance:(ElasticLoadBalancingInstance *)instanceObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

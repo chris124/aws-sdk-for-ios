@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 
 @synthesize accessKey;
 @synthesize secretKey;
+@synthesize securityToken;
 
 -(id)initWithAccessKey:(NSString *)theAccessKey withSecretKey:(NSString *)theSecretKey
 {
@@ -29,10 +30,21 @@
     return self;
 }
 
+-(id)initWithAccessKey:(NSString *)theAccessKey withSecretKey:(NSString *)theSecretKey withSecurityToken:(NSString *)theSecurityToken
+{
+    if (self = [self init]) {
+        self.accessKey     = theAccessKey;
+        self.secretKey     = theSecretKey;
+        self.securityToken = theSecurityToken;
+    }
+    return self;
+}
+
 -(void)dealloc
 {
     [accessKey release];
     [secretKey release];
+    [securityToken release];
     [super dealloc];
 }
 

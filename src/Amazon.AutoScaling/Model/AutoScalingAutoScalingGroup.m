@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,6 +35,8 @@
 @synthesize placementGroup;
 @synthesize vPCZoneIdentifier;
 @synthesize enabledMetrics;
+@synthesize status;
+@synthesize tags;
 
 
 -(id)init
@@ -57,37 +59,66 @@
         placementGroup          = nil;
         vPCZoneIdentifier       = nil;
         enabledMetrics          = [[NSMutableArray alloc] initWithCapacity:1];
+        status                  = nil;
+        tags                    = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
     return self;
 }
 
 
--(void)addInstance:(AutoScalingInstance *)instance
+-(void)addAvailabilityZone:(NSString *)availabilityZoneObject
+{
+    if (availabilityZones == nil) {
+        availabilityZones = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [availabilityZones addObject:availabilityZoneObject];
+}
+
+-(void)addLoadBalancerName:(NSString *)loadBalancerNameObject
+{
+    if (loadBalancerNames == nil) {
+        loadBalancerNames = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [loadBalancerNames addObject:loadBalancerNameObject];
+}
+
+-(void)addInstance:(AutoScalingInstance *)instanceObject
 {
     if (instances == nil) {
         instances = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [instances addObject:instance];
+    [instances addObject:instanceObject];
 }
 
--(void)addSuspendedProcesse:(AutoScalingSuspendedProcess *)suspendedProcesse
+-(void)addSuspendedProcesse:(AutoScalingSuspendedProcess *)suspendedProcesseObject
 {
     if (suspendedProcesses == nil) {
         suspendedProcesses = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [suspendedProcesses addObject:suspendedProcesse];
+    [suspendedProcesses addObject:suspendedProcesseObject];
 }
 
--(void)addEnabledMetric:(AutoScalingEnabledMetric *)enabledMetric
+-(void)addEnabledMetric:(AutoScalingEnabledMetric *)enabledMetricObject
 {
     if (enabledMetrics == nil) {
         enabledMetrics = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [enabledMetrics addObject:enabledMetric];
+    [enabledMetrics addObject:enabledMetricObject];
+}
+
+-(void)addTag:(AutoScalingTagDescription *)tagObject
+{
+    if (tags == nil) {
+        tags = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [tags addObject:tagObject];
 }
 
 
@@ -113,6 +144,8 @@
     [buffer appendString:[[[NSString alloc] initWithFormat:@"PlacementGroup: %@,", placementGroup] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"VPCZoneIdentifier: %@,", vPCZoneIdentifier] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"EnabledMetrics: %@,", enabledMetrics] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"Status: %@,", status] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"Tags: %@,", tags] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -140,6 +173,8 @@
     [placementGroup release];
     [vPCZoneIdentifier release];
     [enabledMetrics release];
+    [status release];
+    [tags release];
 
     [super dealloc];
 }

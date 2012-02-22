@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 
 @synthesize availabilityZone;
 @synthesize groupName;
+@synthesize tenancy;
 
 
 -(id)init
@@ -27,6 +28,7 @@
     if (self = [super init]) {
         availabilityZone = nil;
         groupName        = nil;
+        tenancy          = nil;
     }
 
     return self;
@@ -50,6 +52,7 @@
     [buffer appendString:@"{"];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"AvailabilityZone: %@,", availabilityZone] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"GroupName: %@,", groupName] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"Tenancy: %@,", tenancy] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -62,6 +65,7 @@
 {
     [availabilityZone release];
     [groupName release];
+    [tenancy release];
 
     [super dealloc];
 }

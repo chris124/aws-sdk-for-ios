@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@
     bool           consistentRead;
     bool           consistentReadIsSet;
 }
+
 
 
 /**
@@ -77,6 +78,12 @@
  * @param theItemName The name of the item.
  */
 -(id)initWithDomainName:(NSString *)theDomainName andItemName:(NSString *)theItemName;
+
+/**
+ * Adds a single object to attributeNames.
+ * This function will alloc and init attributeNames if not already done.
+ */
+-(void)addAttributeName:(NSString *)attributeNameObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

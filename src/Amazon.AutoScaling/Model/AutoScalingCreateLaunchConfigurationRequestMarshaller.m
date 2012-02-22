@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@
     AmazonServiceRequest *request = [[AutoScalingRequest alloc] init];
 
     [request setParameterValue:@"CreateLaunchConfiguration"           forKey:@"Action"];
-    [request setParameterValue:@"2010-08-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
 
     [request setDelegate:[createLaunchConfigurationRequest delegate]];
     [request setCredentials:[createLaunchConfigurationRequest credentials]];
     [request setEndpoint:[createLaunchConfigurationRequest requestEndpoint]];
+    [request setRequestTag:[createLaunchConfigurationRequest requestTag]];
 
     if (createLaunchConfigurationRequest != nil) {
         if (createLaunchConfigurationRequest.launchConfigurationName != nil) {
@@ -43,12 +44,14 @@
             [request setParameterValue:[NSString stringWithFormat:@"%@", createLaunchConfigurationRequest.keyName] forKey:[NSString stringWithFormat:@"%@", @"KeyName"]];
         }
     }
+
     if (createLaunchConfigurationRequest != nil) {
         int securityGroupsListIndex = 1;
         for (NSString *securityGroupsListValue in createLaunchConfigurationRequest.securityGroups) {
             if (securityGroupsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", securityGroupsListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"SecurityGroups", securityGroupsListIndex]];
             }
+
             securityGroupsListIndex++;
         }
     }
@@ -107,7 +110,7 @@
         AutoScalingInstanceMonitoring *instanceMonitoring = createLaunchConfigurationRequest.instanceMonitoring;
         if (instanceMonitoring != nil) {
             if (instanceMonitoring.enabledIsSet) {
-                [request setParameterValue:(instanceMonitoring.enabled ? @"true":@"false")forKey:[NSString stringWithFormat:@"%@.%@", @"InstanceMonitoring", @"Enabled"]];
+                [request setParameterValue:(instanceMonitoring.enabled ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@.%@", @"InstanceMonitoring", @"Enabled"]];
             }
         }
     }

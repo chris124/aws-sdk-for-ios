@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -68,6 +68,15 @@
         [parser setDelegate:listUnmarshaller];
     }
 
+    if ([elementName isEqualToString:@"Tags"]) {
+        AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.tags withSetter:@selector(addObjectsFromArray:)] autorelease];
+        listUnmarshaller.endListElementName = @"Tags";
+        listUnmarshaller.entryElementName   = @"member";
+        listUnmarshaller.delegateClass      = [AutoScalingTagDescriptionUnmarshaller class];
+
+        [parser setDelegate:listUnmarshaller];
+    }
+
 
 
     if ([elementName isEqualToString:@"Error"]) {
@@ -115,16 +124,6 @@
         return;
     }
 
-    if ([elementName isEqualToString:@"AvailabilityZones/member"]) {
-        [self.response.availabilityZones addObject:self.currentText];
-    }
-
-
-    if ([elementName isEqualToString:@"LoadBalancerNames/member"]) {
-        [self.response.loadBalancerNames addObject:self.currentText];
-    }
-
-
     if ([elementName isEqualToString:@"HealthCheckType"]) {
         self.response.healthCheckType = self.currentText;
         return;
@@ -147,6 +146,11 @@
 
     if ([elementName isEqualToString:@"VPCZoneIdentifier"]) {
         self.response.vPCZoneIdentifier = self.currentText;
+        return;
+    }
+
+    if ([elementName isEqualToString:@"Status"]) {
+        self.response.status = self.currentText;
         return;
     }
 

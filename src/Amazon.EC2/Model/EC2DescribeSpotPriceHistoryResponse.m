@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,12 +19,14 @@
 @implementation EC2DescribeSpotPriceHistoryResponse
 
 @synthesize spotPriceHistory;
+@synthesize nextToken;
 
 
 -(id)init
 {
     if (self = [super init]) {
         spotPriceHistory = [[NSMutableArray alloc] initWithCapacity:1];
+        nextToken        = nil;
     }
 
     return self;
@@ -48,12 +50,19 @@
 
 
 
+-(EC2SpotPrice *)spotPriceHistoryObjectAtIndex:(int)index
+{
+    return (EC2SpotPrice *)[spotPriceHistory objectAtIndex:index];
+}
+
+
 -(NSString *)description
 {
     NSMutableString *buffer = [[NSMutableString alloc] initWithCapacity:256];
 
     [buffer appendString:@"{"];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"SpotPriceHistory: %@,", spotPriceHistory] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"NextToken: %@,", nextToken] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -65,6 +74,7 @@
 -(void)dealloc
 {
     [spotPriceHistory release];
+    [nextToken release];
 
     [super dealloc];
 }

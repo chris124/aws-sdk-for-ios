@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,23 +22,26 @@
     AmazonServiceRequest *request = [[AutoScalingRequest alloc] init];
 
     [request setParameterValue:@"DescribeScheduledActions"           forKey:@"Action"];
-    [request setParameterValue:@"2010-08-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
 
     [request setDelegate:[describeScheduledActionsRequest delegate]];
     [request setCredentials:[describeScheduledActionsRequest credentials]];
     [request setEndpoint:[describeScheduledActionsRequest requestEndpoint]];
+    [request setRequestTag:[describeScheduledActionsRequest requestTag]];
 
     if (describeScheduledActionsRequest != nil) {
         if (describeScheduledActionsRequest.autoScalingGroupName != nil) {
             [request setParameterValue:[NSString stringWithFormat:@"%@", describeScheduledActionsRequest.autoScalingGroupName] forKey:[NSString stringWithFormat:@"%@", @"AutoScalingGroupName"]];
         }
     }
+
     if (describeScheduledActionsRequest != nil) {
         int scheduledActionNamesListIndex = 1;
         for (NSString *scheduledActionNamesListValue in describeScheduledActionsRequest.scheduledActionNames) {
             if (scheduledActionNamesListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", scheduledActionNamesListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"ScheduledActionNames", scheduledActionNamesListIndex]];
             }
+
             scheduledActionNamesListIndex++;
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,23 +22,26 @@
     AmazonServiceRequest *request = [[ElasticLoadBalancingRequest alloc] init];
 
     [request setParameterValue:@"DeleteLoadBalancerListeners"           forKey:@"Action"];
-    [request setParameterValue:@"2010-07-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-11-15"   forKey:@"Version"];
 
     [request setDelegate:[deleteLoadBalancerListenersRequest delegate]];
     [request setCredentials:[deleteLoadBalancerListenersRequest credentials]];
     [request setEndpoint:[deleteLoadBalancerListenersRequest requestEndpoint]];
+    [request setRequestTag:[deleteLoadBalancerListenersRequest requestTag]];
 
     if (deleteLoadBalancerListenersRequest != nil) {
         if (deleteLoadBalancerListenersRequest.loadBalancerName != nil) {
             [request setParameterValue:[NSString stringWithFormat:@"%@", deleteLoadBalancerListenersRequest.loadBalancerName] forKey:[NSString stringWithFormat:@"%@", @"LoadBalancerName"]];
         }
     }
+
     if (deleteLoadBalancerListenersRequest != nil) {
         int loadBalancerPortsListIndex = 1;
         for (NSNumber *loadBalancerPortsListValue in deleteLoadBalancerListenersRequest.loadBalancerPorts) {
             if (loadBalancerPortsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", loadBalancerPortsListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"LoadBalancerPorts", loadBalancerPortsListIndex]];
             }
+
             loadBalancerPortsListIndex++;
         }
     }

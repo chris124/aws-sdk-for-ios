@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,9 +16,27 @@
 #import "AmazonSDKUtil.h"
 #import <CommonCrypto/CommonDigest.h>
 
+static char        base64EncodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-static char base64EncodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
+static const short base64DecodingTable[] =
+{
+    -2, -2, -2, -2, -2, -2, -2, -2, -2, -1, -1, -2, -1, -1, -2, -2,
+    -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
+    -1, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, 62, -2, -2, -2, 63,
+    52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -2, -2, -2, -2, -2, -2,
+    -2,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,
+    15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -2, -2, -2, -2, -2,
+    -2, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -2, -2, -2, -2, -2,
+    -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
+    -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
+    -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
+    -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
+    -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
+    -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
+    -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
+    -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2
+};
 
 @implementation AmazonSDKUtil
 
@@ -37,6 +55,57 @@ static char base64EncodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
     NSString *encoded = (NSString *)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)input, NULL, (CFStringRef)@"!*'\"();:@&=+$,/?%#[]% ", kCFStringEncodingUTF8);
 
     return [encoded autorelease];
+}
+
++(NSData *)hexDecode:(NSString *)hexString
+{
+    NSMutableData *stringData = [[[NSMutableData alloc] init] autorelease];
+    unsigned char whole_byte;
+    char          byte_chars[3] = { '\0', '\0', '\0' };
+    int           i;
+    for (i = 0; i < [hexString length] / 2; i++) {
+        byte_chars[0] = [hexString characterAtIndex:i * 2];
+        byte_chars[1] = [hexString characterAtIndex:i * 2 + 1];
+        whole_byte    = strtol(byte_chars, NULL, 16);
+        [stringData appendBytes:&whole_byte length:1];
+    }
+
+    return stringData;
+}
+
++(NSString *)hexEncode:(NSString *)string
+{
+    NSUInteger len    = [string length];
+    unichar    *chars = malloc(len * sizeof(unichar));
+
+    [string getCharacters:chars];
+
+    NSMutableString *hexString = [[NSMutableString alloc] init];
+    for (NSUInteger i = 0; i < len; i++) {
+        if ((int)chars[i] < 16) {
+            [hexString appendString:@"0"];
+        }
+        [hexString appendString:[NSString stringWithFormat:@"%x", chars[i]]];
+    }
+    free(chars);
+
+    return [hexString autorelease];
+}
+
++(NSString *)hexEncodeData:(NSData *)data
+{
+    NSUInteger      len    = [data length];
+    const unsigned  *chars = [data bytes];
+
+    NSMutableString *hexString = [[NSMutableString alloc] init];
+    for (NSUInteger i = 0; i < len; i++) {
+        if ((int)chars[i] < 16) {
+            [hexString appendString:@"0"];
+        }
+        [hexString appendString:[NSString stringWithFormat:@"%x", chars[i]]];
+    }
+
+    return [hexString autorelease];
 }
 
 +(NSString *)MIMETypeForExtension:(NSString *)extension
@@ -236,6 +305,11 @@ static char base64EncodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
     }
 }
 
++(NSDate *)millisSinceEpochToDate:(NSNumber *)millisSinceEpoch
+{
+    return [NSDate dateWithTimeIntervalSince1970:([millisSinceEpoch longLongValue] / 1000)];
+}
+
 +(NSDate *)convertStringToDate:(NSString *)string usingFormat:(NSString *)dateFormat
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -353,6 +427,37 @@ static char base64EncodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
     return [[NSDate date] stringWithISO8061Format];
 }
 
+-(NSString *)dateStamp
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    [dateFormatter setDateFormat:kDateStampFormat];
+    [dateFormatter setLocale:[AmazonSDKUtil timestampLocale]];
+
+    NSString *formatted = [dateFormatter stringFromDate:self];
+
+    [dateFormatter release];
+
+    return formatted;
+}
+
+-(NSString *)dateTime
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    [dateFormatter setDateFormat:kDateTimeFormat];
+    [dateFormatter setLocale:[AmazonSDKUtil timestampLocale]];
+
+    NSString *formatted = [dateFormatter stringFromDate:self];
+
+    [dateFormatter release];
+
+    return formatted;
+}
+
+
 
 @end
 
@@ -430,6 +535,84 @@ static char base64EncodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 
     return [NSString stringWithString:result]; // convert to immutable string
 }
+
++(NSData *) dataWithBase64EncodedString:(NSString *)encodedString
+{
+    if (nil == encodedString || [encodedString length] < 1) {
+        return [NSData data];
+    }
+
+    const char    *inputPtr;
+    unsigned char *buffer;
+
+    int           length;
+
+    inputPtr = [encodedString cStringUsingEncoding:NSASCIIStringEncoding];
+    length   = strlen(inputPtr);
+    char ch;
+    int  inputIdx = 0, outputIdx = 0, padIdx;
+
+    buffer = calloc(length, sizeof(char));
+
+    while (((ch = *inputPtr++) != '\0') && (length-- > 0)) {
+        if (ch == '=') {
+            if (*inputPtr != '=' && ((inputIdx % 4) == 1)) {
+                free(buffer);
+                return nil;
+            }
+            continue;
+        }
+
+        ch = base64DecodingTable[ch];
+
+        if (ch < 0) { // whitespace or other invalid character
+            continue;
+        }
+
+        switch (inputIdx % 4) {
+        case 0:
+            buffer[outputIdx] = ch << 2;
+            break;
+
+        case 1:
+            buffer[outputIdx++] |= ch >> 4;
+            buffer[outputIdx]    = (ch & 0x0f) << 4;
+            break;
+
+        case 2:
+            buffer[outputIdx++] |= ch >> 2;
+            buffer[outputIdx]    = (ch & 0x03) << 6;
+            break;
+
+        case 3:
+            buffer[outputIdx++] |= ch;
+            break;
+        }
+
+        inputIdx++;
+    }
+
+    padIdx = outputIdx;
+
+    if (ch == '=') {
+        switch (inputIdx % 4) {
+        case 1:
+            free(buffer);
+            return nil;
+
+        case 2:
+            padIdx++;
+
+        case 3:
+            buffer[padIdx] = 0;
+        }
+    }
+
+    NSData *objData = [[[NSData alloc] initWithBytes:buffer length:outputIdx] autorelease];
+    free(buffer);
+    return objData;
+}
+
 
 @end
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@
     AmazonServiceRequest *request = [[EC2Request alloc] init];
 
     [request setParameterValue:@"RunInstances"           forKey:@"Action"];
-    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-12-15"   forKey:@"Version"];
 
     [request setDelegate:[runInstancesRequest delegate]];
     [request setCredentials:[runInstancesRequest credentials]];
     [request setEndpoint:[runInstancesRequest requestEndpoint]];
+    [request setRequestTag:[runInstancesRequest requestTag]];
 
     if (runInstancesRequest != nil) {
         if (runInstancesRequest.imageId != nil) {
@@ -48,27 +49,36 @@
             [request setParameterValue:[NSString stringWithFormat:@"%@", runInstancesRequest.keyName] forKey:[NSString stringWithFormat:@"%@", @"KeyName"]];
         }
     }
+
     if (runInstancesRequest != nil) {
         int securityGroupsListIndex = 1;
         for (NSString *securityGroupsListValue in runInstancesRequest.securityGroups) {
             if (securityGroupsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", securityGroupsListValue] forKey:[NSString stringWithFormat:@"%@.%d", @"SecurityGroup", securityGroupsListIndex]];
             }
+
             securityGroupsListIndex++;
         }
     }
+
     if (runInstancesRequest != nil) {
         int securityGroupIdsListIndex = 1;
         for (NSString *securityGroupIdsListValue in runInstancesRequest.securityGroupIds) {
             if (securityGroupIdsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", securityGroupIdsListValue] forKey:[NSString stringWithFormat:@"%@.%d", @"SecurityGroupId", securityGroupIdsListIndex]];
             }
+
             securityGroupIdsListIndex++;
         }
     }
     if (runInstancesRequest != nil) {
         if (runInstancesRequest.userData != nil) {
             [request setParameterValue:[NSString stringWithFormat:@"%@", runInstancesRequest.userData] forKey:[NSString stringWithFormat:@"%@", @"UserData"]];
+        }
+    }
+    if (runInstancesRequest != nil) {
+        if (runInstancesRequest.addressingType != nil) {
+            [request setParameterValue:[NSString stringWithFormat:@"%@", runInstancesRequest.addressingType] forKey:[NSString stringWithFormat:@"%@", @"AddressingType"]];
         }
     }
     if (runInstancesRequest != nil) {
@@ -86,6 +96,11 @@
         if (placement != nil) {
             if (placement.groupName != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", placement.groupName] forKey:[NSString stringWithFormat:@"%@.%@", @"Placement", @"GroupName"]];
+            }
+        }
+        if (placement != nil) {
+            if (placement.tenancy != nil) {
+                [request setParameterValue:[NSString stringWithFormat:@"%@", placement.tenancy] forKey:[NSString stringWithFormat:@"%@.%@", @"Placement", @"Tenancy"]];
             }
         }
     }
@@ -127,7 +142,7 @@
                 }
                 if (ebs != nil) {
                     if (ebs.deleteOnTerminationIsSet) {
-                        [request setParameterValue:(ebs.deleteOnTermination ? @"true":@"false")forKey:[NSString stringWithFormat:@"%@.%d.%@.%@", @"BlockDeviceMapping", blockDeviceMappingsListIndex, @"Ebs", @"DeleteOnTermination"]];
+                        [request setParameterValue:(ebs.deleteOnTermination ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@.%d.%@.%@", @"BlockDeviceMapping", blockDeviceMappingsListIndex, @"Ebs", @"DeleteOnTermination"]];
                     }
                 }
             }
@@ -142,7 +157,7 @@
     }
     if (runInstancesRequest != nil) {
         if (runInstancesRequest.monitoringIsSet) {
-            [request setParameterValue:(runInstancesRequest.monitoring ? @"true":@"false")forKey:[NSString stringWithFormat:@"%@", @"Monitoring.Enabled"]];
+            [request setParameterValue:(runInstancesRequest.monitoring ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@", @"Monitoring.Enabled"]];
         }
     }
     if (runInstancesRequest != nil) {
@@ -152,7 +167,7 @@
     }
     if (runInstancesRequest != nil) {
         if (runInstancesRequest.disableApiTerminationIsSet) {
-            [request setParameterValue:(runInstancesRequest.disableApiTermination ? @"true":@"false")forKey:[NSString stringWithFormat:@"%@", @"DisableApiTermination"]];
+            [request setParameterValue:(runInstancesRequest.disableApiTermination ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@", @"DisableApiTermination"]];
         }
     }
     if (runInstancesRequest != nil) {
@@ -181,6 +196,55 @@
     if (runInstancesRequest != nil) {
         if (runInstancesRequest.additionalInfo != nil) {
             [request setParameterValue:[NSString stringWithFormat:@"%@", runInstancesRequest.additionalInfo] forKey:[NSString stringWithFormat:@"%@", @"AdditionalInfo"]];
+        }
+    }
+
+    if (runInstancesRequest != nil) {
+        int networkInterfacesListIndex = 1;
+        for (EC2InstanceNetworkInterfaceSpecification *networkInterfacesListValue in runInstancesRequest.networkInterfaces) {
+            if (networkInterfacesListValue != nil) {
+                if (networkInterfacesListValue.networkInterfaceId != nil) {
+                    [request setParameterValue:[NSString stringWithFormat:@"%@", networkInterfacesListValue.networkInterfaceId] forKey:[NSString stringWithFormat:@"%@.%d.%@", @"NetworkInterfaceSet", networkInterfacesListIndex, @"NetworkInterfaceId"]];
+                }
+            }
+            if (networkInterfacesListValue != nil) {
+                if (networkInterfacesListValue.deviceIndex != nil) {
+                    [request setParameterValue:[NSString stringWithFormat:@"%@", networkInterfacesListValue.deviceIndex] forKey:[NSString stringWithFormat:@"%@.%d.%@", @"NetworkInterfaceSet", networkInterfacesListIndex, @"DeviceIndex"]];
+                }
+            }
+            if (networkInterfacesListValue != nil) {
+                if (networkInterfacesListValue.subnetId != nil) {
+                    [request setParameterValue:[NSString stringWithFormat:@"%@", networkInterfacesListValue.subnetId] forKey:[NSString stringWithFormat:@"%@.%d.%@", @"NetworkInterfaceSet", networkInterfacesListIndex, @"SubnetId"]];
+                }
+            }
+            if (networkInterfacesListValue != nil) {
+                if (networkInterfacesListValue.descriptionValue != nil) {
+                    [request setParameterValue:[NSString stringWithFormat:@"%@", networkInterfacesListValue.descriptionValue] forKey:[NSString stringWithFormat:@"%@.%d.%@", @"NetworkInterfaceSet", networkInterfacesListIndex, @"Description"]];
+                }
+            }
+            if (networkInterfacesListValue != nil) {
+                if (networkInterfacesListValue.privateIpAddress != nil) {
+                    [request setParameterValue:[NSString stringWithFormat:@"%@", networkInterfacesListValue.privateIpAddress] forKey:[NSString stringWithFormat:@"%@.%d.%@", @"NetworkInterfaceSet", networkInterfacesListIndex, @"PrivateIpAddress"]];
+                }
+            }
+
+            if (networkInterfacesListValue != nil) {
+                int groupsListIndex = 1;
+                for (NSString *groupsListValue in networkInterfacesListValue.groups) {
+                    if (groupsListValue != nil) {
+                        [request setParameterValue:[NSString stringWithFormat:@"%@", groupsListValue] forKey:[NSString stringWithFormat:@"%@.%d.%@.%d", @"NetworkInterfaceSet", networkInterfacesListIndex, @"SecurityGroupId", groupsListIndex]];
+                    }
+
+                    groupsListIndex++;
+                }
+            }
+            if (networkInterfacesListValue != nil) {
+                if (networkInterfacesListValue.deleteOnTerminationIsSet) {
+                    [request setParameterValue:(networkInterfacesListValue.deleteOnTermination ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@.%d.%@", @"NetworkInterfaceSet", networkInterfacesListIndex, @"DeleteOnTermination"]];
+                }
+            }
+
+            networkInterfacesListIndex++;
         }
     }
 

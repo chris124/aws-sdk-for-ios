@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,13 +32,14 @@
 }
 
 
+
 /**
- *
+ * The URL of the SQS queue to take action on.
  */
 @property (nonatomic, retain) NSString *queueUrl;
 
 /**
- * A list of attributes to get.
+ * A list of attributes to retrieve information for.
  */
 @property (nonatomic, retain) NSMutableArray *attributeNames;
 
@@ -53,9 +54,15 @@
  * Constructs a new GetQueueAttributesRequest object.
  * Callers should use properties to initialize any additional object members.
  *
- * @param theQueueUrl
+ * @param theQueueUrl The URL of the SQS queue to take action on.
  */
 -(id)initWithQueueUrl:(NSString *)theQueueUrl;
+
+/**
+ * Adds a single object to attributeNames.
+ * This function will alloc and init attributeNames if not already done.
+ */
+-(void)addAttributeName:(NSString *)attributeNameObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

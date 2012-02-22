@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,13 @@
     AmazonServiceRequest *request = [[EC2Request alloc] init];
 
     [request setParameterValue:@"DescribeSecurityGroups"           forKey:@"Action"];
-    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-12-15"   forKey:@"Version"];
 
     [request setDelegate:[describeSecurityGroupsRequest delegate]];
     [request setCredentials:[describeSecurityGroupsRequest credentials]];
     [request setEndpoint:[describeSecurityGroupsRequest requestEndpoint]];
+    [request setRequestTag:[describeSecurityGroupsRequest requestTag]];
+
 
     if (describeSecurityGroupsRequest != nil) {
         int groupNamesListIndex = 1;
@@ -34,15 +36,18 @@
             if (groupNamesListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", groupNamesListValue] forKey:[NSString stringWithFormat:@"%@.%d", @"GroupName", groupNamesListIndex]];
             }
+
             groupNamesListIndex++;
         }
     }
+
     if (describeSecurityGroupsRequest != nil) {
         int groupIdsListIndex = 1;
         for (NSString *groupIdsListValue in describeSecurityGroupsRequest.groupIds) {
             if (groupIdsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", groupIdsListValue] forKey:[NSString stringWithFormat:@"%@.%d", @"GroupId", groupIdsListIndex]];
             }
+
             groupIdsListIndex++;
         }
     }
@@ -55,12 +60,14 @@
                     [request setParameterValue:[NSString stringWithFormat:@"%@", filtersListValue.name] forKey:[NSString stringWithFormat:@"%@.%d.%@", @"Filter", filtersListIndex, @"Name"]];
                 }
             }
+
             if (filtersListValue != nil) {
                 int valuesListIndex = 1;
                 for (NSString *valuesListValue in filtersListValue.values) {
                     if (valuesListValue != nil) {
                         [request setParameterValue:[NSString stringWithFormat:@"%@", valuesListValue] forKey:[NSString stringWithFormat:@"%@.%d.%@.%d", @"Filter", filtersListIndex, @"Value", valuesListIndex]];
                     }
+
                     valuesListIndex++;
                 }
             }

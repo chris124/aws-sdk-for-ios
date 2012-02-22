@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@
     [super configureURLRequest];
     [self setHttpMethod:kHttpMethodGet];
 
-    [self.urlRequest setValue:[NSString stringWithFormat:@"%d", self.contentLength, nil] forHTTPHeaderField:kHttpHdrContentLength];
+    [self.urlRequest setValue:[NSString stringWithFormat:@"%d", self.contentLength] forHTTPHeaderField:kHttpHdrContentLength];
 
     [self.urlRequest setValue:self.host forHTTPHeaderField:kHttpHdrHost];
     [self.urlRequest setValue:[self.date requestFormat] forHTTPHeaderField:kHttpHdrDate];
@@ -134,6 +134,9 @@
 
 -(void)dealloc
 {
+    delegate = nil;
+
+    [authorization release];
     [contentType release];
     [securityToken release];
     [httpMethod release];

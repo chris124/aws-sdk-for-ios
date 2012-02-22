@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,6 +25,8 @@
 @synthesize userAgent;
 @synthesize credentials;
 @synthesize urlConnection;
+@synthesize requestTag;
+
 
 -(void)sign
 {
@@ -41,6 +43,10 @@
 
 -(NSMutableURLRequest *)configureURLRequest
 {
+    if (self.credentials != nil && self.credentials.securityToken != nil) {
+        [self setParameterValue:self.credentials.securityToken forKey:@"SecurityToken"];
+    }
+
     [self.urlRequest setHTTPMethod:@"POST"];
     [self.urlRequest setHTTPBody:[[self queryString] dataUsingEncoding:NSUTF8StringEncoding]];
     [self.urlRequest setValue:self.userAgent forHTTPHeaderField:@"User-Agent"];
@@ -48,6 +54,7 @@
     NSURL *url = [NSURL URLWithString:self.endpoint];
     [urlRequest setURL:url];
     [urlRequest setValue:[url host] forHTTPHeaderField:@"Host"];
+
 
     return self.urlRequest;
 }
@@ -118,12 +125,14 @@
 
 -(void)dealloc
 {
+    delegate = nil;
     [credentials release];
     [endpoint release];
     [urlRequest release];
     [parameters release];
     [userAgent release];
     [urlConnection release];
+    [requestTag release];
 
     [super dealloc];
 }

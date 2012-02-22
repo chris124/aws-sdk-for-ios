@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 #import "../AmazonServiceResponse.h"
-#import "S3ErrorResponseHandler.h";
+#import "S3ErrorResponseHandler.h"
 #import "S3Constants.h"
 #import "S3Request.h"
 
@@ -34,6 +34,7 @@
     bool                deleteMarker;
     NSString            *id2;
     NSString            *versionId;
+    NSString            *serverSideEncryption;
 
     NSDateFormatter     *dateFormatter;
 
@@ -60,6 +61,10 @@
  * The value is UTF-8 encoded and URL ready.
  * When you PUT an object in a bucket where versioning has been suspended, the version ID is always <code>null</code>. */
 @property (nonatomic, retain) NSString *versionId;
+
+/**
+ * Algorithm used for optional server side encryption. */
+@property (nonatomic, retain) NSString *serverSideEncryption;
 
 /** The date and time Amazon S3 responded. */
 @property (nonatomic, retain) NSDate *date;

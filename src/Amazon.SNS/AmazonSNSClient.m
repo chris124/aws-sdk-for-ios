@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,14 @@
 -(id)initWithAccessKey:(NSString *)theAccessKey withSecretKey:(NSString *)theSecretKey
 {
     if (self = [super initWithAccessKey:theAccessKey withSecretKey:theSecretKey]) {
+        self.endpoint = @"https://sns.us-east-1.amazonaws.com";
+    }
+    return self;
+}
+
+-(id)initWithCredentials:(AmazonCredentials *)theCredentials
+{
+    if (self = [super initWithCredentials:theCredentials]) {
         self.endpoint = @"https://sns.us-east-1.amazonaws.com";
     }
     return self;
@@ -76,6 +84,13 @@
     return (SNSListSubscriptionsResponse *)[self invoke:request rawRequest:listSubscriptionsRequest unmarshallerDelegate:[SNSListSubscriptionsResponseUnmarshaller class]];
 }
 
+-(SNSSetSubscriptionAttributesResponse *)setSubscriptionAttributes:(SNSSetSubscriptionAttributesRequest *)setSubscriptionAttributesRequest
+{
+    AmazonServiceRequest *request = [SNSSetSubscriptionAttributesRequestMarshaller createRequest:setSubscriptionAttributesRequest];
+
+    return (SNSSetSubscriptionAttributesResponse *)[self invoke:request rawRequest:setSubscriptionAttributesRequest unmarshallerDelegate:[SNSSetSubscriptionAttributesResponseUnmarshaller class]];
+}
+
 -(SNSAddPermissionResponse *)addPermission:(SNSAddPermissionRequest *)addPermissionRequest
 {
     AmazonServiceRequest *request = [SNSAddPermissionRequestMarshaller createRequest:addPermissionRequest];
@@ -88,6 +103,13 @@
     AmazonServiceRequest *request = [SNSCreateTopicRequestMarshaller createRequest:createTopicRequest];
 
     return (SNSCreateTopicResponse *)[self invoke:request rawRequest:createTopicRequest unmarshallerDelegate:[SNSCreateTopicResponseUnmarshaller class]];
+}
+
+-(SNSGetSubscriptionAttributesResponse *)getSubscriptionAttributes:(SNSGetSubscriptionAttributesRequest *)getSubscriptionAttributesRequest
+{
+    AmazonServiceRequest *request = [SNSGetSubscriptionAttributesRequestMarshaller createRequest:getSubscriptionAttributesRequest];
+
+    return (SNSGetSubscriptionAttributesResponse *)[self invoke:request rawRequest:getSubscriptionAttributesRequest unmarshallerDelegate:[SNSGetSubscriptionAttributesResponseUnmarshaller class]];
 }
 
 -(SNSListTopicsResponse *)listTopics:(SNSListTopicsRequest *)listTopicsRequest

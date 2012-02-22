@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@
 
 
 
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -54,12 +55,18 @@
 @property (nonatomic, retain) NSString *nextToken;
 
 /**
- * The maximum number of launch configurations.
+ * The maximum number of launch configurations. The default is 100.
  * <p>
  * <b>Constraints:</b><br/>
  * <b>Range: </b>1 - 50<br/>
  */
 @property (nonatomic, retain) NSNumber *maxRecords;
+
+/**
+ * Adds a single object to launchConfigurationNames.
+ * This function will alloc and init launchConfigurationNames if not already done.
+ */
+-(void)addLaunchConfigurationName:(NSString *)launchConfigurationNameObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,9 +18,11 @@
 #import "../AmazonClientException.h"
 
 #define kS3RegionUSWest1         @"us-west-1"
+#define kS3RegionUSWest2         @"us-west-2"
 #define kS3RegionEU              @"EU"
 #define kS3RegionAPSoutheast1    @"ap-southeast-1"
 #define kS3RegionAPNortheast1    @"ap-northeast-1"
+#define kS3RegionSAEast1         @"sa-east-1"
 
 /**
  * Specifies constants that define Amazon S3 Regions.
@@ -77,6 +79,18 @@
 +(S3Region *)USWest;
 
 /**
+ * The US-West-2 (Oregon) Region. This region uses Amazon S3 servers located
+ * in Oregon.
+ * <p>
+ * When using buckets in this region, optionally set the client
+ * endpoint to <code>s3-us-west-2.amazonaws.com</code> on all requests to these buckets
+ * to reduce any latency experienced after the first hour of
+ * creating a bucket in this region.
+ * </p>
+ */
++(S3Region *)USWest2;
+
+/**
  * The EU (Ireland) Amazon S3 Region. This region uses Amazon S3 servers located
  * in Ireland.
  * <p>
@@ -110,6 +124,18 @@
  * </p>
  */
 +(S3Region *)APJapan;
+
+/**
+ * The South America (Sao Paulo) Region. This region uses Amazon S3 servers
+ * located in Sao Paulo.
+ * <p>
+ * When using buckets in this region, optionally set the client endpoint to
+ * <code>s3-sa-east-1.amazonaws.com</code> on all requests to these buckets
+ * to reduce any latency experienced after the first hour of creating a
+ * bucket in this region.
+ * </p>
+ */
++(S3Region *)SASaoPaulo;
 
 /** Convert a string describing an Amazon S3 region to the corresponding S3Region
  *

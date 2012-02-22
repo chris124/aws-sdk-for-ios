@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,7 +30,9 @@
     NSString *instanceId;
     NSString *publicIp;
     NSString *allocationId;
+    NSString *networkInterfaceId;
 }
+
 
 
 /**
@@ -48,6 +50,11 @@
  * address for use with Amazon VPC.
  */
 @property (nonatomic, retain) NSString *allocationId;
+
+/**
+ * The value of the NetworkInterfaceId property for this object.
+ */
+@property (nonatomic, retain) NSString *networkInterfaceId;
 
 
 /**

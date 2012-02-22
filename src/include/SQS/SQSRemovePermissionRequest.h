@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,14 +32,15 @@
 }
 
 
+
 /**
- *
+ * The URL of the SQS queue to take action on.
  */
 @property (nonatomic, retain) NSString *queueUrl;
 
 /**
- * The identfication of the permission to remove. This is the label added
- * with the <a>AddPermission</a> operation.
+ * The identification of the permission to remove. This is the label
+ * added with the <a>AddPermission</a> operation.
  */
 @property (nonatomic, retain) NSString *label;
 
@@ -54,9 +55,9 @@
  * Constructs a new RemovePermissionRequest object.
  * Callers should use properties to initialize any additional object members.
  *
- * @param theQueueUrl
- * @param theLabel The identfication of the permission to remove. This is
- * the label added with the <a>AddPermission</a> operation.
+ * @param theQueueUrl The URL of the SQS queue to take action on.
+ * @param theLabel The identification of the permission to remove. This
+ * is the label added with the <a>AddPermission</a> operation.
  */
 -(id)initWithQueueUrl:(NSString *)theQueueUrl andLabel:(NSString *)theLabel;
 

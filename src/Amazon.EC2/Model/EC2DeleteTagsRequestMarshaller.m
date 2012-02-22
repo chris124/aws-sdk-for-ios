@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,13 @@
     AmazonServiceRequest *request = [[EC2Request alloc] init];
 
     [request setParameterValue:@"DeleteTags"           forKey:@"Action"];
-    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-12-15"   forKey:@"Version"];
 
     [request setDelegate:[deleteTagsRequest delegate]];
     [request setCredentials:[deleteTagsRequest credentials]];
     [request setEndpoint:[deleteTagsRequest requestEndpoint]];
+    [request setRequestTag:[deleteTagsRequest requestTag]];
+
 
     if (deleteTagsRequest != nil) {
         int resourcesListIndex = 1;
@@ -34,6 +36,7 @@
             if (resourcesListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", resourcesListValue] forKey:[NSString stringWithFormat:@"%@.%d", @"ResourceId", resourcesListIndex]];
             }
+
             resourcesListIndex++;
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@
 }
 
 
+
 /**
  * One or more IDs of resources to tag. This could be the ID of an AMI,
  * an instance, an EBS volume, or snapshot, etc.
@@ -64,10 +65,16 @@
 -(id)initWithResources:(NSMutableArray *)theResources andTags:(NSMutableArray *)theTags;
 
 /**
+ * Adds a single object to resources.
+ * This function will alloc and init resources if not already done.
+ */
+-(void)addResource:(NSString *)resourceObject;
+
+/**
  * Adds a single object to tags.
  * This function will alloc and init tags if not already done.
  */
--(void)addTag:(EC2Tag *)tag;
+-(void)addTag:(EC2Tag *)tagObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

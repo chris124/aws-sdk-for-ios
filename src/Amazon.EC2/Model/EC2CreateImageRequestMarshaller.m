@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@
     AmazonServiceRequest *request = [[EC2Request alloc] init];
 
     [request setParameterValue:@"CreateImage"           forKey:@"Action"];
-    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-12-15"   forKey:@"Version"];
 
     [request setDelegate:[createImageRequest delegate]];
     [request setCredentials:[createImageRequest credentials]];
     [request setEndpoint:[createImageRequest requestEndpoint]];
+    [request setRequestTag:[createImageRequest requestTag]];
 
     if (createImageRequest != nil) {
         if (createImageRequest.instanceId != nil) {
@@ -45,7 +46,7 @@
     }
     if (createImageRequest != nil) {
         if (createImageRequest.noRebootIsSet) {
-            [request setParameterValue:(createImageRequest.noReboot ? @"true":@"false")forKey:[NSString stringWithFormat:@"%@", @"NoReboot"]];
+            [request setParameterValue:(createImageRequest.noReboot ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@", @"NoReboot"]];
         }
     }
 

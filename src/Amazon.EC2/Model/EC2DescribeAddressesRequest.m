@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,13 +35,31 @@
 }
 
 
--(void)addFilter:(EC2Filter *)filter
+-(void)addPublicIp:(NSString *)publicIpObject
+{
+    if (publicIps == nil) {
+        publicIps = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [publicIps addObject:publicIpObject];
+}
+
+-(void)addFilter:(EC2Filter *)filterObject
 {
     if (filters == nil) {
         filters = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [filters addObject:filter];
+    [filters addObject:filterObject];
+}
+
+-(void)addAllocationId:(NSString *)allocationIdObject
+{
+    if (allocationIds == nil) {
+        allocationIds = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [allocationIds addObject:allocationIdObject];
 }
 
 

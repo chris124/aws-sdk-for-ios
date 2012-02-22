@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,7 +34,9 @@
     NSString *statusCode;
     NSString *statusMessage;
     NSNumber *progress;
+    NSString *details;
 }
+
 
 
 
@@ -110,6 +112,14 @@
  * activity.
  */
 @property (nonatomic, retain) NSNumber *progress;
+
+/**
+ * Contains details of the scaling activity.
+ * <p>
+ * <b>Constraints:</b><br/>
+ * <b>Pattern: </b>[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*<br/>
+ */
+@property (nonatomic, retain) NSString *details;
 
 /**
  * Returns a string representation of this object; useful for testing and

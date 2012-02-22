@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@
     [request setDelegate:[putMetricAlarmRequest delegate]];
     [request setCredentials:[putMetricAlarmRequest credentials]];
     [request setEndpoint:[putMetricAlarmRequest requestEndpoint]];
+    [request setRequestTag:[putMetricAlarmRequest requestTag]];
 
     if (putMetricAlarmRequest != nil) {
         if (putMetricAlarmRequest.alarmName != nil) {
@@ -40,33 +41,39 @@
     }
     if (putMetricAlarmRequest != nil) {
         if (putMetricAlarmRequest.actionsEnabledIsSet) {
-            [request setParameterValue:(putMetricAlarmRequest.actionsEnabled ? @"true":@"false")forKey:[NSString stringWithFormat:@"%@", @"ActionsEnabled"]];
+            [request setParameterValue:(putMetricAlarmRequest.actionsEnabled ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@", @"ActionsEnabled"]];
         }
     }
+
     if (putMetricAlarmRequest != nil) {
         int oKActionsListIndex = 1;
         for (NSString *oKActionsListValue in putMetricAlarmRequest.oKActions) {
             if (oKActionsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", oKActionsListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"OKActions", oKActionsListIndex]];
             }
+
             oKActionsListIndex++;
         }
     }
+
     if (putMetricAlarmRequest != nil) {
         int alarmActionsListIndex = 1;
         for (NSString *alarmActionsListValue in putMetricAlarmRequest.alarmActions) {
             if (alarmActionsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", alarmActionsListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"AlarmActions", alarmActionsListIndex]];
             }
+
             alarmActionsListIndex++;
         }
     }
+
     if (putMetricAlarmRequest != nil) {
         int insufficientDataActionsListIndex = 1;
         for (NSString *insufficientDataActionsListValue in putMetricAlarmRequest.insufficientDataActions) {
             if (insufficientDataActionsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", insufficientDataActionsListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"InsufficientDataActions", insufficientDataActionsListIndex]];
             }
+
             insufficientDataActionsListIndex++;
         }
     }

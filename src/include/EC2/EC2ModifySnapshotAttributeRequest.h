@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 
+#import "EC2CreateVolumePermissionModifications.h"
 
 #import "../AmazonServiceRequestConfig.h"
 
@@ -27,12 +28,14 @@
 @interface EC2ModifySnapshotAttributeRequest:AmazonServiceRequestConfig
 
 {
-    NSString       *snapshotId;
-    NSString       *attribute;
-    NSString       *operationType;
-    NSMutableArray *userIds;
-    NSMutableArray *groupNames;
+    NSString                               *snapshotId;
+    NSString                               *attribute;
+    NSString                               *operationType;
+    NSMutableArray                         *userIds;
+    NSMutableArray                         *groupNames;
+    EC2CreateVolumePermissionModifications *createVolumePermission;
 }
+
 
 
 /**
@@ -70,6 +73,11 @@
  */
 @property (nonatomic, retain) NSMutableArray *groupNames;
 
+/**
+ * The value of the CreateVolumePermission property for this object.
+ */
+@property (nonatomic, retain) EC2CreateVolumePermissionModifications *createVolumePermission;
+
 
 /**
  * Default constructor for a new ModifySnapshotAttributeRequest object.  Callers should use the
@@ -89,6 +97,18 @@
  * Available operation names: <code>add</code>, <code>remove</code>
  */
 -(id)initWithSnapshotId:(NSString *)theSnapshotId andAttribute:(NSString *)theAttribute andOperationType:(NSString *)theOperationType;
+
+/**
+ * Adds a single object to userIds.
+ * This function will alloc and init userIds if not already done.
+ */
+-(void)addUserId:(NSString *)userIdObject;
+
+/**
+ * Adds a single object to groupNames.
+ * This function will alloc and init groupNames if not already done.
+ */
+-(void)addGroupName:(NSString *)groupNameObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

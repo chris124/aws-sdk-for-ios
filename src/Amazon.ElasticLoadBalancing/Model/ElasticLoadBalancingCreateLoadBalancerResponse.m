@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,20 +35,32 @@
 {
     AmazonServiceException *newException = nil;
 
-    if ([[theException errorCode] isEqualToString:@"DuplicateLoadBalancerName"]) {
-        newException = [[ElasticLoadBalancingDuplicateLoadBalancerNameException alloc] initWithMessage:@""];
+    if ([[theException errorCode] isEqualToString:@"InvalidSubnet"]) {
+        newException = [[ElasticLoadBalancingInvalidSubnetException alloc] initWithMessage:@""];
+    }
+
+    if ([[theException errorCode] isEqualToString:@"CertificateNotFound"]) {
+        newException = [[ElasticLoadBalancingCertificateNotFoundException alloc] initWithMessage:@""];
+    }
+
+    if ([[theException errorCode] isEqualToString:@"SubnetNotFound"]) {
+        newException = [[ElasticLoadBalancingSubnetNotFoundException alloc] initWithMessage:@""];
     }
 
     if ([[theException errorCode] isEqualToString:@"TooManyLoadBalancers"]) {
         newException = [[ElasticLoadBalancingTooManyLoadBalancersException alloc] initWithMessage:@""];
     }
 
+    if ([[theException errorCode] isEqualToString:@"DuplicateLoadBalancerName"]) {
+        newException = [[ElasticLoadBalancingDuplicateLoadBalancerNameException alloc] initWithMessage:@""];
+    }
+
     if ([[theException errorCode] isEqualToString:@"InvalidConfigurationRequest"]) {
         newException = [[ElasticLoadBalancingInvalidConfigurationRequestException alloc] initWithMessage:@""];
     }
 
-    if ([[theException errorCode] isEqualToString:@"CertificateNotFound"]) {
-        newException = [[ElasticLoadBalancingCertificateNotFoundException alloc] initWithMessage:@""];
+    if ([[theException errorCode] isEqualToString:@"InvalidSecurityGroup"]) {
+        newException = [[ElasticLoadBalancingInvalidSecurityGroupException alloc] initWithMessage:@""];
     }
 
     if (newException != nil) {

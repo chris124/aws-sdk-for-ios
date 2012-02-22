@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@
     AmazonServiceRequest *request = [[SQSRequest alloc] init];
 
     [request setParameterValue:@"DeleteMessage"           forKey:@"Action"];
-    [request setParameterValue:@"2009-02-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-10-01"   forKey:@"Version"];
 
     [request setDelegate:[deleteMessageRequest delegate]];
     [request setCredentials:[deleteMessageRequest credentials]];
     [request setEndpoint:[deleteMessageRequest requestEndpoint]];
+    [request setRequestTag:[deleteMessageRequest requestTag]];
 
     if (deleteMessageRequest != nil) {
         if (deleteMessageRequest.queueUrl != nil) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,47 +20,97 @@
 
 @synthesize loadBalancerName;
 @synthesize dNSName;
+@synthesize canonicalHostedZoneName;
+@synthesize canonicalHostedZoneNameID;
 @synthesize listenerDescriptions;
 @synthesize policies;
+@synthesize backendServerDescriptions;
 @synthesize availabilityZones;
+@synthesize subnets;
+@synthesize vPCId;
 @synthesize instances;
 @synthesize healthCheck;
+@synthesize sourceSecurityGroup;
+@synthesize securityGroups;
 @synthesize createdTime;
 
 
 -(id)init
 {
     if (self = [super init]) {
-        loadBalancerName     = nil;
-        dNSName              = nil;
-        listenerDescriptions = [[NSMutableArray alloc] initWithCapacity:1];
-        policies             = nil;
-        availabilityZones    = [[NSMutableArray alloc] initWithCapacity:1];
-        instances            = [[NSMutableArray alloc] initWithCapacity:1];
-        healthCheck          = nil;
-        createdTime          = nil;
+        loadBalancerName          = nil;
+        dNSName                   = nil;
+        canonicalHostedZoneName   = nil;
+        canonicalHostedZoneNameID = nil;
+        listenerDescriptions      = [[NSMutableArray alloc] initWithCapacity:1];
+        policies                  = nil;
+        backendServerDescriptions = [[NSMutableArray alloc] initWithCapacity:1];
+        availabilityZones         = [[NSMutableArray alloc] initWithCapacity:1];
+        subnets                   = [[NSMutableArray alloc] initWithCapacity:1];
+        vPCId                     = nil;
+        instances                 = [[NSMutableArray alloc] initWithCapacity:1];
+        healthCheck               = nil;
+        sourceSecurityGroup       = nil;
+        securityGroups            = [[NSMutableArray alloc] initWithCapacity:1];
+        createdTime               = nil;
     }
 
     return self;
 }
 
 
--(void)addListenerDescription:(ElasticLoadBalancingListenerDescription *)listenerDescription
+-(void)addListenerDescription:(ElasticLoadBalancingListenerDescription *)listenerDescriptionObject
 {
     if (listenerDescriptions == nil) {
         listenerDescriptions = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [listenerDescriptions addObject:listenerDescription];
+    [listenerDescriptions addObject:listenerDescriptionObject];
 }
 
--(void)addInstance:(ElasticLoadBalancingInstance *)instance
+-(void)addBackendServerDescription:(ElasticLoadBalancingBackendServerDescription *)backendServerDescriptionObject
+{
+    if (backendServerDescriptions == nil) {
+        backendServerDescriptions = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [backendServerDescriptions addObject:backendServerDescriptionObject];
+}
+
+-(void)addAvailabilityZone:(NSString *)availabilityZoneObject
+{
+    if (availabilityZones == nil) {
+        availabilityZones = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [availabilityZones addObject:availabilityZoneObject];
+}
+
+-(void)addSubnet:(NSString *)subnetObject
+{
+    if (subnets == nil) {
+        subnets = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [subnets addObject:subnetObject];
+}
+
+-(void)addInstance:(ElasticLoadBalancingInstance *)instanceObject
 {
     if (instances == nil) {
         instances = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [instances addObject:instance];
+    [instances addObject:instanceObject];
+}
+
+-(void)addSecurityGroup:(NSString *)securityGroupObject
+{
+    if (securityGroups == nil) {
+        securityGroups = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [securityGroups addObject:securityGroupObject];
 }
 
 
@@ -71,11 +121,18 @@
     [buffer appendString:@"{"];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"LoadBalancerName: %@,", loadBalancerName] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"DNSName: %@,", dNSName] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"CanonicalHostedZoneName: %@,", canonicalHostedZoneName] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"CanonicalHostedZoneNameID: %@,", canonicalHostedZoneNameID] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"ListenerDescriptions: %@,", listenerDescriptions] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"Policies: %@,", policies] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"BackendServerDescriptions: %@,", backendServerDescriptions] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"AvailabilityZones: %@,", availabilityZones] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"Subnets: %@,", subnets] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"VPCId: %@,", vPCId] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"Instances: %@,", instances] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"HealthCheck: %@,", healthCheck] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"SourceSecurityGroup: %@,", sourceSecurityGroup] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"SecurityGroups: %@,", securityGroups] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"CreatedTime: %@,", createdTime] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
@@ -89,11 +146,18 @@
 {
     [loadBalancerName release];
     [dNSName release];
+    [canonicalHostedZoneName release];
+    [canonicalHostedZoneNameID release];
     [listenerDescriptions release];
     [policies release];
+    [backendServerDescriptions release];
     [availabilityZones release];
+    [subnets release];
+    [vPCId release];
     [instances release];
     [healthCheck release];
+    [sourceSecurityGroup release];
+    [securityGroups release];
     [createdTime release];
 
     [super dealloc];

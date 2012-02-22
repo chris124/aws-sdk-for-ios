@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 #import "AmazonServiceResponse.h"
 #import "AmazonServiceResponseUnmarshaller.h"
+#import "AmazonLogger.h"
 
 @implementation AmazonServiceResponse
 
@@ -25,6 +26,7 @@
 @synthesize requestId;
 @synthesize didTimeout;
 @synthesize unmarshallerDelegate;
+@synthesize processingTime;
 
 -(id)init
 {
@@ -87,6 +89,12 @@
 {
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
+    AMZLogDebug(@"Response Headers:");
+    for (NSString *header in [[httpResponse allHeaderFields] allKeys]) {
+        AMZLogDebug(@"%@ = [%@]", header, [[httpResponse allHeaderFields] valueForKey:header]);
+    }
+
+
     self.httpStatusCode = [httpResponse statusCode];
 
     [body setLength:0];
@@ -111,6 +119,8 @@
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    NSDate *startDate = [NSDate date];
+
     isFinishedLoading = YES;
 
     NSString *tmpStr = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
@@ -141,6 +151,10 @@
     }
 
     [response postProcess];
+    processingTime          = fabs([startDate timeIntervalSinceNow]);
+    response.processingTime = processingTime;
+
+
 
     if ([(NSObject *)request.delegate respondsToSelector:@selector(request:didCompleteWithResponse:)]) {
         [request.delegate request:request didCompleteWithResponse:response];
@@ -182,6 +196,11 @@
     return proposedRequest;
 }
 
+-(NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
+{
+    return nil;
+}
+
 #pragma mark memory management
 
 -(void)dealloc
@@ -206,3 +225,8 @@
 }
 
 @end
+
+
+
+
+

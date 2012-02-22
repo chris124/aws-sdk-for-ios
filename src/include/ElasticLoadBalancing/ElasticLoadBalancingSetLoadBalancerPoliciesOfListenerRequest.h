@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@
 }
 
 
+
 /**
  * The name associated with the LoadBalancer. The name must be unique
  * within the client AWS account.
@@ -40,8 +41,8 @@
 @property (nonatomic, retain) NSString *loadBalancerName;
 
 /**
- * The external port of the LoadBalancer with which this policy has to be
- * associated.
+ * The external port of the LoadBalancer with which this policy applies
+ * to.
  */
 @property (nonatomic, retain) NSNumber *loadBalancerPort;
 
@@ -66,12 +67,18 @@
  * @param theLoadBalancerName The name associated with the LoadBalancer.
  * The name must be unique within the client AWS account.
  * @param theLoadBalancerPort The external port of the LoadBalancer with
- * which this policy has to be associated.
+ * which this policy applies to.
  * @param thePolicyNames List of policies to be associated with the
  * listener. Currently this list can have at most one policy. If the list
  * is empty, the current policy is removed from the listener.
  */
 -(id)initWithLoadBalancerName:(NSString *)theLoadBalancerName andLoadBalancerPort:(NSNumber *)theLoadBalancerPort andPolicyNames:(NSMutableArray *)thePolicyNames;
+
+/**
+ * Adds a single object to policyNames.
+ * This function will alloc and init policyNames if not already done.
+ */
+-(void)addPolicyName:(NSString *)policyNameObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

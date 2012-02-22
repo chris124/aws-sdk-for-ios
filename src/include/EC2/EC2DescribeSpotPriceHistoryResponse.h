@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,8 +30,12 @@
 
 {
     NSMutableArray *spotPriceHistory;
+    NSString       *nextToken;
 }
 
+
+
+-(void)setException:(AmazonServiceException *)theException;
 
 
 /**
@@ -41,9 +45,22 @@
 -(id)init;
 
 /**
- *
+ * The value of the SpotPriceHistory property for this object.
  */
 @property (nonatomic, retain) NSMutableArray *spotPriceHistory;
+
+/**
+ * The string marking the next set of results returned. Displays empty if
+ * there are no more results to be returned.
+ */
+@property (nonatomic, retain) NSString *nextToken;
+
+
+
+/**
+ * Returns a value from the spotPriceHistory array for the specified index
+ */
+-(EC2SpotPrice *)spotPriceHistoryObjectAtIndex:(int)index;
 
 /**
  * Returns a string representation of this object; useful for testing and

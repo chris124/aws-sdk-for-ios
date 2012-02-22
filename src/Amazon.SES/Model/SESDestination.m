@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,6 +34,33 @@
     return self;
 }
 
+
+-(void)addToAddresse:(NSString *)toAddresseObject
+{
+    if (toAddresses == nil) {
+        toAddresses = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [toAddresses addObject:toAddresseObject];
+}
+
+-(void)addCcAddresse:(NSString *)ccAddresseObject
+{
+    if (ccAddresses == nil) {
+        ccAddresses = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [ccAddresses addObject:ccAddresseObject];
+}
+
+-(void)addBccAddresse:(NSString *)bccAddresseObject
+{
+    if (bccAddresses == nil) {
+        bccAddresses = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [bccAddresses addObject:bccAddresseObject];
+}
 
 
 -(NSString *)description

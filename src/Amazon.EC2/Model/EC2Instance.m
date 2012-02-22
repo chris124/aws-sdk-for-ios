@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -52,6 +52,8 @@
 @synthesize securityGroups;
 @synthesize sourceDestCheck;
 @synthesize sourceDestCheckIsSet;
+@synthesize hypervisor;
+@synthesize networkInterfaces;
 
 
 -(id)init
@@ -91,46 +93,57 @@
         securityGroups        = [[NSMutableArray alloc] initWithCapacity:1];
         sourceDestCheck       = NO;
         sourceDestCheckIsSet  = NO;
+        hypervisor            = nil;
+        networkInterfaces     = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
     return self;
 }
 
 
--(void)addProductCode:(EC2ProductCode *)productCode
+-(void)addProductCode:(EC2ProductCode *)productCodeObject
 {
     if (productCodes == nil) {
         productCodes = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [productCodes addObject:productCode];
+    [productCodes addObject:productCodeObject];
 }
 
--(void)addBlockDeviceMapping:(EC2InstanceBlockDeviceMapping *)blockDeviceMapping
+-(void)addBlockDeviceMapping:(EC2InstanceBlockDeviceMapping *)blockDeviceMappingObject
 {
     if (blockDeviceMappings == nil) {
         blockDeviceMappings = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [blockDeviceMappings addObject:blockDeviceMapping];
+    [blockDeviceMappings addObject:blockDeviceMappingObject];
 }
 
--(void)addTag:(EC2Tag *)tag
+-(void)addTag:(EC2Tag *)tagObject
 {
     if (tags == nil) {
         tags = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [tags addObject:tag];
+    [tags addObject:tagObject];
 }
 
--(void)addSecurityGroup:(EC2GroupIdentifier *)securityGroup
+-(void)addSecurityGroup:(EC2GroupIdentifier *)securityGroupObject
 {
     if (securityGroups == nil) {
         securityGroups = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [securityGroups addObject:securityGroup];
+    [securityGroups addObject:securityGroupObject];
+}
+
+-(void)addNetworkInterface:(EC2InstanceNetworkInterface *)networkInterfaceObject
+{
+    if (networkInterfaces == nil) {
+        networkInterfaces = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [networkInterfaces addObject:networkInterfaceObject];
 }
 
 
@@ -172,6 +185,8 @@
     [buffer appendString:[[[NSString alloc] initWithFormat:@"Tags: %@,", tags] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"SecurityGroups: %@,", securityGroups] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"SourceDestCheck: %d,", sourceDestCheck] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"Hypervisor: %@,", hypervisor] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"NetworkInterfaces: %@,", networkInterfaces] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -220,6 +235,8 @@
     [clientToken release];
     [tags release];
     [securityGroups release];
+    [hypervisor release];
+    [networkInterfaces release];
 
     [super dealloc];
 }

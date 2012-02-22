@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@
 }
 
 
+
 /**
  * The list of Amazon EC2 instances on which to enable monitoring.
  */
@@ -51,6 +52,12 @@
  * enable monitoring.
  */
 -(id)initWithInstanceIds:(NSMutableArray *)theInstanceIds;
+
+/**
+ * Adds a single object to instanceIds.
+ * This function will alloc and init instanceIds if not already done.
+ */
+-(void)addInstanceId:(NSString *)instanceIdObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

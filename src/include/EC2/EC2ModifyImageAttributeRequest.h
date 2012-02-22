@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
  * permissions and limitations under the License.
  */
 
+#import "EC2LaunchPermissionModifications.h"
 
 #import "../AmazonServiceRequestConfig.h"
 
@@ -27,14 +28,17 @@
 @interface EC2ModifyImageAttributeRequest:AmazonServiceRequestConfig
 
 {
-    NSString       *imageId;
-    NSString       *attribute;
-    NSString       *operationType;
-    NSMutableArray *userIds;
-    NSMutableArray *userGroups;
-    NSMutableArray *productCodes;
-    NSString       *value;
+    NSString                         *imageId;
+    NSString                         *attribute;
+    NSString                         *operationType;
+    NSMutableArray                   *userIds;
+    NSMutableArray                   *userGroups;
+    NSMutableArray                   *productCodes;
+    NSString                         *value;
+    EC2LaunchPermissionModifications *launchPermission;
+    NSString                         *descriptionValue;
 }
+
 
 
 /**
@@ -81,6 +85,16 @@
  */
 @property (nonatomic, retain) NSString *value;
 
+/**
+ * The value of the LaunchPermission property for this object.
+ */
+@property (nonatomic, retain) EC2LaunchPermissionModifications *launchPermission;
+
+/**
+ * String value
+ */
+@property (nonatomic, retain) NSString *descriptionValue;
+
 
 /**
  * Default constructor for a new ModifyImageAttributeRequest object.  Callers should use the
@@ -99,6 +113,24 @@
  * <code>productCodes</code>
  */
 -(id)initWithImageId:(NSString *)theImageId andAttribute:(NSString *)theAttribute;
+
+/**
+ * Adds a single object to userIds.
+ * This function will alloc and init userIds if not already done.
+ */
+-(void)addUserId:(NSString *)userIdObject;
+
+/**
+ * Adds a single object to userGroups.
+ * This function will alloc and init userGroups if not already done.
+ */
+-(void)addUserGroup:(NSString *)userGroupObject;
+
+/**
+ * Adds a single object to productCodes.
+ * This function will alloc and init productCodes if not already done.
+ */
+-(void)addProductCode:(NSString *)productCodeObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

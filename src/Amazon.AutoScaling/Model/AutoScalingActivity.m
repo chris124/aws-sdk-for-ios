@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@
 @synthesize statusCode;
 @synthesize statusMessage;
 @synthesize progress;
+@synthesize details;
 
 
 -(id)init
@@ -41,6 +42,7 @@
         statusCode           = nil;
         statusMessage        = nil;
         progress             = nil;
+        details              = nil;
     }
 
     return self;
@@ -62,6 +64,7 @@
     [buffer appendString:[[[NSString alloc] initWithFormat:@"StatusCode: %@,", statusCode] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"StatusMessage: %@,", statusMessage] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"Progress: %@,", progress] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"Details: %@,", details] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -81,6 +84,7 @@
     [statusCode release];
     [statusMessage release];
     [progress release];
+    [details release];
 
     [super dealloc];
 }

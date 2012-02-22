@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@
 @synthesize healthCheckGracePeriod;
 @synthesize placementGroup;
 @synthesize vPCZoneIdentifier;
+@synthesize tags;
 
 
 -(id)init
@@ -47,11 +48,39 @@
         healthCheckGracePeriod  = nil;
         placementGroup          = nil;
         vPCZoneIdentifier       = nil;
+        tags                    = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
     return self;
 }
 
+
+-(void)addAvailabilityZone:(NSString *)availabilityZoneObject
+{
+    if (availabilityZones == nil) {
+        availabilityZones = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [availabilityZones addObject:availabilityZoneObject];
+}
+
+-(void)addLoadBalancerName:(NSString *)loadBalancerNameObject
+{
+    if (loadBalancerNames == nil) {
+        loadBalancerNames = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [loadBalancerNames addObject:loadBalancerNameObject];
+}
+
+-(void)addTag:(AutoScalingTag *)tagObject
+{
+    if (tags == nil) {
+        tags = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [tags addObject:tagObject];
+}
 
 
 -(NSString *)description
@@ -71,6 +100,7 @@
     [buffer appendString:[[[NSString alloc] initWithFormat:@"HealthCheckGracePeriod: %@,", healthCheckGracePeriod] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"PlacementGroup: %@,", placementGroup] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"VPCZoneIdentifier: %@,", vPCZoneIdentifier] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"Tags: %@,", tags] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -93,6 +123,7 @@
     [healthCheckGracePeriod release];
     [placementGroup release];
     [vPCZoneIdentifier release];
+    [tags release];
 
     [super dealloc];
 }

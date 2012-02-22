@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@
     NSMutableArray *executableUsers;
     NSMutableArray *filters;
 }
+
 
 
 
@@ -73,10 +74,28 @@
 @property (nonatomic, retain) NSMutableArray *filters;
 
 /**
+ * Adds a single object to imageIds.
+ * This function will alloc and init imageIds if not already done.
+ */
+-(void)addImageId:(NSString *)imageIdObject;
+
+/**
+ * Adds a single object to owners.
+ * This function will alloc and init owners if not already done.
+ */
+-(void)addOwner:(NSString *)ownerObject;
+
+/**
+ * Adds a single object to executableUsers.
+ * This function will alloc and init executableUsers if not already done.
+ */
+-(void)addExecutableUser:(NSString *)executableUserObject;
+
+/**
  * Adds a single object to filters.
  * This function will alloc and init filters if not already done.
  */
--(void)addFilter:(EC2Filter *)filter;
+-(void)addFilter:(EC2Filter *)filterObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

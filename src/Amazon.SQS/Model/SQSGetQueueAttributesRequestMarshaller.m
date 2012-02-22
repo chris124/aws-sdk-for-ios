@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,23 +22,26 @@
     AmazonServiceRequest *request = [[SQSRequest alloc] init];
 
     [request setParameterValue:@"GetQueueAttributes"           forKey:@"Action"];
-    [request setParameterValue:@"2009-02-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-10-01"   forKey:@"Version"];
 
     [request setDelegate:[getQueueAttributesRequest delegate]];
     [request setCredentials:[getQueueAttributesRequest credentials]];
     [request setEndpoint:[getQueueAttributesRequest requestEndpoint]];
+    [request setRequestTag:[getQueueAttributesRequest requestTag]];
 
     if (getQueueAttributesRequest != nil) {
         if (getQueueAttributesRequest.queueUrl != nil) {
             [request setParameterValue:[NSString stringWithFormat:@"%@", getQueueAttributesRequest.queueUrl] forKey:[NSString stringWithFormat:@"%@", @"QueueUrl"]];
         }
     }
+
     if (getQueueAttributesRequest != nil) {
         int attributeNamesListIndex = 1;
         for (NSString *attributeNamesListValue in getQueueAttributesRequest.attributeNames) {
             if (attributeNamesListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", attributeNamesListValue] forKey:[NSString stringWithFormat:@"%@.%d", @"AttributeName", attributeNamesListIndex]];
             }
+
             attributeNamesListIndex++;
         }
     }

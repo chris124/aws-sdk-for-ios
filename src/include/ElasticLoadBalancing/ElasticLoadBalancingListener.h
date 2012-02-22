@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,24 +27,42 @@
 {
     NSString *protocol;
     NSNumber *loadBalancerPort;
+    NSString *instanceProtocol;
     NSNumber *instancePort;
     NSString *sSLCertificateId;
 }
 
 
+
 /**
- * Specifies the LoadBalancer transport protocol to use for routing - TCP
- * or HTTP. This property cannot be modified for the life of the
- * LoadBalancer.
+ * Specifies the LoadBalancer transport protocol to use for routing -
+ * HTTP, HTTPS, TCP or SSL. This property cannot be modified for the life
+ * of the LoadBalancer.
  */
 @property (nonatomic, retain) NSString *protocol;
 
 /**
- * Specifies the LoadBalancer transport protocol to use for routing - TCP
- * or HTTP. This property cannot be modified for the life of the
- * LoadBalancer.
+ * Specifies the external LoadBalancer port number. This property cannot
+ * be modified for the life of the LoadBalancer.
  */
 @property (nonatomic, retain) NSNumber *loadBalancerPort;
+
+/**
+ * Specifies the protocol to use for routing traffic to back-end
+ * instances - HTTP, HTTPS, TCP, or SSL. This property cannot be modified
+ * for the life of the LoadBalancer. <note> If the front-end protocol is
+ * HTTP or HTTPS, <code>InstanceProtocol</code> has to be at the same
+ * protocol layer, i.e., HTTP or HTTPS. Likewise, if the front-end
+ * protocol is TCP or SSL, InstanceProtocol has to be TCP or SSL. </note>
+ * <note> If there is another listener with the same
+ * <code>InstancePort</code> whose <code>InstanceProtocol</code> is
+ * secure, i.e., HTTPS or SSL, the listener's
+ * <code>InstanceProtocol</code> has to be secure, i.e., HTTPS or SSL. If
+ * there is another listener with the same <code>InstancePort</code>
+ * whose <code>InstanceProtocol</code> is HTTP or TCP, the listener's
+ * <code>InstanceProtocol</code> must be either HTTP or TCP. </note>
+ */
+@property (nonatomic, retain) NSString *instanceProtocol;
 
 /**
  * Specifies the TCP port on which the instance server is listening. This
@@ -56,11 +74,10 @@
 @property (nonatomic, retain) NSNumber *instancePort;
 
 /**
- * The ID of the SSL certificate chain to use. For more information on
- * SSL certificates, see <a
- * ervices.com/IAM/latest/UserGuide/index.html?ManagingCredentials.html">
- * Managing Keys and Certificates </a> in the AWS Identity and Access
- * Management documentation.
+ * The ARN string of the server certificate. To get the ARN of the server
+ * certificate, call the AWS Identity and Access Management <a
+ * e/index.html?API_UploadServerCertificate.html">UploadServerCertificate
+ * </a> API.
  */
 @property (nonatomic, retain) NSString *sSLCertificateId;
 
@@ -76,11 +93,11 @@
  * Callers should use properties to initialize any additional object members.
  *
  * @param theProtocol Specifies the LoadBalancer transport protocol to
- * use for routing - TCP or HTTP. This property cannot be modified for
- * the life of the LoadBalancer.
- * @param theLoadBalancerPort Specifies the LoadBalancer transport
- * protocol to use for routing - TCP or HTTP. This property cannot be
+ * use for routing - HTTP, HTTPS, TCP or SSL. This property cannot be
  * modified for the life of the LoadBalancer.
+ * @param theLoadBalancerPort Specifies the external LoadBalancer port
+ * number. This property cannot be modified for the life of the
+ * LoadBalancer.
  * @param theInstancePort Specifies the TCP port on which the instance
  * server is listening. This property cannot be modified for the life of
  * the LoadBalancer.

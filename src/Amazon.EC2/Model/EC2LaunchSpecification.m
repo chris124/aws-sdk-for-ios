@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@
 @synthesize monitoringEnabled;
 @synthesize monitoringEnabledIsSet;
 @synthesize subnetId;
+@synthesize networkInterfaces;
 
 
 -(id)init
@@ -51,28 +52,47 @@
         monitoringEnabled      = NO;
         monitoringEnabledIsSet = NO;
         subnetId               = nil;
+        networkInterfaces      = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
     return self;
 }
 
 
--(void)addAllSecurityGroup:(EC2GroupIdentifier *)allSecurityGroup
+-(void)addAllSecurityGroup:(EC2GroupIdentifier *)allSecurityGroupObject
 {
     if (allSecurityGroups == nil) {
         allSecurityGroups = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [allSecurityGroups addObject:allSecurityGroup];
+    [allSecurityGroups addObject:allSecurityGroupObject];
 }
 
--(void)addBlockDeviceMapping:(EC2BlockDeviceMapping *)blockDeviceMapping
+-(void)addSecurityGroup:(NSString *)securityGroupObject
+{
+    if (securityGroups == nil) {
+        securityGroups = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [securityGroups addObject:securityGroupObject];
+}
+
+-(void)addBlockDeviceMapping:(EC2BlockDeviceMapping *)blockDeviceMappingObject
 {
     if (blockDeviceMappings == nil) {
         blockDeviceMappings = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [blockDeviceMappings addObject:blockDeviceMapping];
+    [blockDeviceMappings addObject:blockDeviceMappingObject];
+}
+
+-(void)addNetworkInterface:(EC2InstanceNetworkInterfaceSpecification *)networkInterfaceObject
+{
+    if (networkInterfaces == nil) {
+        networkInterfaces = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [networkInterfaces addObject:networkInterfaceObject];
 }
 
 
@@ -94,6 +114,7 @@
     [buffer appendString:[[[NSString alloc] initWithFormat:@"BlockDeviceMappings: %@,", blockDeviceMappings] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"MonitoringEnabled: %d,", monitoringEnabled] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"SubnetId: %@,", subnetId] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"NetworkInterfaces: %@,", networkInterfaces] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -122,6 +143,7 @@
     [ramdiskId release];
     [blockDeviceMappings release];
     [subnetId release];
+    [networkInterfaces release];
 
     [super dealloc];
 }

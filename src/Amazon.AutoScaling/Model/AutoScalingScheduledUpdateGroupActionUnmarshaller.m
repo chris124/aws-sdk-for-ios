@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -52,6 +52,21 @@
 
     if ([elementName isEqualToString:@"Time"]) {
         self.response.time = [AmazonSDKUtil convertStringToDate:self.currentText];
+        return;
+    }
+
+    if ([elementName isEqualToString:@"StartTime"]) {
+        self.response.startTime = [AmazonSDKUtil convertStringToDate:self.currentText];
+        return;
+    }
+
+    if ([elementName isEqualToString:@"EndTime"]) {
+        self.response.endTime = [AmazonSDKUtil convertStringToDate:self.currentText];
+        return;
+    }
+
+    if ([elementName isEqualToString:@"Recurrence"]) {
+        self.response.recurrence = self.currentText;
         return;
     }
 

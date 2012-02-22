@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@
     NSString       *cidrIp;
     NSMutableArray *ipPermissions;
 }
+
 
 
 /**
@@ -116,7 +117,7 @@
  * Adds a single object to ipPermissions.
  * This function will alloc and init ipPermissions if not already done.
  */
--(void)addIpPermission:(EC2IpPermission *)ipPermission;
+-(void)addIpPermission:(EC2IpPermission *)ipPermissionObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

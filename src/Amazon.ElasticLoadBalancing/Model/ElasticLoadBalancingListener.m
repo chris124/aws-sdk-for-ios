@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 
 @synthesize protocol;
 @synthesize loadBalancerPort;
+@synthesize instanceProtocol;
 @synthesize instancePort;
 @synthesize sSLCertificateId;
 
@@ -29,6 +30,7 @@
     if (self = [super init]) {
         protocol         = nil;
         loadBalancerPort = nil;
+        instanceProtocol = nil;
         instancePort     = nil;
         sSLCertificateId = nil;
     }
@@ -56,6 +58,7 @@
     [buffer appendString:@"{"];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"Protocol: %@,", protocol] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"LoadBalancerPort: %@,", loadBalancerPort] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"InstanceProtocol: %@,", instanceProtocol] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"InstancePort: %@,", instancePort] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"SSLCertificateId: %@,", sSLCertificateId] autorelease]];
     [buffer appendString:[super description]];
@@ -70,6 +73,7 @@
 {
     [protocol release];
     [loadBalancerPort release];
+    [instanceProtocol release];
     [instancePort release];
     [sSLCertificateId release];
 

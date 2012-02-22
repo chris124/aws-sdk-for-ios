@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@
 @synthesize availabilityZone;
 @synthesize productDescription;
 @synthesize filters;
+@synthesize instanceTenancy;
+@synthesize offeringType;
 
 
 -(id)init
@@ -33,19 +35,30 @@
         availabilityZone             = nil;
         productDescription           = nil;
         filters                      = [[NSMutableArray alloc] initWithCapacity:1];
+        instanceTenancy              = nil;
+        offeringType                 = nil;
     }
 
     return self;
 }
 
 
--(void)addFilter:(EC2Filter *)filter
+-(void)addReservedInstancesOfferingId:(NSString *)reservedInstancesOfferingIdObject
+{
+    if (reservedInstancesOfferingIds == nil) {
+        reservedInstancesOfferingIds = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [reservedInstancesOfferingIds addObject:reservedInstancesOfferingIdObject];
+}
+
+-(void)addFilter:(EC2Filter *)filterObject
 {
     if (filters == nil) {
         filters = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [filters addObject:filter];
+    [filters addObject:filterObject];
 }
 
 
@@ -59,6 +72,8 @@
     [buffer appendString:[[[NSString alloc] initWithFormat:@"AvailabilityZone: %@,", availabilityZone] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"ProductDescription: %@,", productDescription] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"Filters: %@,", filters] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"InstanceTenancy: %@,", instanceTenancy] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"OfferingType: %@,", offeringType] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -74,6 +89,8 @@
     [availabilityZone release];
     [productDescription release];
     [filters release];
+    [instanceTenancy release];
+    [offeringType release];
 
     [super dealloc];
 }

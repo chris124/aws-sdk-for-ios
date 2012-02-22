@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,8 +31,15 @@
 }
 
 
-@property (nonatomic, retain) NSString       *name;
 
+/**
+ * The value of the Name property for this object.
+ */
+@property (nonatomic, retain) NSString *name;
+
+/**
+ * The value of the Attributes property for this object.
+ */
 @property (nonatomic, retain) NSMutableArray *attributes;
 
 
@@ -55,7 +62,7 @@
  * Adds a single object to attributes.
  * This function will alloc and init attributes if not already done.
  */
--(void)addAttribute:(SimpleDBAttribute *)attribute;
+-(void)addAttribute:(SimpleDBAttribute *)attributeObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

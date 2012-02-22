@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,13 @@
     AmazonServiceRequest *request = [[EC2Request alloc] init];
 
     [request setParameterValue:@"DescribeInstances"           forKey:@"Action"];
-    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-12-15"   forKey:@"Version"];
 
     [request setDelegate:[describeInstancesRequest delegate]];
     [request setCredentials:[describeInstancesRequest credentials]];
     [request setEndpoint:[describeInstancesRequest requestEndpoint]];
+    [request setRequestTag:[describeInstancesRequest requestTag]];
+
 
     if (describeInstancesRequest != nil) {
         int instanceIdsListIndex = 1;
@@ -34,6 +36,7 @@
             if (instanceIdsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", instanceIdsListValue] forKey:[NSString stringWithFormat:@"%@.%d", @"InstanceId", instanceIdsListIndex]];
             }
+
             instanceIdsListIndex++;
         }
     }
@@ -46,12 +49,14 @@
                     [request setParameterValue:[NSString stringWithFormat:@"%@", filtersListValue.name] forKey:[NSString stringWithFormat:@"%@.%d.%@", @"Filter", filtersListIndex, @"Name"]];
                 }
             }
+
             if (filtersListValue != nil) {
                 int valuesListIndex = 1;
                 for (NSString *valuesListValue in filtersListValue.values) {
                     if (valuesListValue != nil) {
                         [request setParameterValue:[NSString stringWithFormat:@"%@", valuesListValue] forKey:[NSString stringWithFormat:@"%@.%d.%@.%d", @"Filter", filtersListIndex, @"Value", valuesListIndex]];
                     }
+
                     valuesListIndex++;
                 }
             }

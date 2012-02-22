@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@
 @synthesize securityGroups;
 @synthesize securityGroupIds;
 @synthesize userData;
+@synthesize addressingType;
 @synthesize instanceType;
 @synthesize placement;
 @synthesize kernelId;
@@ -40,6 +41,7 @@
 @synthesize privateIpAddress;
 @synthesize clientToken;
 @synthesize additionalInfo;
+@synthesize networkInterfaces;
 
 
 -(id)init
@@ -52,6 +54,7 @@
         securityGroups                    = [[NSMutableArray alloc] initWithCapacity:1];
         securityGroupIds                  = [[NSMutableArray alloc] initWithCapacity:1];
         userData                          = nil;
+        addressingType                    = nil;
         instanceType                      = nil;
         placement                         = nil;
         kernelId                          = nil;
@@ -67,6 +70,7 @@
         privateIpAddress                  = nil;
         clientToken                       = nil;
         additionalInfo                    = nil;
+        networkInterfaces                 = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
     return self;
@@ -84,13 +88,40 @@
 }
 
 
--(void)addBlockDeviceMapping:(EC2BlockDeviceMapping *)blockDeviceMapping
+-(void)addSecurityGroup:(NSString *)securityGroupObject
+{
+    if (securityGroups == nil) {
+        securityGroups = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [securityGroups addObject:securityGroupObject];
+}
+
+-(void)addSecurityGroupId:(NSString *)securityGroupIdObject
+{
+    if (securityGroupIds == nil) {
+        securityGroupIds = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [securityGroupIds addObject:securityGroupIdObject];
+}
+
+-(void)addBlockDeviceMapping:(EC2BlockDeviceMapping *)blockDeviceMappingObject
 {
     if (blockDeviceMappings == nil) {
         blockDeviceMappings = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [blockDeviceMappings addObject:blockDeviceMapping];
+    [blockDeviceMappings addObject:blockDeviceMappingObject];
+}
+
+-(void)addNetworkInterface:(EC2InstanceNetworkInterfaceSpecification *)networkInterfaceObject
+{
+    if (networkInterfaces == nil) {
+        networkInterfaces = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [networkInterfaces addObject:networkInterfaceObject];
 }
 
 
@@ -106,6 +137,7 @@
     [buffer appendString:[[[NSString alloc] initWithFormat:@"SecurityGroups: %@,", securityGroups] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"SecurityGroupIds: %@,", securityGroupIds] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"UserData: %@,", userData] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"AddressingType: %@,", addressingType] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"InstanceType: %@,", instanceType] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"Placement: %@,", placement] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"KernelId: %@,", kernelId] autorelease]];
@@ -119,6 +151,7 @@
     [buffer appendString:[[[NSString alloc] initWithFormat:@"PrivateIpAddress: %@,", privateIpAddress] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"ClientToken: %@,", clientToken] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"AdditionalInfo: %@,", additionalInfo] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"NetworkInterfaces: %@,", networkInterfaces] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -148,6 +181,7 @@
     [securityGroups release];
     [securityGroupIds release];
     [userData release];
+    [addressingType release];
     [instanceType release];
     [placement release];
     [kernelId release];
@@ -159,6 +193,7 @@
     [privateIpAddress release];
     [clientToken release];
     [additionalInfo release];
+    [networkInterfaces release];
 
     [super dealloc];
 }

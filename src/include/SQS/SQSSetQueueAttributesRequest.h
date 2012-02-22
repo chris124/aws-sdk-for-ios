@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,13 +32,14 @@
 }
 
 
+
 /**
- *
+ * The URL of the SQS queue to take action on.
  */
 @property (nonatomic, retain) NSString *queueUrl;
 
 /**
- * A list of attributes to set.
+ * A map of attributes to set.
  */
 @property (nonatomic, retain) NSMutableDictionary *attributes;
 
@@ -53,10 +54,17 @@
  * Constructs a new SetQueueAttributesRequest object.
  * Callers should use properties to initialize any additional object members.
  *
- * @param theQueueUrl
- * @param theAttributes A list of attributes to set.
+ * @param theQueueUrl The URL of the SQS queue to take action on.
+ * @param theAttributes A map of attributes to set.
  */
 -(id)initWithQueueUrl:(NSString *)theQueueUrl andAttributes:(NSMutableDictionary *)theAttributes;
+
+
+/**
+ * Set a value in the dictionary attributes for the specified key.
+ * This function will alloc and init attributes if not already done.
+ */
+-(void)setAttributesValue:(NSString *)theValue forKey:(NSString *)theKey;
 
 /**
  * Returns a string representation of this object; useful for testing and

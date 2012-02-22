@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -48,6 +48,31 @@
 
     if ([elementName isEqualToString:@"publicIp"]) {
         self.response.publicIp = self.currentText;
+        return;
+    }
+
+    if ([elementName isEqualToString:@"allocationId"]) {
+        self.response.allocationId = self.currentText;
+        return;
+    }
+
+    if ([elementName isEqualToString:@"associationId"]) {
+        self.response.associationId = self.currentText;
+        return;
+    }
+
+    if ([elementName isEqualToString:@"domain"]) {
+        self.response.domain = self.currentText;
+        return;
+    }
+
+    if ([elementName isEqualToString:@"networkInterfaceId"]) {
+        self.response.networkInterfaceId = self.currentText;
+        return;
+    }
+
+    if ([elementName isEqualToString:@"networkInterfaceOwnerId"]) {
+        self.response.networkInterfaceOwnerId = self.currentText;
         return;
     }
 

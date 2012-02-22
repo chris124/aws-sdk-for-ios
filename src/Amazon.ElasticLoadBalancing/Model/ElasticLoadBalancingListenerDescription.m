@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,6 +32,15 @@
     return self;
 }
 
+
+-(void)addPolicyName:(NSString *)policyNameObject
+{
+    if (policyNames == nil) {
+        policyNames = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [policyNames addObject:policyNameObject];
+}
 
 
 -(NSString *)description

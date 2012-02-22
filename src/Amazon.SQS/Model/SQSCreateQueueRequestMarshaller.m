@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@
     AmazonServiceRequest *request = [[SQSRequest alloc] init];
 
     [request setParameterValue:@"CreateQueue"           forKey:@"Action"];
-    [request setParameterValue:@"2009-02-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-10-01"   forKey:@"Version"];
 
     [request setDelegate:[createQueueRequest delegate]];
     [request setCredentials:[createQueueRequest credentials]];
     [request setEndpoint:[createQueueRequest requestEndpoint]];
+    [request setRequestTag:[createQueueRequest requestTag]];
 
     if (createQueueRequest != nil) {
         if (createQueueRequest.queueName != nil) {
@@ -34,8 +35,23 @@
         }
     }
     if (createQueueRequest != nil) {
-        if (createQueueRequest.defaultVisibilityTimeout != nil) {
-            [request setParameterValue:[NSString stringWithFormat:@"%@", createQueueRequest.defaultVisibilityTimeout] forKey:[NSString stringWithFormat:@"%@", @"DefaultVisibilityTimeout"]];
+        if (createQueueRequest.attributes != nil) {
+            int attributesListIndex = 1;
+            for (NSString *attributesListKey in createQueueRequest.attributes) {
+                NSString *attributesListKeyValue = [createQueueRequest.attributes valueForKey:attributesListKey];
+                if (attributesListKey != nil) {
+                    [request setParameterValue:[NSString stringWithFormat:@"%@", attributesListKey] forKey:[NSString stringWithFormat:@"%@.%d.%@", @"Attribute", attributesListIndex, @"Name"]];
+                }
+
+                if (attributesListKeyValue != nil) {
+                    [request setParameterValue:[NSString stringWithFormat:@"%@", attributesListKeyValue] forKey:[NSString stringWithFormat:@"%@.%d.%@", @"Attribute", attributesListIndex, @"Value"]];
+                }
+
+
+
+
+                ++attributesListIndex;
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
  */
 
 #import "AmazonRequestDelegate.h"
+#import "AmazonLogger.h"
 
 @implementation AmazonRequestDelegate
 
@@ -47,7 +48,8 @@
 {
     AMZLogDebug(@"didCompleteWithResponse");
     [response release];
-    response = [aResponse retain];
+    response         = [aResponse retain];
+    response.request = request;
 }
 
 -(void)request:(AmazonServiceRequest *)request didReceiveData:(NSData *)data

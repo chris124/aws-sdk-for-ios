@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,18 +27,21 @@
     [request setDelegate:[sendRawEmailRequest delegate]];
     [request setCredentials:[sendRawEmailRequest credentials]];
     [request setEndpoint:[sendRawEmailRequest requestEndpoint]];
+    [request setRequestTag:[sendRawEmailRequest requestTag]];
 
     if (sendRawEmailRequest != nil) {
         if (sendRawEmailRequest.source != nil) {
             [request setParameterValue:[NSString stringWithFormat:@"%@", sendRawEmailRequest.source] forKey:[NSString stringWithFormat:@"%@", @"Source"]];
         }
     }
+
     if (sendRawEmailRequest != nil) {
         int destinationsListIndex = 1;
         for (NSString *destinationsListValue in sendRawEmailRequest.destinations) {
             if (destinationsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", destinationsListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"Destinations", destinationsListIndex]];
             }
+
             destinationsListIndex++;
         }
     }

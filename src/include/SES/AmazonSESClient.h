@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@
 
 /**
  * <p>
- * Returns the user's current sending limits.
+ * Returns the user's current activity limits.
  * </p>
  *
  * @param getSendQuotaRequest Container for the necessary parameters to
@@ -213,8 +213,9 @@
  * <p>
  * Sends an email message, with header and content specified by the
  * client. The <code>SendRawEmail</code> action is useful for sending
- * multipart MIME emails. The raw text of the message must comply with
- * Internet email standards; otherwise, the message cannot be sent.
+ * multipart MIME emails, with attachments or inline content. The raw
+ * text of the message must comply with Internet email standards;
+ * otherwise, the message cannot be sent.
  * </p>
  * <p>
  * <b>IMPORTANT:</b>If you have not yet requested production access to

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@
     AmazonServiceRequest *request = [[EC2Request alloc] init];
 
     [request setParameterValue:@"DetachVolume"           forKey:@"Action"];
-    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-12-15"   forKey:@"Version"];
 
     [request setDelegate:[detachVolumeRequest delegate]];
     [request setCredentials:[detachVolumeRequest credentials]];
     [request setEndpoint:[detachVolumeRequest requestEndpoint]];
+    [request setRequestTag:[detachVolumeRequest requestTag]];
 
     if (detachVolumeRequest != nil) {
         if (detachVolumeRequest.volumeId != nil) {
@@ -45,7 +46,7 @@
     }
     if (detachVolumeRequest != nil) {
         if (detachVolumeRequest.forceIsSet) {
-            [request setParameterValue:(detachVolumeRequest.force ? @"true":@"false")forKey:[NSString stringWithFormat:@"%@", @"Force"]];
+            [request setParameterValue:(detachVolumeRequest.force ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@", @"Force"]];
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@
 
 
 
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -69,7 +70,7 @@
 
 /**
  * The latest scheduled start time to return. If scheduled action names
- * are provided, this field will be ignored.
+ * are provided, this field is ignored.
  */
 @property (nonatomic, retain) NSDate *endTime;
 
@@ -88,6 +89,12 @@
  * <b>Range: </b>1 - 50<br/>
  */
 @property (nonatomic, retain) NSNumber *maxRecords;
+
+/**
+ * Adds a single object to scheduledActionNames.
+ * This function will alloc and init scheduledActionNames if not already done.
+ */
+-(void)addScheduledActionName:(NSString *)scheduledActionNameObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

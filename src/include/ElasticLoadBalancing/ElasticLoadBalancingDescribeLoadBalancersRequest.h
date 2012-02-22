@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,13 +28,20 @@
 
 {
     NSMutableArray *loadBalancerNames;
+    NSString       *marker;
 }
+
 
 
 /**
  * A list of names associated with the LoadBalancers at creation time.
  */
 @property (nonatomic, retain) NSMutableArray *loadBalancerNames;
+
+/**
+ * An optional parameter reserved for future use.
+ */
+@property (nonatomic, retain) NSString *marker;
 
 
 /**
@@ -51,6 +58,12 @@
  * LoadBalancers at creation time.
  */
 -(id)initWithLoadBalancerNames:(NSMutableArray *)theLoadBalancerNames;
+
+/**
+ * Adds a single object to loadBalancerNames.
+ * This function will alloc and init loadBalancerNames if not already done.
+ */
+-(void)addLoadBalancerName:(NSString *)loadBalancerNameObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

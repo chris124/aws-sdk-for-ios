@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -39,13 +39,22 @@
 }
 
 
--(void)addUserIdGroupPair:(EC2UserIdGroupPair *)userIdGroupPair
+-(void)addUserIdGroupPair:(EC2UserIdGroupPair *)userIdGroupPairObject
 {
     if (userIdGroupPairs == nil) {
         userIdGroupPairs = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [userIdGroupPairs addObject:userIdGroupPair];
+    [userIdGroupPairs addObject:userIdGroupPairObject];
+}
+
+-(void)addIpRange:(NSString *)ipRangeObject
+{
+    if (ipRanges == nil) {
+        ipRanges = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [ipRanges addObject:ipRangeObject];
 }
 
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@
     [request setDelegate:[getAttributesRequest delegate]];
     [request setCredentials:[getAttributesRequest credentials]];
     [request setEndpoint:[getAttributesRequest requestEndpoint]];
+    [request setRequestTag:[getAttributesRequest requestTag]];
 
     if (getAttributesRequest != nil) {
         if (getAttributesRequest.domainName != nil) {
@@ -38,18 +39,20 @@
             [request setParameterValue:[NSString stringWithFormat:@"%@", getAttributesRequest.itemName] forKey:[NSString stringWithFormat:@"%@", @"ItemName"]];
         }
     }
+
     if (getAttributesRequest != nil) {
         int attributeNamesListIndex = 1;
         for (NSString *attributeNamesListValue in getAttributesRequest.attributeNames) {
             if (attributeNamesListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", attributeNamesListValue] forKey:[NSString stringWithFormat:@"%@.%d", @"AttributeName", attributeNamesListIndex]];
             }
+
             attributeNamesListIndex++;
         }
     }
     if (getAttributesRequest != nil) {
         if (getAttributesRequest.consistentReadIsSet) {
-            [request setParameterValue:(getAttributesRequest.consistentRead ? @"true":@"false")forKey:[NSString stringWithFormat:@"%@", @"ConsistentRead"]];
+            [request setParameterValue:(getAttributesRequest.consistentRead ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@", @"ConsistentRead"]];
         }
     }
 

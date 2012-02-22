@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,20 +27,21 @@
 @interface SQSCreateQueueRequest:AmazonServiceRequestConfig
 
 {
-    NSString *queueName;
-    NSNumber *defaultVisibilityTimeout;
+    NSString            *queueName;
+    NSMutableDictionary *attributes;
 }
 
 
+
 /**
- * The name to use for the created queue.
+ * The name for the queue to be created.
  */
 @property (nonatomic, retain) NSString *queueName;
 
 /**
- * The visibility timeout (in seconds) to use for the created queue.
+ * A map of attributes with their corresponding values.
  */
-@property (nonatomic, retain) NSNumber *defaultVisibilityTimeout;
+@property (nonatomic, retain) NSMutableDictionary *attributes;
 
 
 /**
@@ -53,19 +54,16 @@
  * Constructs a new CreateQueueRequest object.
  * Callers should use properties to initialize any additional object members.
  *
- * @param theQueueName The name to use for the created queue.
+ * @param theQueueName The name for the queue to be created.
  */
 -(id)initWithQueueName:(NSString *)theQueueName;
 
+
 /**
- * Constructs a new CreateQueueRequest object.
- * Callers should use properties to initialize any additional object members.
- *
- * @param theQueueName The name to use for the created queue.
- * @param theDefaultVisibilityTimeout The visibility timeout (in seconds)
- * to use for the created queue.
+ * Set a value in the dictionary attributes for the specified key.
+ * This function will alloc and init attributes if not already done.
  */
--(id)initWithQueueName:(NSString *)theQueueName andDefaultVisibilityTimeout:(NSNumber *)theDefaultVisibilityTimeout;
+-(void)setAttributesValue:(NSString *)theValue forKey:(NSString *)theKey;
 
 /**
  * Returns a string representation of this object; useful for testing and

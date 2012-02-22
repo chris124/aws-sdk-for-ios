@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -48,6 +48,16 @@
     return west;
 }
 
++(S3Region *)USWest2
+{
+    static S3Region *west2 = nil;
+
+    if (west2 == nil) {
+        west2 = [[S3Region alloc] initWithStringValue:kS3RegionUSWest2];
+    }
+    return west2;
+}
+
 +(S3Region *)EUIreland
 {
     static S3Region *eu = nil;
@@ -78,6 +88,16 @@
     return ap;
 }
 
++(S3Region *)SASaoPaulo
+{
+    static S3Region *ap = nil;
+
+    if (ap == nil) {
+        ap = [[S3Region alloc] initWithStringValue:kS3RegionSAEast1];
+    }
+    return ap;
+}
+
 +(S3Region *)regionWithString:(NSString *)regionName
 {
     if ([regionName isEqual:@""]) {
@@ -85,6 +105,9 @@
     }
     if ([regionName isEqual:kS3RegionUSWest1]) {
         return [S3Region USWest];
+    }
+    if ([regionName isEqual:kS3RegionUSWest2]) {
+        return [S3Region USWest2];
     }
     if ([regionName isEqual:kS3RegionEU]) {
         return [S3Region EUIreland];
@@ -94,6 +117,9 @@
     }
     if ([regionName isEqual:kS3RegionAPNortheast1]) {
         return [S3Region APJapan];
+    }
+    if ([regionName isEqual:kS3RegionSAEast1]) {
+        return [S3Region SASaoPaulo];
     }
 
 

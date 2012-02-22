@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -43,31 +43,31 @@
 }
 
 
--(void)addLaunchPermission:(EC2LaunchPermission *)launchPermission
+-(void)addLaunchPermission:(EC2LaunchPermission *)launchPermissionObject
 {
     if (launchPermissions == nil) {
         launchPermissions = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [launchPermissions addObject:launchPermission];
+    [launchPermissions addObject:launchPermissionObject];
 }
 
--(void)addProductCode:(EC2ProductCode *)productCode
+-(void)addProductCode:(EC2ProductCode *)productCodeObject
 {
     if (productCodes == nil) {
         productCodes = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [productCodes addObject:productCode];
+    [productCodes addObject:productCodeObject];
 }
 
--(void)addBlockDeviceMapping:(EC2BlockDeviceMapping *)blockDeviceMapping
+-(void)addBlockDeviceMapping:(EC2BlockDeviceMapping *)blockDeviceMappingObject
 {
     if (blockDeviceMappings == nil) {
         blockDeviceMappings = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [blockDeviceMappings addObject:blockDeviceMapping];
+    [blockDeviceMappings addObject:blockDeviceMappingObject];
 }
 
 

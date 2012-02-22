@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,15 @@
 {
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qName attributes:attributeDict];
 
+
+    if ([elementName isEqualToString:@"groupSet"]) {
+        AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.groupNames withSetter:@selector(addObjectsFromArray:)] autorelease];
+        listUnmarshaller.endListElementName = @"groupSet";
+        listUnmarshaller.entryElementName   = @"groupName";
+        listUnmarshaller.delegateClass      = [AmazonValueUnmarshaller class];
+
+        [parser setDelegate:listUnmarshaller];
+    }
 
     if ([elementName isEqualToString:@"groupSet"]) {
         AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.groupNames withSetter:@selector(addObjectsFromArray:)] autorelease];
@@ -86,7 +95,6 @@
     if ([elementName isEqualToString:@"groupSet/item/groupName"]) {
         [self.response.groupNames addObject:self.currentText];
     }
-
 
     if ([elementName isEqualToString:@"reservation"]) {
         if (caller != nil) {

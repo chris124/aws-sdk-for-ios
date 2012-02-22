@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@
     AmazonServiceRequest *request = [[ElasticLoadBalancingRequest alloc] init];
 
     [request setParameterValue:@"SetLoadBalancerPoliciesOfListener"           forKey:@"Action"];
-    [request setParameterValue:@"2010-07-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-11-15"   forKey:@"Version"];
 
     [request setDelegate:[setLoadBalancerPoliciesOfListenerRequest delegate]];
     [request setCredentials:[setLoadBalancerPoliciesOfListenerRequest credentials]];
     [request setEndpoint:[setLoadBalancerPoliciesOfListenerRequest requestEndpoint]];
+    [request setRequestTag:[setLoadBalancerPoliciesOfListenerRequest requestTag]];
 
     if (setLoadBalancerPoliciesOfListenerRequest != nil) {
         if (setLoadBalancerPoliciesOfListenerRequest.loadBalancerName != nil) {
@@ -38,6 +39,7 @@
             [request setParameterValue:[NSString stringWithFormat:@"%@", setLoadBalancerPoliciesOfListenerRequest.loadBalancerPort] forKey:[NSString stringWithFormat:@"%@", @"LoadBalancerPort"]];
         }
     }
+
     if (setLoadBalancerPoliciesOfListenerRequest != nil) {
         int policyNamesListIndex = 1;
 
@@ -48,6 +50,7 @@
             if (policyNamesListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", policyNamesListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"PolicyNames", policyNamesListIndex]];
             }
+
             policyNamesListIndex++;
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@
     [request setDelegate:[sendEmailRequest delegate]];
     [request setCredentials:[sendEmailRequest credentials]];
     [request setEndpoint:[sendEmailRequest requestEndpoint]];
+    [request setRequestTag:[sendEmailRequest requestTag]];
 
     if (sendEmailRequest != nil) {
         if (sendEmailRequest.source != nil) {
@@ -35,30 +36,36 @@
     }
     if (sendEmailRequest != nil) {
         SESDestination *destination = sendEmailRequest.destination;
+
         if (destination != nil) {
             int toAddressesListIndex = 1;
             for (NSString *toAddressesListValue in destination.toAddresses) {
                 if (toAddressesListValue != nil) {
                     [request setParameterValue:[NSString stringWithFormat:@"%@", toAddressesListValue] forKey:[NSString stringWithFormat:@"%@.%@.member.%d", @"Destination", @"ToAddresses", toAddressesListIndex]];
                 }
+
                 toAddressesListIndex++;
             }
         }
+
         if (destination != nil) {
             int ccAddressesListIndex = 1;
             for (NSString *ccAddressesListValue in destination.ccAddresses) {
                 if (ccAddressesListValue != nil) {
                     [request setParameterValue:[NSString stringWithFormat:@"%@", ccAddressesListValue] forKey:[NSString stringWithFormat:@"%@.%@.member.%d", @"Destination", @"CcAddresses", ccAddressesListIndex]];
                 }
+
                 ccAddressesListIndex++;
             }
         }
+
         if (destination != nil) {
             int bccAddressesListIndex = 1;
             for (NSString *bccAddressesListValue in destination.bccAddresses) {
                 if (bccAddressesListValue != nil) {
                     [request setParameterValue:[NSString stringWithFormat:@"%@", bccAddressesListValue] forKey:[NSString stringWithFormat:@"%@.%@.member.%d", @"Destination", @"BccAddresses", bccAddressesListIndex]];
                 }
+
                 bccAddressesListIndex++;
             }
         }
@@ -108,12 +115,14 @@
             }
         }
     }
+
     if (sendEmailRequest != nil) {
         int replyToAddressesListIndex = 1;
         for (NSString *replyToAddressesListValue in sendEmailRequest.replyToAddresses) {
             if (replyToAddressesListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", replyToAddressesListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"ReplyToAddresses", replyToAddressesListIndex]];
             }
+
             replyToAddressesListIndex++;
         }
     }

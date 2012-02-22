@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -85,6 +85,15 @@
         listUnmarshaller.endListElementName = @"groupSet";
         listUnmarshaller.entryElementName   = @"item";
         listUnmarshaller.delegateClass      = [EC2GroupIdentifierUnmarshaller class];
+
+        [parser setDelegate:listUnmarshaller];
+    }
+
+    if ([elementName isEqualToString:@"networkInterfaceSet"]) {
+        AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.networkInterfaces withSetter:@selector(addObjectsFromArray:)] autorelease];
+        listUnmarshaller.endListElementName = @"networkInterfaceSet";
+        listUnmarshaller.entryElementName   = @"item";
+        listUnmarshaller.delegateClass      = [EC2InstanceNetworkInterfaceUnmarshaller class];
 
         [parser setDelegate:listUnmarshaller];
     }
@@ -224,6 +233,11 @@
 
     if ([elementName isEqualToString:@"sourceDestCheck"]) {
         self.response.sourceDestCheck = [self.currentText boolValue];
+        return;
+    }
+
+    if ([elementName isEqualToString:@"hypervisor"]) {
+        self.response.hypervisor = self.currentText;
         return;
     }
 

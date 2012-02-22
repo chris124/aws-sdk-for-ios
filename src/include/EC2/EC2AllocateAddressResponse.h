@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,6 +35,9 @@
 
 
 
+-(void)setException:(AmazonServiceException *)theException;
+
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -46,8 +49,17 @@
  */
 @property (nonatomic, retain) NSString *publicIp;
 
+/**
+ * The value of the Domain property for this object.
+ * <p>
+ * <b>Constraints:</b><br/>
+ * <b>Allowed Values: </b>vpc, standard
+ */
 @property (nonatomic, retain) NSString *domain;
 
+/**
+ * The value of the AllocationId property for this object.
+ */
 @property (nonatomic, retain) NSString *allocationId;
 
 /**

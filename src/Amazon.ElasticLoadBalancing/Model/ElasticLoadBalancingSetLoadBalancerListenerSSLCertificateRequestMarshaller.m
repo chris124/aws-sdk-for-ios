@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@
     AmazonServiceRequest *request = [[ElasticLoadBalancingRequest alloc] init];
 
     [request setParameterValue:@"SetLoadBalancerListenerSSLCertificate"           forKey:@"Action"];
-    [request setParameterValue:@"2010-07-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-11-15"   forKey:@"Version"];
 
     [request setDelegate:[setLoadBalancerListenerSSLCertificateRequest delegate]];
     [request setCredentials:[setLoadBalancerListenerSSLCertificateRequest credentials]];
     [request setEndpoint:[setLoadBalancerListenerSSLCertificateRequest requestEndpoint]];
+    [request setRequestTag:[setLoadBalancerListenerSSLCertificateRequest requestTag]];
 
     if (setLoadBalancerListenerSSLCertificateRequest != nil) {
         if (setLoadBalancerListenerSSLCertificateRequest.loadBalancerName != nil) {

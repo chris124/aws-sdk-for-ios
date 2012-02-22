@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@
 
 
 
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -41,7 +42,7 @@
 -(id)init;
 
 /**
- * The name or ARN of the Auto Scaling Group.
+ * The name or ARN of the Auto Scaling group.
  * <p>
  * <b>Constraints:</b><br/>
  * <b>Length: </b>1 - 1600<br/>
@@ -69,6 +70,12 @@
  * <b>Pattern: </b>[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*<br/>
  */
 @property (nonatomic, retain) NSString *granularity;
+
+/**
+ * Adds a single object to metrics.
+ * This function will alloc and init metrics if not already done.
+ */
+-(void)addMetric:(NSString *)metricObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

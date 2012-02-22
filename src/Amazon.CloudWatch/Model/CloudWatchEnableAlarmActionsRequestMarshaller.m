@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,8 @@
     [request setDelegate:[enableAlarmActionsRequest delegate]];
     [request setCredentials:[enableAlarmActionsRequest credentials]];
     [request setEndpoint:[enableAlarmActionsRequest requestEndpoint]];
+    [request setRequestTag:[enableAlarmActionsRequest requestTag]];
+
 
     if (enableAlarmActionsRequest != nil) {
         int alarmNamesListIndex = 1;
@@ -34,6 +36,7 @@
             if (alarmNamesListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", alarmNamesListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"AlarmNames", alarmNamesListIndex]];
             }
+
             alarmNamesListIndex++;
         }
     }

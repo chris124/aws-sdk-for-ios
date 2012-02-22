@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@
     NSMutableArray *aWSAccountIds;
     NSMutableArray *actionNames;
 }
+
 
 
 /**
@@ -84,6 +85,18 @@
  * principal(s).
  */
 -(id)initWithTopicArn:(NSString *)theTopicArn andLabel:(NSString *)theLabel andAWSAccountIds:(NSMutableArray *)theAWSAccountIds andActionNames:(NSMutableArray *)theActionNames;
+
+/**
+ * Adds a single object to aWSAccountIds.
+ * This function will alloc and init aWSAccountIds if not already done.
+ */
+-(void)addAWSAccountId:(NSString *)aWSAccountIdObject;
+
+/**
+ * Adds a single object to actionNames.
+ * This function will alloc and init actionNames if not already done.
+ */
+-(void)addActionName:(NSString *)actionNameObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

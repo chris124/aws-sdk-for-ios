@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@
 
 
 
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -43,7 +44,7 @@
 -(id)init;
 
 /**
- * The name or ARN of the Auto Scaling Group.
+ * The name or ARN of the Auto Scaling group.
  * <p>
  * <b>Constraints:</b><br/>
  * <b>Length: </b>1 - 1600<br/>
@@ -61,11 +62,11 @@
 @property (nonatomic, retain) NSString *policyName;
 
 /**
- * The number of instances by which to scale. AdjustmentType determines
- * the interpretation of this number (e.g., as an absolute number or as a
- * percentage of the existing Auto Scaling group size). A positive
- * increment adds to the current capacity and a negative value removes
- * from the current capacity.
+ * The number of instances by which to scale. <code>AdjustmentType</code>
+ * determines the interpretation of this number (e.g., as an absolute
+ * number or as a percentage of the existing Auto Scaling group size). A
+ * positive increment adds to the current capacity and a negative value
+ * removes from the current capacity.
  */
 @property (nonatomic, retain) NSNumber *scalingAdjustment;
 

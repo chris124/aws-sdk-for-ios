@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@
     [request setDelegate:[deleteAttributesRequest delegate]];
     [request setCredentials:[deleteAttributesRequest credentials]];
     [request setEndpoint:[deleteAttributesRequest requestEndpoint]];
+    [request setRequestTag:[deleteAttributesRequest requestTag]];
 
     if (deleteAttributesRequest != nil) {
         if (deleteAttributesRequest.domainName != nil) {
@@ -80,7 +81,7 @@
         }
         if (expected != nil) {
             if (expected.existsIsSet) {
-                [request setParameterValue:(expected.exists ? @"true":@"false")forKey:[NSString stringWithFormat:@"%@.%@", @"Expected", @"Exists"]];
+                [request setParameterValue:(expected.exists ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@.%@", @"Expected", @"Exists"]];
             }
         }
     }

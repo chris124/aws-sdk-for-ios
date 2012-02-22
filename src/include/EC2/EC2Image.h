@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -50,7 +50,9 @@
     NSMutableArray *blockDeviceMappings;
     NSString       *virtualizationType;
     NSMutableArray *tags;
+    NSString       *hypervisor;
 }
+
 
 
 
@@ -163,7 +165,13 @@
  */
 @property (nonatomic, retain) NSMutableArray *blockDeviceMappings;
 
-@property (nonatomic, retain) NSString       *virtualizationType;
+/**
+ * The value of the VirtualizationType property for this object.
+ * <p>
+ * <b>Constraints:</b><br/>
+ * <b>Allowed Values: </b>hvm, paravirtual
+ */
+@property (nonatomic, retain) NSString *virtualizationType;
 
 /**
  * A list of tags for the Image.
@@ -171,22 +179,30 @@
 @property (nonatomic, retain) NSMutableArray *tags;
 
 /**
+ * The value of the Hypervisor property for this object.
+ * <p>
+ * <b>Constraints:</b><br/>
+ * <b>Allowed Values: </b>ovm, xen
+ */
+@property (nonatomic, retain) NSString *hypervisor;
+
+/**
  * Adds a single object to productCodes.
  * This function will alloc and init productCodes if not already done.
  */
--(void)addProductCode:(EC2ProductCode *)productCode;
+-(void)addProductCode:(EC2ProductCode *)productCodeObject;
 
 /**
  * Adds a single object to blockDeviceMappings.
  * This function will alloc and init blockDeviceMappings if not already done.
  */
--(void)addBlockDeviceMapping:(EC2BlockDeviceMapping *)blockDeviceMapping;
+-(void)addBlockDeviceMapping:(EC2BlockDeviceMapping *)blockDeviceMappingObject;
 
 /**
  * Adds a single object to tags.
  * This function will alloc and init tags if not already done.
  */
--(void)addTag:(EC2Tag *)tag;
+-(void)addTag:(EC2Tag *)tagObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

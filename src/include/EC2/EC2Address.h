@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,7 +27,13 @@
 {
     NSString *instanceId;
     NSString *publicIp;
+    NSString *allocationId;
+    NSString *associationId;
+    NSString *domain;
+    NSString *networkInterfaceId;
+    NSString *networkInterfaceOwnerId;
 }
+
 
 
 
@@ -46,6 +52,34 @@
  *
  */
 @property (nonatomic, retain) NSString *publicIp;
+
+/**
+ * The value of the AllocationId property for this object.
+ */
+@property (nonatomic, retain) NSString *allocationId;
+
+/**
+ * The value of the AssociationId property for this object.
+ */
+@property (nonatomic, retain) NSString *associationId;
+
+/**
+ * The value of the Domain property for this object.
+ * <p>
+ * <b>Constraints:</b><br/>
+ * <b>Allowed Values: </b>vpc, standard
+ */
+@property (nonatomic, retain) NSString *domain;
+
+/**
+ * The value of the NetworkInterfaceId property for this object.
+ */
+@property (nonatomic, retain) NSString *networkInterfaceId;
+
+/**
+ * The value of the NetworkInterfaceOwnerId property for this object.
+ */
+@property (nonatomic, retain) NSString *networkInterfaceOwnerId;
 
 /**
  * Returns a string representation of this object; useful for testing and

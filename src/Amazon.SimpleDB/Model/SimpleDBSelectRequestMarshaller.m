@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@
     [request setDelegate:[selectRequest delegate]];
     [request setCredentials:[selectRequest credentials]];
     [request setEndpoint:[selectRequest requestEndpoint]];
+    [request setRequestTag:[selectRequest requestTag]];
 
     if (selectRequest != nil) {
         if (selectRequest.selectExpression != nil) {
@@ -40,7 +41,7 @@
     }
     if (selectRequest != nil) {
         if (selectRequest.consistentReadIsSet) {
-            [request setParameterValue:(selectRequest.consistentRead ? @"true":@"false")forKey:[NSString stringWithFormat:@"%@", @"ConsistentRead"]];
+            [request setParameterValue:(selectRequest.consistentRead ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@", @"ConsistentRead"]];
         }
     }
 

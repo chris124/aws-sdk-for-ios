@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,23 +22,26 @@
     AmazonServiceRequest *request = [[AutoScalingRequest alloc] init];
 
     [request setParameterValue:@"ResumeProcesses"           forKey:@"Action"];
-    [request setParameterValue:@"2010-08-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
 
     [request setDelegate:[resumeProcessesRequest delegate]];
     [request setCredentials:[resumeProcessesRequest credentials]];
     [request setEndpoint:[resumeProcessesRequest requestEndpoint]];
+    [request setRequestTag:[resumeProcessesRequest requestTag]];
 
     if (resumeProcessesRequest != nil) {
         if (resumeProcessesRequest.autoScalingGroupName != nil) {
             [request setParameterValue:[NSString stringWithFormat:@"%@", resumeProcessesRequest.autoScalingGroupName] forKey:[NSString stringWithFormat:@"%@", @"AutoScalingGroupName"]];
         }
     }
+
     if (resumeProcessesRequest != nil) {
         int scalingProcessesListIndex = 1;
         for (NSString *scalingProcessesListValue in resumeProcessesRequest.scalingProcesses) {
             if (scalingProcessesListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", scalingProcessesListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"ScalingProcesses", scalingProcessesListIndex]];
             }
+
             scalingProcessesListIndex++;
         }
     }

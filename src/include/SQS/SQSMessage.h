@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@
 }
 
 
+
 /**
  *
  */
@@ -64,6 +65,13 @@
  * property methods to initialize this object after creating it.
  */
 -(id)init;
+
+
+/**
+ * Set a value in the dictionary attributes for the specified key.
+ * This function will alloc and init attributes if not already done.
+ */
+-(void)setAttributesValue:(NSString *)theValue forKey:(NSString *)theKey;
 
 /**
  * Returns a string representation of this object; useful for testing and

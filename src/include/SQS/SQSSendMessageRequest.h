@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -29,11 +29,13 @@
 {
     NSString *queueUrl;
     NSString *messageBody;
+    NSNumber *delaySeconds;
 }
 
 
+
 /**
- *
+ * The URL of the SQS queue to take action on.
  */
 @property (nonatomic, retain) NSString *queueUrl;
 
@@ -41,6 +43,11 @@
  * The message to send.
  */
 @property (nonatomic, retain) NSString *messageBody;
+
+/**
+ * The number of seconds the message has to be delayed.
+ */
+@property (nonatomic, retain) NSNumber *delaySeconds;
 
 
 /**
@@ -53,7 +60,7 @@
  * Constructs a new SendMessageRequest object.
  * Callers should use properties to initialize any additional object members.
  *
- * @param theQueueUrl
+ * @param theQueueUrl The URL of the SQS queue to take action on.
  * @param theMessageBody The message to send.
  */
 -(id)initWithQueueUrl:(NSString *)theQueueUrl andMessageBody:(NSString *)theMessageBody;

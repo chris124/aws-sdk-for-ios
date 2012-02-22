@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,7 +27,9 @@
 {
     NSString *availabilityZone;
     NSString *groupName;
+    NSString *tenancy;
 }
+
 
 
 /**
@@ -36,9 +38,19 @@
 @property (nonatomic, retain) NSString *availabilityZone;
 
 /**
- * The name of a <a>PlacementGroup</a>.
+ * The name of the <a>PlacementGroup</a> in which an Amazon EC2 instance
+ * runs. Placement groups are primarily used for launching High
+ * Performance Computing instances in the same group to ensure fast
+ * connection speeds.
  */
 @property (nonatomic, retain) NSString *groupName;
+
+/**
+ * The allowed tenancy of instances launched into the VPC. A value of
+ * default means instances can be launched with any tenancy; a value of
+ * dedicated means instances must be launched with tenancy as dedicated.
+ */
+@property (nonatomic, retain) NSString *tenancy;
 
 
 /**

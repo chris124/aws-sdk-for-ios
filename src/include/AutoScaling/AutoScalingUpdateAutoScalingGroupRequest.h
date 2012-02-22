@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -39,6 +39,7 @@
     NSString       *placementGroup;
     NSString       *vPCZoneIdentifier;
 }
+
 
 
 
@@ -88,7 +89,7 @@
 @property (nonatomic, retain) NSNumber *defaultCooldown;
 
 /**
- * Availability zones for the group.
+ * Availability Zones for the group.
  * <p>
  * <b>Constraints:</b><br/>
  * <b>Length: </b>1 - <br/>
@@ -125,13 +126,23 @@
 @property (nonatomic, retain) NSString *placementGroup;
 
 /**
- * The identifier for the VPC connection, if applicable.
+ * The subnet identifier for the Amazon VPC connection, if applicable.
+ * You can specify several subnets in a comma-separated list. <p> When
+ * you specify <code>VPCZoneIdentifier</code> with
+ * <code>AvailabilityZones</code>, ensure that the subnets' Availability
+ * Zones match the values you specify for <code>AvailabilityZones</code>.
  * <p>
  * <b>Constraints:</b><br/>
  * <b>Length: </b>1 - 255<br/>
  * <b>Pattern: </b>[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*<br/>
  */
 @property (nonatomic, retain) NSString *vPCZoneIdentifier;
+
+/**
+ * Adds a single object to availabilityZones.
+ * This function will alloc and init availabilityZones if not already done.
+ */
+-(void)addAvailabilityZone:(NSString *)availabilityZoneObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

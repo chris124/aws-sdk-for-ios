@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@
     NSMutableArray *attachments;
     NSMutableArray *tags;
 }
+
 
 
 
@@ -92,13 +93,13 @@
  * Adds a single object to attachments.
  * This function will alloc and init attachments if not already done.
  */
--(void)addAttachment:(EC2VolumeAttachment *)attachment;
+-(void)addAttachment:(EC2VolumeAttachment *)attachmentObject;
 
 /**
  * Adds a single object to tags.
  * This function will alloc and init tags if not already done.
  */
--(void)addTag:(EC2Tag *)tag;
+-(void)addTag:(EC2Tag *)tagObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

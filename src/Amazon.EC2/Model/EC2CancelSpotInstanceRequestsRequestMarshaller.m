@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,13 @@
     AmazonServiceRequest *request = [[EC2Request alloc] init];
 
     [request setParameterValue:@"CancelSpotInstanceRequests"           forKey:@"Action"];
-    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-12-15"   forKey:@"Version"];
 
     [request setDelegate:[cancelSpotInstanceRequestsRequest delegate]];
     [request setCredentials:[cancelSpotInstanceRequestsRequest credentials]];
     [request setEndpoint:[cancelSpotInstanceRequestsRequest requestEndpoint]];
+    [request setRequestTag:[cancelSpotInstanceRequestsRequest requestTag]];
+
 
     if (cancelSpotInstanceRequestsRequest != nil) {
         int spotInstanceRequestIdsListIndex = 1;
@@ -34,6 +36,7 @@
             if (spotInstanceRequestIdsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", spotInstanceRequestIdsListValue] forKey:[NSString stringWithFormat:@"%@.%d", @"SpotInstanceRequestId", spotInstanceRequestIdsListIndex]];
             }
+
             spotInstanceRequestIdsListIndex++;
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -23,6 +23,9 @@
 @synthesize instanceTypes;
 @synthesize productDescriptions;
 @synthesize filters;
+@synthesize availabilityZone;
+@synthesize maxResults;
+@synthesize nextToken;
 
 
 -(id)init
@@ -33,19 +36,40 @@
         instanceTypes       = [[NSMutableArray alloc] initWithCapacity:1];
         productDescriptions = [[NSMutableArray alloc] initWithCapacity:1];
         filters             = [[NSMutableArray alloc] initWithCapacity:1];
+        availabilityZone    = nil;
+        maxResults          = nil;
+        nextToken           = nil;
     }
 
     return self;
 }
 
 
--(void)addFilter:(EC2Filter *)filter
+-(void)addInstanceType:(NSString *)instanceTypeObject
+{
+    if (instanceTypes == nil) {
+        instanceTypes = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [instanceTypes addObject:instanceTypeObject];
+}
+
+-(void)addProductDescription:(NSString *)productDescriptionObject
+{
+    if (productDescriptions == nil) {
+        productDescriptions = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [productDescriptions addObject:productDescriptionObject];
+}
+
+-(void)addFilter:(EC2Filter *)filterObject
 {
     if (filters == nil) {
         filters = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [filters addObject:filter];
+    [filters addObject:filterObject];
 }
 
 
@@ -59,6 +83,9 @@
     [buffer appendString:[[[NSString alloc] initWithFormat:@"InstanceTypes: %@,", instanceTypes] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"ProductDescriptions: %@,", productDescriptions] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"Filters: %@,", filters] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"AvailabilityZone: %@,", availabilityZone] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"MaxResults: %@,", maxResults] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"NextToken: %@,", nextToken] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -74,6 +101,9 @@
     [instanceTypes release];
     [productDescriptions release];
     [filters release];
+    [availabilityZone release];
+    [maxResults release];
+    [nextToken release];
 
     [super dealloc];
 }

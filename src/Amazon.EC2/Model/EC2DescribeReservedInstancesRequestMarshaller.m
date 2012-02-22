@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,13 @@
     AmazonServiceRequest *request = [[EC2Request alloc] init];
 
     [request setParameterValue:@"DescribeReservedInstances"           forKey:@"Action"];
-    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-12-15"   forKey:@"Version"];
 
     [request setDelegate:[describeReservedInstancesRequest delegate]];
     [request setCredentials:[describeReservedInstancesRequest credentials]];
     [request setEndpoint:[describeReservedInstancesRequest requestEndpoint]];
+    [request setRequestTag:[describeReservedInstancesRequest requestTag]];
+
 
     if (describeReservedInstancesRequest != nil) {
         int reservedInstancesIdsListIndex = 1;
@@ -34,6 +36,7 @@
             if (reservedInstancesIdsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", reservedInstancesIdsListValue] forKey:[NSString stringWithFormat:@"%@.%d", @"ReservedInstancesId", reservedInstancesIdsListIndex]];
             }
+
             reservedInstancesIdsListIndex++;
         }
     }
@@ -46,17 +49,24 @@
                     [request setParameterValue:[NSString stringWithFormat:@"%@", filtersListValue.name] forKey:[NSString stringWithFormat:@"%@.%d.%@", @"Filter", filtersListIndex, @"Name"]];
                 }
             }
+
             if (filtersListValue != nil) {
                 int valuesListIndex = 1;
                 for (NSString *valuesListValue in filtersListValue.values) {
                     if (valuesListValue != nil) {
                         [request setParameterValue:[NSString stringWithFormat:@"%@", valuesListValue] forKey:[NSString stringWithFormat:@"%@.%d.%@.%d", @"Filter", filtersListIndex, @"Value", valuesListIndex]];
                     }
+
                     valuesListIndex++;
                 }
             }
 
             filtersListIndex++;
+        }
+    }
+    if (describeReservedInstancesRequest != nil) {
+        if (describeReservedInstancesRequest.offeringType != nil) {
+            [request setParameterValue:[NSString stringWithFormat:@"%@", describeReservedInstancesRequest.offeringType] forKey:[NSString stringWithFormat:@"%@", @"OfferingType"]];
         }
     }
 

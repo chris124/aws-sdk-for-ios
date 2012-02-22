@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@
 }
 
 
+
 /**
  * The mnemonic name associated with the LoadBalancer.
  */
@@ -60,6 +61,12 @@
  * LoadBalancerListener(s) to be removed.
  */
 -(id)initWithLoadBalancerName:(NSString *)theLoadBalancerName andLoadBalancerPorts:(NSMutableArray *)theLoadBalancerPorts;
+
+/**
+ * Adds a single object to loadBalancerPorts.
+ * This function will alloc and init loadBalancerPorts if not already done.
+ */
+-(void)addLoadBalancerPort:(NSNumber *)loadBalancerPortObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@
 
 
 
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -52,10 +53,17 @@
  * The processes that you want to suspend or resume, which can include
  * one or more of the following: <ul> <li>Launch</li> <li>Terminate</li>
  * <li>HealthCheck</li> <li>ReplaceUnhealthy</li> <li>AZRebalance</li>
- * <li>AlarmNotifications</li> <li>ScheduledActions</li> </ul> <p> To
- * suspend all process types, omit this parameter.
+ * <li>AlarmNotifications</li> <li>ScheduledActions</li>
+ * <li>AddToLoadBalancer</li> </ul> <p> To suspend all process types,
+ * omit this parameter.
  */
 @property (nonatomic, retain) NSMutableArray *scalingProcesses;
+
+/**
+ * Adds a single object to scalingProcesses.
+ * This function will alloc and init scalingProcesses if not already done.
+ */
+-(void)addScalingProcesse:(NSString *)scalingProcesseObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

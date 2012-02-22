@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@
 
 /**
  * <p>
- * Policy with the same name exists for this load balancer. Please
- * choose another name.
+ * Policy with the same name exists for this LoadBalancer. Please choose
+ * another name.
  * </p>
  *
  * \ingroup ElasticLoadBalancing

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@
 
 
 
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -63,15 +64,15 @@
 @property (nonatomic, retain) NSString *policyName;
 
 /**
- * The number associated with the specified AdjustmentType. A positive
+ * The number associated with the specified adjustment type. A positive
  * value adds to the current capacity and a negative value removes from
  * the current capacity.
  */
 @property (nonatomic, retain) NSNumber *scalingAdjustment;
 
 /**
- * Specifies whether the ScalingAdjustment is an absolute number or a
- * percentage of the current capacity. Valid values are
+ * Specifies whether the <code>ScalingAdjustment</code> is an absolute
+ * number or a percentage of the current capacity. Valid values are
  * <code>ChangeInCapacity</code>, <code>ExactCapacity</code>, and
  * <code>PercentOfCapacity</code>.
  * <p>
@@ -105,7 +106,7 @@
  * Adds a single object to alarms.
  * This function will alloc and init alarms if not already done.
  */
--(void)addAlarm:(AutoScalingAlarm *)alarm;
+-(void)addAlarm:(AutoScalingAlarm *)alarmObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

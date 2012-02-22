@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@
 
 
 
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -68,10 +69,28 @@
 @property (nonatomic, retain) NSMutableArray *filters;
 
 /**
+ * Adds a single object to snapshotIds.
+ * This function will alloc and init snapshotIds if not already done.
+ */
+-(void)addSnapshotId:(NSString *)snapshotIdObject;
+
+/**
+ * Adds a single object to ownerIds.
+ * This function will alloc and init ownerIds if not already done.
+ */
+-(void)addOwnerId:(NSString *)ownerIdObject;
+
+/**
+ * Adds a single object to restorableByUserIds.
+ * This function will alloc and init restorableByUserIds if not already done.
+ */
+-(void)addRestorableByUserId:(NSString *)restorableByUserIdObject;
+
+/**
  * Adds a single object to filters.
  * This function will alloc and init filters if not already done.
  */
--(void)addFilter:(EC2Filter *)filter;
+-(void)addFilter:(EC2Filter *)filterObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

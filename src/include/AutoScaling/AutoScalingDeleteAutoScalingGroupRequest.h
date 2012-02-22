@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,7 +28,10 @@
 
 {
     NSString *autoScalingGroupName;
+    bool     forceDelete;
+    bool     forceDeleteIsSet;
 }
+
 
 
 
@@ -46,6 +49,15 @@
  * <b>Pattern: </b>[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*<br/>
  */
 @property (nonatomic, retain) NSString *autoScalingGroupName;
+
+/**
+ * Starting with API version 2011-01-01, specifies that the Auto Scaling
+ * group will be deleted along with all instances associated with the
+ * group, without waiting for all instances to be terminated.
+ */
+@property (nonatomic) bool           forceDelete;
+
+@property (nonatomic, readonly) bool forceDeleteIsSet;
 
 /**
  * Returns a string representation of this object; useful for testing and

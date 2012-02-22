@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@
 
 
 
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -44,10 +45,10 @@
 /**
  * A list containing the activity IDs of the desired scaling activities.
  * If this list is omitted, all activities are described. If an
- * AutoScalingGroupName is provided, the results are limited to that
- * group. The list of requested activities cannot contain more than 50
- * items. If unknown activities are requested, they are ignored with no
- * error.
+ * <code>AutoScalingGroupName</code> is provided, the results are limited
+ * to that group. The list of requested activities cannot contain more
+ * than 50 items. If unknown activities are requested, they are ignored
+ * with no error.
  */
 @property (nonatomic, retain) NSMutableArray *activityIds;
 
@@ -76,6 +77,12 @@
  * <b>Pattern: </b>[\u0020-\uD7FF\uE000-\uFFFD\uD800\uDC00-\uDBFF\uDFFF\r\n\t]*<br/>
  */
 @property (nonatomic, retain) NSString *nextToken;
+
+/**
+ * Adds a single object to activityIds.
+ * This function will alloc and init activityIds if not already done.
+ */
+-(void)addActivityId:(NSString *)activityIdObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

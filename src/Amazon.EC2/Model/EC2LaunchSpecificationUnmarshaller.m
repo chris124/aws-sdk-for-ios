@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -40,6 +40,15 @@
     }
 
     if ([elementName isEqualToString:@"groupSet"]) {
+        AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.securityGroups withSetter:@selector(addObjectsFromArray:)] autorelease];
+        listUnmarshaller.endListElementName = @"groupSet";
+        listUnmarshaller.entryElementName   = @"groupName";
+        listUnmarshaller.delegateClass      = [AmazonValueUnmarshaller class];
+
+        [parser setDelegate:listUnmarshaller];
+    }
+
+    if ([elementName isEqualToString:@"groupSet"]) {
         AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.allSecurityGroups withSetter:@selector(addObjectsFromArray:)] autorelease];
         listUnmarshaller.endListElementName = @"groupSet";
         listUnmarshaller.entryElementName   = @"item";
@@ -49,7 +58,7 @@
     }
 
     if ([elementName isEqualToString:@"placement"]) {
-        EC2PlacementUnmarshaller *unmarshaller = [[[EC2PlacementUnmarshaller alloc] initWithCaller:self withParentObject:self.response withSetter:@selector(setPlacement:)] autorelease];
+        EC2SpotPlacementUnmarshaller *unmarshaller = [[[EC2SpotPlacementUnmarshaller alloc] initWithCaller:self withParentObject:self.response withSetter:@selector(setPlacement:)] autorelease];
         unmarshaller.endElementTagName = @"placement";
         [parser setDelegate:unmarshaller];
     }
@@ -59,6 +68,15 @@
         listUnmarshaller.endListElementName = @"blockDeviceMapping";
         listUnmarshaller.entryElementName   = @"item";
         listUnmarshaller.delegateClass      = [EC2BlockDeviceMappingUnmarshaller class];
+
+        [parser setDelegate:listUnmarshaller];
+    }
+
+    if ([elementName isEqualToString:@"networkInterfaceSet"]) {
+        AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.networkInterfaces withSetter:@selector(addObjectsFromArray:)] autorelease];
+        listUnmarshaller.endListElementName = @"networkInterfaceSet";
+        listUnmarshaller.entryElementName   = @"item";
+        listUnmarshaller.delegateClass      = [EC2InstanceNetworkInterfaceSpecificationUnmarshaller class];
 
         [parser setDelegate:listUnmarshaller];
     }
@@ -94,7 +112,6 @@
     if ([elementName isEqualToString:@"groupSet/item/groupName"]) {
         [self.response.securityGroups addObject:self.currentText];
     }
-
 
     if ([elementName isEqualToString:@"userData"]) {
         self.response.userData = self.currentText;

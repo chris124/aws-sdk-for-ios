@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@
     [request setDelegate:[putAttributesRequest delegate]];
     [request setCredentials:[putAttributesRequest credentials]];
     [request setEndpoint:[putAttributesRequest requestEndpoint]];
+    [request setRequestTag:[putAttributesRequest requestTag]];
 
     if (putAttributesRequest != nil) {
         if (putAttributesRequest.domainName != nil) {
@@ -54,7 +55,7 @@
             }
             if (attributesListValue != nil) {
                 if (attributesListValue.replaceIsSet) {
-                    [request setParameterValue:(attributesListValue.replace ? @"true":@"false")forKey:[NSString stringWithFormat:@"%@.%d.%@", @"Attribute", attributesListIndex, @"Replace"]];
+                    [request setParameterValue:(attributesListValue.replace ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@.%d.%@", @"Attribute", attributesListIndex, @"Replace"]];
                 }
             }
 
@@ -75,7 +76,7 @@
         }
         if (expected != nil) {
             if (expected.existsIsSet) {
-                [request setParameterValue:(expected.exists ? @"true":@"false")forKey:[NSString stringWithFormat:@"%@.%@", @"Expected", @"Exists"]];
+                [request setParameterValue:(expected.exists ? @"true":@"false") forKey:[NSString stringWithFormat:@"%@.%@", @"Expected", @"Exists"]];
             }
         }
     }

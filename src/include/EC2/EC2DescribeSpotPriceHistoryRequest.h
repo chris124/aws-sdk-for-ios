@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,7 +33,11 @@
     NSMutableArray *instanceTypes;
     NSMutableArray *productDescriptions;
     NSMutableArray *filters;
+    NSString       *availabilityZone;
+    NSNumber       *maxResults;
+    NSString       *nextToken;
 }
+
 
 
 
@@ -73,10 +77,37 @@
 @property (nonatomic, retain) NSMutableArray *filters;
 
 /**
+ * Filters the results by availability zone (ex: 'us-east-1a').
+ */
+@property (nonatomic, retain) NSString *availabilityZone;
+
+/**
+ * Specifies the number of rows to return.
+ */
+@property (nonatomic, retain) NSNumber *maxResults;
+
+/**
+ * Specifies the next set of rows to return.
+ */
+@property (nonatomic, retain) NSString *nextToken;
+
+/**
+ * Adds a single object to instanceTypes.
+ * This function will alloc and init instanceTypes if not already done.
+ */
+-(void)addInstanceType:(NSString *)instanceTypeObject;
+
+/**
+ * Adds a single object to productDescriptions.
+ * This function will alloc and init productDescriptions if not already done.
+ */
+-(void)addProductDescription:(NSString *)productDescriptionObject;
+
+/**
  * Adds a single object to filters.
  * This function will alloc and init filters if not already done.
  */
--(void)addFilter:(EC2Filter *)filter;
+-(void)addFilter:(EC2Filter *)filterObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

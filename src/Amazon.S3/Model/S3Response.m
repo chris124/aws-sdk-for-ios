@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
  */
 
 #import "S3Response.h"
+#import "AmazonLogger.h"
 
 @implementation S3Response
 
@@ -25,6 +26,7 @@
 @synthesize deleteMarker;
 @synthesize id2;
 @synthesize versionId;
+@synthesize serverSideEncryption;
 
 -(id)init
 {
@@ -79,6 +81,7 @@
 {
     if (nil == dateFormatter) {
         dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setLocale:[AmazonSDKUtil timestampLocale]];
         [dateFormatter setDateFormat:kS3DateFormat];
     }
 
@@ -116,6 +119,7 @@
         [body setLength:0];
     }
     body = [[NSMutableData dataWithData:data] retain];
+
     [self processBody];
 }
 
@@ -145,6 +149,7 @@
     [buffer appendString:[[[NSString alloc] initWithFormat:@"Delete-Marker: %d,", deleteMarker] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"Id2: %@,", id2] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"VersionId: %@,", versionId] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"Server Side Encryption: %@,", serverSideEncryption] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -187,7 +192,8 @@
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSString *tmp = [[NSString alloc] initWithData:self.body encoding:NSUTF8StringEncoding];
+    NSDate   *startDate = [NSDate date];
+    NSString *tmp       = [[NSString alloc] initWithData:self.body encoding:NSUTF8StringEncoding];
 
     AMZLogDebug(@"Response:\n%@", tmp);
     [tmp release];
@@ -209,12 +215,15 @@
     }
     else {
         [self processBody];
+        processingTime    = fabs([startDate timeIntervalSinceNow]);
         isFinishedLoading = YES;
     }
 
     if ([(NSObject *)self.request.delegate respondsToSelector:@selector(request:didCompleteWithResponse:)]) {
         [self.request.delegate request:self.request didCompleteWithResponse:self];
     }
+
+
 }
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -260,6 +269,11 @@
     return proposedRequest;
 }
 
+-(NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
+{
+    return nil;
+}
+
 #pragma mark memory managament
 
 -(void)dealloc
@@ -270,6 +284,7 @@
     [server release];
     [id2 release];
     [versionId release];
+    [serverSideEncryption release];
     [headers release];
 
     [dateFormatter release];

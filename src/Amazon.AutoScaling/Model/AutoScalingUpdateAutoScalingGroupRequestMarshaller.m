@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@
     AmazonServiceRequest *request = [[AutoScalingRequest alloc] init];
 
     [request setParameterValue:@"UpdateAutoScalingGroup"           forKey:@"Action"];
-    [request setParameterValue:@"2010-08-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-01-01"   forKey:@"Version"];
 
     [request setDelegate:[updateAutoScalingGroupRequest delegate]];
     [request setCredentials:[updateAutoScalingGroupRequest credentials]];
     [request setEndpoint:[updateAutoScalingGroupRequest requestEndpoint]];
+    [request setRequestTag:[updateAutoScalingGroupRequest requestTag]];
 
     if (updateAutoScalingGroupRequest != nil) {
         if (updateAutoScalingGroupRequest.autoScalingGroupName != nil) {
@@ -58,12 +59,14 @@
             [request setParameterValue:[NSString stringWithFormat:@"%@", updateAutoScalingGroupRequest.defaultCooldown] forKey:[NSString stringWithFormat:@"%@", @"DefaultCooldown"]];
         }
     }
+
     if (updateAutoScalingGroupRequest != nil) {
         int availabilityZonesListIndex = 1;
         for (NSString *availabilityZonesListValue in updateAutoScalingGroupRequest.availabilityZones) {
             if (availabilityZonesListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", availabilityZonesListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"AvailabilityZones", availabilityZonesListIndex]];
             }
+
             availabilityZonesListIndex++;
         }
     }

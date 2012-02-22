@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -127,9 +127,9 @@
     return (S3GetObjectMetadataResponse *)[self invoke:getObjectMetadataRequest];
 }
 
--(S3Response *)putObject:(S3PutObjectRequest *)putObjectRequest
+-(S3PutObjectResponse *)putObject:(S3PutObjectRequest *)putObjectRequest
 {
-    return [self invoke:putObjectRequest];
+    return (S3PutObjectResponse *)[self invoke:putObjectRequest];
 }
 
 -(S3GetObjectResponse *)getObject:(S3GetObjectRequest *)getObjectRequest
@@ -140,6 +140,11 @@
 -(S3DeleteObjectResponse *)deleteObject:(S3DeleteObjectRequest *)deleteObjectRequest
 {
     return (S3DeleteObjectResponse *)[self invoke:deleteObjectRequest];
+}
+
+-(S3DeleteObjectsResponse *)deleteObjects:(S3DeleteObjectsRequest *)deleteObjectsRequest
+{
+    return (S3DeleteObjectsResponse *)[self invoke:deleteObjectsRequest];
 }
 
 -(S3DeleteObjectResponse *)deleteObjectWithKey:(NSString *)theKey withBucket:(NSString *)theBucket
@@ -208,6 +213,37 @@
     return (S3SetBucketVersioningConfigurationResponse *)[self invoke:setBucketVersioningConfigurationRequest];
 }
 
+-(S3SetBucketWebsiteConfigurationResponse *)setBucketWebsiteConfiguration:(S3SetBucketWebsiteConfigurationRequest *)setBucketWebsiteConfigurationRequest
+{
+    return (S3SetBucketWebsiteConfigurationResponse *)[self invoke:setBucketWebsiteConfigurationRequest];
+}
+
+-(S3GetBucketWebsiteConfigurationResponse *)getBucketWebsiteConfiguration:(S3GetBucketWebsiteConfigurationRequest *)getBucketWebsiteConfigurationRequest
+{
+    return (S3GetBucketWebsiteConfigurationResponse *)[self invoke:getBucketWebsiteConfigurationRequest];
+}
+
+-(S3DeleteBucketWebsiteConfigurationResponse *)deleteBucketWebsiteConfiguration:(S3DeleteBucketWebsiteConfigurationRequest *)deleteBucketWebsiteConfigurationRequest
+{
+    return (S3DeleteBucketWebsiteConfigurationResponse *)[self invoke:deleteBucketWebsiteConfigurationRequest];
+}
+
+-(S3SetBucketLifecycleConfigurationResponse *)setBucketLifecycleConfiguration:(S3SetBucketLifecycleConfigurationRequest *)setBucketLifecycleConfigurationRequest
+{
+    return (S3SetBucketLifecycleConfigurationResponse *)[self invoke:setBucketLifecycleConfigurationRequest];
+}
+
+-(S3GetBucketLifecycleConfigurationResponse *)getBucketLifecycleConfiguration:(S3GetBucketLifecycleConfigurationRequest *)getBucketLifecycleConfigurationRequest
+{
+    return (S3GetBucketLifecycleConfigurationResponse *)[self invoke:getBucketLifecycleConfigurationRequest];
+}
+
+-(S3DeleteBucketLifecycleConfigurationResponse *)deleteBucketLifecycleConfiguration:(S3DeleteBucketLifecycleConfigurationRequest *)deleteBucketLifecycleConfigurationRequest
+{
+    return (S3DeleteBucketLifecycleConfigurationResponse *)[self invoke:deleteBucketLifecycleConfigurationRequest];
+}
+
+
 -(S3DeleteVersionResponse *)deleteVersion:(S3DeleteVersionRequest *)deleteVersionRequest
 {
     return (S3DeleteVersionResponse *)[self invoke:deleteVersionRequest];
@@ -233,6 +269,10 @@
         [preSignedURLRequest setEndpoint:self.endpoint];
     }
 
+    if (preSignedURLRequest.securityToken == nil && credentials != nil && credentials.securityToken != nil) {
+        preSignedURLRequest.securityToken = credentials.securityToken;
+    }
+
 
     AmazonURLRequest *amazonURLRequest = [preSignedURLRequest configureURLRequest];
     amazonURLRequest.endpointHost = [preSignedURLRequest endpointHost];
@@ -251,6 +291,11 @@
     return (S3InitiateMultipartUploadResponse *)[self invoke:initiateMultipartUploadRequest];
 }
 
+-(S3CopyPartResponse *)copyPart:(S3CopyPartRequest *)copyPartRequest
+{
+    return (S3CopyPartResponse *)[self invoke:copyPartRequest];
+}
+
 -(S3MultipartUpload *)initiateMultipartUploadWithKey:(NSString *)theKey withBucket:(NSString *)theBucket
 {
     S3InitiateMultipartUploadRequest *request = [[[S3InitiateMultipartUploadRequest alloc] init] autorelease];
@@ -266,15 +311,6 @@
 -(S3AbortMultipartUploadResponse *)abortMultipartUpload:(S3AbortMultipartUploadRequest *)abortMultipartUploadRequest
 {
     return (S3AbortMultipartUploadResponse *)[self invoke:abortMultipartUploadRequest];
-}
-
--(void)abortMultipartUploadWithUploadId:(NSString *)theUploadId
-{
-    S3AbortMultipartUploadRequest *request = [[[S3AbortMultipartUploadRequest alloc] init] autorelease];
-
-    request.uploadId = theUploadId;
-
-    [self abortMultipartUpload:request];
 }
 
 -(S3ListMultipartUploadsResponse *)listMultipartUploads:(S3ListMultipartUploadsRequest *)listMultipartUploadsRequest
@@ -310,20 +346,33 @@
         [request setEndpoint:self.endpoint];
     }
 
-    AMZLogDebug(@"Begin Request: %@", NSStringFromClass([request class]));
 
-    NSURLRequest *urlRequest = [self signS3Request:request];
 
-    AMZLogDebug(@"%@ %@", [urlRequest HTTPMethod], [urlRequest URL]);
-    AMZLogDebug(@"Request headers: ");
-    for (id hKey in [[urlRequest allHTTPHeaderFields] allKeys])
-    {
-        AMZLogDebug(@"  %@: %@", [hKey description], [[urlRequest allHTTPHeaderFields] valueForKey:hKey]);
+
+
+    if (request.securityToken == nil && credentials != nil && credentials.securityToken != nil) {
+        request.securityToken = credentials.securityToken;
     }
+
+
+    AMZLogDebug(@"Begin Request: %@", NSStringFromClass([request class]));
 
     S3Response *response = nil;
     int        retries   = 0;
     while (retries < self.maxRetries) {
+        if (retries > 0) {
+            request.date = [NSDate date];
+        }
+
+        NSURLRequest *urlRequest = [self signS3Request:request];
+
+        AMZLogDebug(@"%@ %@", [urlRequest HTTPMethod], [urlRequest URL]);
+        AMZLogDebug(@"Request headers: ");
+        for (id hKey in [[urlRequest allHTTPHeaderFields] allKeys])
+        {
+            AMZLogDebug(@"  %@: %@", [hKey description], [[urlRequest allHTTPHeaderFields] valueForKey:hKey]);
+        }
+
         response = [AmazonS3Client constructResponseFromRequest:request];
         [response setRequest:request];
 
@@ -379,6 +428,7 @@
     }
 
     AMZLogDebug(@"Received response from server. RequestId: %@. HTTP: %d. Id2: %@.", response.requestId, response.httpStatusCode, response.id2);
+    AMZLogDebug(@"Response [%@]", response);
 
     return response;
 }
@@ -499,23 +549,34 @@
 {
     // Since we will be creating instances of these classes using NSClassFromString,
     // make certain they have been loaded by the runtime.
-    [S3GetObjectResponse class];
-    [S3GetObjectMetadataResponse class];
-    [S3DeleteObjectResponse class];
-    [S3CopyObjectResponse class];
-    [S3ListObjectsResponse class];
-    [S3ListBucketsResponse class];
-    [S3DeleteBucketResponse class];
+    [S3AbortMultipartUploadResponse class];
     [S3CreateBucketResponse class];
-    [S3GetACLResponse class];
-    [S3SetACLResponse class];
-    [S3DeleteVersionResponse class];
-    [S3ListVersionsResponse class];
-    [S3GetBucketVersioningConfigurationResponse class];
-    [S3SetBucketVersioningConfigurationResponse class];
+    [S3CompleteMultipartUploadResponse class];
+    [S3CopyObjectResponse class];
+    [S3CopyPartResponse class];
     [S3DeleteBucketPolicyResponse class];
+    [S3DeleteBucketResponse class];
+    [S3DeleteObjectResponse class];
+    [S3DeleteVersionResponse class];
+    [S3GetACLResponse class];
     [S3GetBucketPolicyResponse class];
+    [S3GetBucketVersioningConfigurationResponse class];
+    [S3GetObjectMetadataResponse class];
+    [S3GetObjectResponse class];
+    [S3InitiateMultipartUploadResponse class];
+    [S3ListBucketsResponse class];
+    [S3ListMultipartUploadsResponse class];
+    [S3ListObjectsResponse class];
+    [S3ListPartsResponse class];
+    [S3ListVersionsResponse class];
+    [S3PutObjectResponse class];
+    [S3SetACLResponse class];
     [S3SetBucketPolicyResponse class];
+    [S3SetBucketVersioningConfigurationResponse class];
+    [S3UploadPartResponse class];
+    [S3GetBucketLifecycleConfigurationResponse class];
+    [S3SetBucketLifecycleConfigurationResponse class];
+    [S3DeleteBucketLifecycleConfigurationResponse class];
 }
 
 

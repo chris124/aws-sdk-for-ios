@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,8 +34,16 @@
     NSMutableArray *blockDeviceMappings;
     bool           sourceDestCheck;
     bool           sourceDestCheckIsSet;
+    bool           disableApiTermination;
+    bool           disableApiTerminationIsSet;
+    NSString       *instanceType;
+    NSString       *kernel;
+    NSString       *ramdisk;
+    NSString       *userData;
+    NSString       *instanceInitiatedShutdownBehavior;
     NSMutableArray *groups;
 }
+
 
 
 /**
@@ -72,10 +80,45 @@
 /**
  * Boolean value
  */
-@property (nonatomic) bool                   sourceDestCheck;
+@property (nonatomic) bool           sourceDestCheck;
 
-@property (nonatomic, readonly) bool         sourceDestCheckIsSet;
+@property (nonatomic, readonly) bool sourceDestCheckIsSet;
 
+/**
+ * Boolean value
+ */
+@property (nonatomic) bool           disableApiTermination;
+
+@property (nonatomic, readonly) bool disableApiTerminationIsSet;
+
+/**
+ * String value
+ */
+@property (nonatomic, retain) NSString *instanceType;
+
+/**
+ * String value
+ */
+@property (nonatomic, retain) NSString *kernel;
+
+/**
+ * String value
+ */
+@property (nonatomic, retain) NSString *ramdisk;
+
+/**
+ * String value
+ */
+@property (nonatomic, retain) NSString *userData;
+
+/**
+ * String value
+ */
+@property (nonatomic, retain) NSString *instanceInitiatedShutdownBehavior;
+
+/**
+ * The value of the Groups property for this object.
+ */
 @property (nonatomic, retain) NSMutableArray *groups;
 
 
@@ -104,7 +147,13 @@
  * Adds a single object to blockDeviceMappings.
  * This function will alloc and init blockDeviceMappings if not already done.
  */
--(void)addBlockDeviceMapping:(EC2InstanceBlockDeviceMappingSpecification *)blockDeviceMapping;
+-(void)addBlockDeviceMapping:(EC2InstanceBlockDeviceMappingSpecification *)blockDeviceMappingObject;
+
+/**
+ * Adds a single object to groups.
+ * This function will alloc and init groups if not already done.
+ */
+-(void)addGroup:(NSString *)groupObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

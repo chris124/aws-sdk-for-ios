@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,11 +22,13 @@
     AmazonServiceRequest *request = [[ElasticLoadBalancingRequest alloc] init];
 
     [request setParameterValue:@"DescribeLoadBalancers"           forKey:@"Action"];
-    [request setParameterValue:@"2010-07-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-11-15"   forKey:@"Version"];
 
     [request setDelegate:[describeLoadBalancersRequest delegate]];
     [request setCredentials:[describeLoadBalancersRequest credentials]];
     [request setEndpoint:[describeLoadBalancersRequest requestEndpoint]];
+    [request setRequestTag:[describeLoadBalancersRequest requestTag]];
+
 
     if (describeLoadBalancersRequest != nil) {
         int loadBalancerNamesListIndex = 1;
@@ -34,7 +36,13 @@
             if (loadBalancerNamesListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", loadBalancerNamesListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"LoadBalancerNames", loadBalancerNamesListIndex]];
             }
+
             loadBalancerNamesListIndex++;
+        }
+    }
+    if (describeLoadBalancersRequest != nil) {
+        if (describeLoadBalancersRequest.marker != nil) {
+            [request setParameterValue:[NSString stringWithFormat:@"%@", describeLoadBalancersRequest.marker] forKey:[NSString stringWithFormat:@"%@", @"Marker"]];
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@
 }
 
 
+
 /**
  * The name associated with the LoadBalancer. The name must be unique
  * within the client AWS account.
@@ -41,7 +42,7 @@
 
 /**
  * The name of the policy being created. The name must be unique within
- * the set of policies for this Load Balancer.
+ * the set of policies for this LoadBalancer.
  */
 @property (nonatomic, retain) NSString *policyName;
 
@@ -64,7 +65,7 @@
  * @param theLoadBalancerName The name associated with the LoadBalancer.
  * The name must be unique within the client AWS account.
  * @param thePolicyName The name of the policy being created. The name
- * must be unique within the set of policies for this Load Balancer.
+ * must be unique within the set of policies for this LoadBalancer.
  * @param theCookieName Name of the application cookie used for
  * stickiness.
  */

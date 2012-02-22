@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@
 }
 
 
+
 /**
  * Specifies the ID of the Spot Instance request.
  */
@@ -51,6 +52,12 @@
  * request.
  */
 -(id)initWithSpotInstanceRequestIds:(NSMutableArray *)theSpotInstanceRequestIds;
+
+/**
+ * Adds a single object to spotInstanceRequestIds.
+ * This function will alloc and init spotInstanceRequestIds if not already done.
+ */
+-(void)addSpotInstanceRequestId:(NSString *)spotInstanceRequestIdObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

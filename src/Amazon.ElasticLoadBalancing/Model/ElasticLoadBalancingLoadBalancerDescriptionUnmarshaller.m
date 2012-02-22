@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,6 +32,24 @@
         [parser setDelegate:listUnmarshaller];
     }
 
+    if ([elementName isEqualToString:@"Subnets"]) {
+        AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.subnets withSetter:@selector(addObjectsFromArray:)] autorelease];
+        listUnmarshaller.endListElementName = @"Subnets";
+        listUnmarshaller.entryElementName   = @"member";
+        listUnmarshaller.delegateClass      = [AmazonValueUnmarshaller class];
+
+        [parser setDelegate:listUnmarshaller];
+    }
+
+    if ([elementName isEqualToString:@"SecurityGroups"]) {
+        AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.securityGroups withSetter:@selector(addObjectsFromArray:)] autorelease];
+        listUnmarshaller.endListElementName = @"SecurityGroups";
+        listUnmarshaller.entryElementName   = @"member";
+        listUnmarshaller.delegateClass      = [AmazonValueUnmarshaller class];
+
+        [parser setDelegate:listUnmarshaller];
+    }
+
     if ([elementName isEqualToString:@"ListenerDescriptions"]) {
         AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.listenerDescriptions withSetter:@selector(addObjectsFromArray:)] autorelease];
         listUnmarshaller.endListElementName = @"ListenerDescriptions";
@@ -47,6 +65,15 @@
         [parser setDelegate:unmarshaller];
     }
 
+    if ([elementName isEqualToString:@"BackendServerDescriptions"]) {
+        AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.backendServerDescriptions withSetter:@selector(addObjectsFromArray:)] autorelease];
+        listUnmarshaller.endListElementName = @"BackendServerDescriptions";
+        listUnmarshaller.entryElementName   = @"member";
+        listUnmarshaller.delegateClass      = [ElasticLoadBalancingBackendServerDescriptionUnmarshaller class];
+
+        [parser setDelegate:listUnmarshaller];
+    }
+
     if ([elementName isEqualToString:@"Instances"]) {
         AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.instances withSetter:@selector(addObjectsFromArray:)] autorelease];
         listUnmarshaller.endListElementName = @"Instances";
@@ -59,6 +86,12 @@
     if ([elementName isEqualToString:@"HealthCheck"]) {
         ElasticLoadBalancingHealthCheckUnmarshaller *unmarshaller = [[[ElasticLoadBalancingHealthCheckUnmarshaller alloc] initWithCaller:self withParentObject:self.response withSetter:@selector(setHealthCheck:)] autorelease];
         unmarshaller.endElementTagName = @"HealthCheck";
+        [parser setDelegate:unmarshaller];
+    }
+
+    if ([elementName isEqualToString:@"SourceSecurityGroup"]) {
+        ElasticLoadBalancingSourceSecurityGroupUnmarshaller *unmarshaller = [[[ElasticLoadBalancingSourceSecurityGroupUnmarshaller alloc] initWithCaller:self withParentObject:self.response withSetter:@selector(setSourceSecurityGroup:)] autorelease];
+        unmarshaller.endElementTagName = @"SourceSecurityGroup";
         [parser setDelegate:unmarshaller];
     }
 
@@ -84,10 +117,20 @@
         return;
     }
 
-    if ([elementName isEqualToString:@"AvailabilityZones/member"]) {
-        [self.response.availabilityZones addObject:self.currentText];
+    if ([elementName isEqualToString:@"CanonicalHostedZoneName"]) {
+        self.response.canonicalHostedZoneName = self.currentText;
+        return;
     }
 
+    if ([elementName isEqualToString:@"CanonicalHostedZoneNameID"]) {
+        self.response.canonicalHostedZoneNameID = self.currentText;
+        return;
+    }
+
+    if ([elementName isEqualToString:@"VPCId"]) {
+        self.response.vPCId = self.currentText;
+        return;
+    }
 
     if ([elementName isEqualToString:@"CreatedTime"]) {
         self.response.createdTime = [AmazonSDKUtil convertStringToDate:self.currentText];

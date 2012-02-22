@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,7 +30,9 @@
 {
     NSMutableArray *reservedInstancesIds;
     NSMutableArray *filters;
+    NSString       *offeringType;
 }
+
 
 
 
@@ -55,10 +57,21 @@
 @property (nonatomic, retain) NSMutableArray *filters;
 
 /**
+ * The Reserved Instance offering type.
+ */
+@property (nonatomic, retain) NSString *offeringType;
+
+/**
+ * Adds a single object to reservedInstancesIds.
+ * This function will alloc and init reservedInstancesIds if not already done.
+ */
+-(void)addReservedInstancesId:(NSString *)reservedInstancesIdObject;
+
+/**
  * Adds a single object to filters.
  * This function will alloc and init filters if not already done.
  */
--(void)addFilter:(EC2Filter *)filter;
+-(void)addFilter:(EC2Filter *)filterObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

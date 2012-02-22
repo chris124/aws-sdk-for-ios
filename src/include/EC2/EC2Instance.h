@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 #import "EC2InstanceLicense.h"
 #import "EC2Tag.h"
 #import "EC2GroupIdentifier.h"
+#import "EC2InstanceNetworkInterface.h"
 
 
 
@@ -68,7 +69,10 @@
     NSMutableArray     *securityGroups;
     bool               sourceDestCheck;
     bool               sourceDestCheckIsSet;
+    NSString           *hypervisor;
+    NSMutableArray     *networkInterfaces;
 }
+
 
 
 
@@ -137,7 +141,7 @@
  * Amazon Elastic Compute Cloud Developer Guide</a>.
  * <p>
  * <b>Constraints:</b><br/>
- * <b>Allowed Values: </b>t1.micro, m1.small, m1.large, m1.xlarge, m2.xlarge, m2.2xlarge, m2.4xlarge, c1.medium, c1.xlarge, cc1.4xlarge, cg1.4xlarge
+ * <b>Allowed Values: </b>t1.micro, m1.small, m1.large, m1.xlarge, m2.xlarge, m2.2xlarge, m2.4xlarge, c1.medium, c1.xlarge, cc1.4xlarge, cc2.8xlarge, cg1.4xlarge
  */
 @property (nonatomic, retain) NSString *instanceType;
 
@@ -218,7 +222,13 @@
  */
 @property (nonatomic, retain) NSMutableArray *blockDeviceMappings;
 
-@property (nonatomic, retain) NSString       *virtualizationType;
+/**
+ * The value of the VirtualizationType property for this object.
+ * <p>
+ * <b>Constraints:</b><br/>
+ * <b>Allowed Values: </b>hvm, paravirtual
+ */
+@property (nonatomic, retain) NSString *virtualizationType;
 
 /**
  *
@@ -236,42 +246,70 @@
  */
 @property (nonatomic, retain) EC2InstanceLicense *license;
 
-@property (nonatomic, retain) NSString           *clientToken;
+/**
+ * The value of the ClientToken property for this object.
+ */
+@property (nonatomic, retain) NSString *clientToken;
 
 /**
  * A list of tags for the Instance.
  */
 @property (nonatomic, retain) NSMutableArray *tags;
 
+/**
+ * The value of the SecurityGroups property for this object.
+ */
 @property (nonatomic, retain) NSMutableArray *securityGroups;
 
-@property (nonatomic) bool                   sourceDestCheck;
+/**
+ * The value of the SourceDestCheck property for this object.
+ */
+@property (nonatomic) bool           sourceDestCheck;
 
-@property (nonatomic, readonly) bool         sourceDestCheckIsSet;
+@property (nonatomic, readonly) bool sourceDestCheckIsSet;
+
+/**
+ * The value of the Hypervisor property for this object.
+ * <p>
+ * <b>Constraints:</b><br/>
+ * <b>Allowed Values: </b>ovm, xen
+ */
+@property (nonatomic, retain) NSString *hypervisor;
+
+/**
+ * The value of the NetworkInterfaces property for this object.
+ */
+@property (nonatomic, retain) NSMutableArray *networkInterfaces;
 
 /**
  * Adds a single object to productCodes.
  * This function will alloc and init productCodes if not already done.
  */
--(void)addProductCode:(EC2ProductCode *)productCode;
+-(void)addProductCode:(EC2ProductCode *)productCodeObject;
 
 /**
  * Adds a single object to blockDeviceMappings.
  * This function will alloc and init blockDeviceMappings if not already done.
  */
--(void)addBlockDeviceMapping:(EC2InstanceBlockDeviceMapping *)blockDeviceMapping;
+-(void)addBlockDeviceMapping:(EC2InstanceBlockDeviceMapping *)blockDeviceMappingObject;
 
 /**
  * Adds a single object to tags.
  * This function will alloc and init tags if not already done.
  */
--(void)addTag:(EC2Tag *)tag;
+-(void)addTag:(EC2Tag *)tagObject;
 
 /**
  * Adds a single object to securityGroups.
  * This function will alloc and init securityGroups if not already done.
  */
--(void)addSecurityGroup:(EC2GroupIdentifier *)securityGroup;
+-(void)addSecurityGroup:(EC2GroupIdentifier *)securityGroupObject;
+
+/**
+ * Adds a single object to networkInterfaces.
+ * This function will alloc and init networkInterfaces if not already done.
+ */
+-(void)addNetworkInterface:(EC2InstanceNetworkInterface *)networkInterfaceObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

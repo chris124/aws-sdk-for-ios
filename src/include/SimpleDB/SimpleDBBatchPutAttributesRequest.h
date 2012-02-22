@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@
 }
 
 
+
 /**
  * The name of the domain in which the attributes are being stored.
  */
@@ -64,7 +65,7 @@
  * Adds a single object to items.
  * This function will alloc and init items if not already done.
  */
--(void)addItem:(SimpleDBReplaceableItem *)item;
+-(void)addItem:(SimpleDBReplaceableItem *)itemObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

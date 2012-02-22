@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@
     NSString       *name;
     NSMutableArray *values;
 }
+
 
 
 /**
@@ -63,6 +64,12 @@
  * @param theName Specifies the name of the filter.
  */
 -(id)initWithName:(NSString *)theName;
+
+/**
+ * Adds a single object to values.
+ * This function will alloc and init values if not already done.
+ */
+-(void)addValue:(NSString *)valueObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

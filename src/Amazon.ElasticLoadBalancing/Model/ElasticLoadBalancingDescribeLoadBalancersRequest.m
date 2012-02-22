@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,12 +19,14 @@
 @implementation ElasticLoadBalancingDescribeLoadBalancersRequest
 
 @synthesize loadBalancerNames;
+@synthesize marker;
 
 
 -(id)init
 {
     if (self = [super init]) {
         loadBalancerNames = [[NSMutableArray alloc] initWithCapacity:1];
+        marker            = nil;
     }
 
     return self;
@@ -40,6 +42,15 @@
 }
 
 
+-(void)addLoadBalancerName:(NSString *)loadBalancerNameObject
+{
+    if (loadBalancerNames == nil) {
+        loadBalancerNames = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [loadBalancerNames addObject:loadBalancerNameObject];
+}
+
 
 -(NSString *)description
 {
@@ -47,6 +58,7 @@
 
     [buffer appendString:@"{"];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"LoadBalancerNames: %@,", loadBalancerNames] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"Marker: %@,", marker] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -58,6 +70,7 @@
 -(void)dealloc
 {
     [loadBalancerNames release];
+    [marker release];
 
     [super dealloc];
 }

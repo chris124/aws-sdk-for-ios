@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@
     [request setDelegate:[getMetricStatisticsRequest delegate]];
     [request setCredentials:[getMetricStatisticsRequest credentials]];
     [request setEndpoint:[getMetricStatisticsRequest requestEndpoint]];
+    [request setRequestTag:[getMetricStatisticsRequest requestTag]];
 
     if (getMetricStatisticsRequest != nil) {
         if (getMetricStatisticsRequest.namespace != nil) {
@@ -71,12 +72,14 @@
             [request setParameterValue:[NSString stringWithFormat:@"%@", getMetricStatisticsRequest.period] forKey:[NSString stringWithFormat:@"%@", @"Period"]];
         }
     }
+
     if (getMetricStatisticsRequest != nil) {
         int statisticsListIndex = 1;
         for (NSString *statisticsListValue in getMetricStatisticsRequest.statistics) {
             if (statisticsListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", statisticsListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"Statistics", statisticsListIndex]];
             }
+
             statisticsListIndex++;
         }
     }

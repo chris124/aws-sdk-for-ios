@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,11 +37,14 @@
 {
     self.subResource = [NSString stringWithFormat:@"%@=%d&%@=%@", kS3QueryParamPartNumber, self.partNumber, kS3QueryParamUploadId, self.uploadId];
 
+    if (self.contentLength < 1) {
+        self.contentLength = [data length];
+    }
     [super configureURLRequest];
 
     [self.urlRequest setHTTPBody:self.data];
-    if (self.contentLength < 1) {
-        self.contentLength = [data length];
+    if (nil != self.contentMD5) {
+        [self.urlRequest setValue:self.contentMD5 forHTTPHeaderField:kHttpHdrContentMD5];
     }
 
     [urlRequest setHTTPMethod:kHttpMethodPut];

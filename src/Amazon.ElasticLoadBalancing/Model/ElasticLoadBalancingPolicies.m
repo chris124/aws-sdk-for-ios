@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 
 @synthesize appCookieStickinessPolicies;
 @synthesize lBCookieStickinessPolicies;
+@synthesize otherPolicies;
 
 
 -(id)init
@@ -27,28 +28,38 @@
     if (self = [super init]) {
         appCookieStickinessPolicies = [[NSMutableArray alloc] initWithCapacity:1];
         lBCookieStickinessPolicies  = [[NSMutableArray alloc] initWithCapacity:1];
+        otherPolicies               = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
     return self;
 }
 
 
--(void)addAppCookieStickinessPolicy:(ElasticLoadBalancingAppCookieStickinessPolicy *)appCookieStickinessPolicy
+-(void)addAppCookieStickinessPolicy:(ElasticLoadBalancingAppCookieStickinessPolicy *)appCookieStickinessPolicyObject
 {
     if (appCookieStickinessPolicies == nil) {
         appCookieStickinessPolicies = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [appCookieStickinessPolicies addObject:appCookieStickinessPolicy];
+    [appCookieStickinessPolicies addObject:appCookieStickinessPolicyObject];
 }
 
--(void)addLBCookieStickinessPolicy:(ElasticLoadBalancingLBCookieStickinessPolicy *)lBCookieStickinessPolicy
+-(void)addLBCookieStickinessPolicy:(ElasticLoadBalancingLBCookieStickinessPolicy *)lBCookieStickinessPolicyObject
 {
     if (lBCookieStickinessPolicies == nil) {
         lBCookieStickinessPolicies = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [lBCookieStickinessPolicies addObject:lBCookieStickinessPolicy];
+    [lBCookieStickinessPolicies addObject:lBCookieStickinessPolicyObject];
+}
+
+-(void)addOtherPolicy:(NSString *)otherPolicyObject
+{
+    if (otherPolicies == nil) {
+        otherPolicies = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [otherPolicies addObject:otherPolicyObject];
 }
 
 
@@ -59,6 +70,7 @@
     [buffer appendString:@"{"];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"AppCookieStickinessPolicies: %@,", appCookieStickinessPolicies] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"LBCookieStickinessPolicies: %@,", lBCookieStickinessPolicies] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"OtherPolicies: %@,", otherPolicies] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -71,6 +83,7 @@
 {
     [appCookieStickinessPolicies release];
     [lBCookieStickinessPolicies release];
+    [otherPolicies release];
 
     [super dealloc];
 }

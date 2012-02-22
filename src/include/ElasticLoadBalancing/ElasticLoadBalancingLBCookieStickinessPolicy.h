@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@
 }
 
 
+
 /**
  * The name for the policy being created. The name must be unique within
  * the set of policies for this LoadBalancer.
@@ -38,8 +39,8 @@
 
 /**
  * The time period in seconds after which the cookie should be considered
- * stale. Not specifying this parameter indicates that the sticky session
- * will last for the duration of the browser session.
+ * stale. Not specifying this parameter indicates that the stickiness
+ * session will last for the duration of the browser session.
  */
 @property (nonatomic, retain) NSNumber *cookieExpirationPeriod;
 
@@ -58,8 +59,8 @@
  * must be unique within the set of policies for this LoadBalancer.
  * @param theCookieExpirationPeriod The time period in seconds after
  * which the cookie should be considered stale. Not specifying this
- * parameter indicates that the sticky session will last for the duration
- * of the browser session.
+ * parameter indicates that the stickiness session will last for the
+ * duration of the browser session.
  */
 -(id)initWithPolicyName:(NSString *)thePolicyName andCookieExpirationPeriod:(NSNumber *)theCookieExpirationPeriod;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -95,21 +95,6 @@
         self.response.actionsEnabled = [self.currentText boolValue];
         return;
     }
-
-    if ([elementName isEqualToString:@"OKActions/member"]) {
-        [self.response.oKActions addObject:self.currentText];
-    }
-
-
-    if ([elementName isEqualToString:@"AlarmActions/member"]) {
-        [self.response.alarmActions addObject:self.currentText];
-    }
-
-
-    if ([elementName isEqualToString:@"InsufficientDataActions/member"]) {
-        [self.response.insufficientDataActions addObject:self.currentText];
-    }
-
 
     if ([elementName isEqualToString:@"StateValue"]) {
         self.response.stateValue = self.currentText;

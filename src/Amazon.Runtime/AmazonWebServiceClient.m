@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -18,14 +18,15 @@
 
 @implementation AmazonWebServiceClient
 
-@synthesize endpoint, maxRetries, timeout, userAgent;
+@synthesize endpoint, maxRetries, timeout, userAgent, delay;
 
 -(id)initWithAccessKey:(NSString *)theAccessKey withSecretKey:(NSString *)theSecretKey
 {
     if (self = [self init]) {
         credentials = [[AmazonCredentials alloc] initWithAccessKey:theAccessKey withSecretKey:theSecretKey];
         maxRetries  = 5;
-        timeout     = 240;
+        timeout     = 30;
+        delay       = 0.2;
         userAgent   = [[AmazonSDKUtil userAgentString] retain];
     }
     return self;
@@ -36,7 +37,8 @@
     if (self = [self init]) {
         credentials = [theCredentials retain];
         maxRetries  = 5;
-        timeout     = 240;
+        timeout     = 30;
+        delay       = 0.2;
         userAgent   = [[AmazonSDKUtil userAgentString] retain];
     }
     return self;
@@ -71,6 +73,9 @@
         [generatedRequest setCredentials:credentials];
     }
 
+
+
+
     NSMutableURLRequest *urlRequest = [generatedRequest configureURLRequest];
     [generatedRequest sign];
     [urlRequest setHTTPBody:[[generatedRequest queryString] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -96,11 +101,10 @@
         [urlRequest addValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
 
         NSURLConnection *urlConnection = [NSURLConnection connectionWithRequest:urlRequest delegate:response];
-        NSTimer         *timeoutTimer  = [NSTimer scheduledTimerWithTimeInterval:self.timeout target:response selector:@selector(timeout) userInfo:nil repeats:NO];
-
         originalRequest.urlConnection = urlConnection;
 
         if ([generatedRequest delegate] == nil) {
+            NSTimer *timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:self.timeout target:response selector:@selector(timeout) userInfo:nil repeats:NO];
             generatedRequest.delegate = [[[AmazonRequestDelegate alloc] init] autorelease];
 
             while (![(AmazonRequestDelegate *)(generatedRequest.delegate)isFinishedOrFailed]) {
@@ -163,7 +167,7 @@
 
 -(void)pauseExponentially:(int)tryCount
 {
-    NSTimeInterval pause = 0.5 * (pow(2, tryCount));
+    NSTimeInterval pause = self.delay * (pow(2, tryCount));
 
     [NSThread sleepForTimeInterval:pause];
 }

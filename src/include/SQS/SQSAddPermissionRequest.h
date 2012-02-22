@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -34,20 +34,24 @@
 }
 
 
+
 /**
- *
+ * The URL of the SQS queue to take action on.
  */
 @property (nonatomic, retain) NSString *queueUrl;
 
 /**
- *
+ * The unique identification of the permission you're setting (e.g.,
+ * <code>AliceSendMessage</code>). Constraints: Maximum 80 characters;
+ * alphanumeric characters, hyphens (-), and underscores (_) are allowed.
  */
 @property (nonatomic, retain) NSString *label;
 
 /**
- * The AWS account number of the principal who will be given permission.
- * The principal must have an AWS account, but does not need to be signed
- * up for Amazon SQS.
+ * The AWS account number of the <a
+ * AWSSimpleQueueService/latest/APIReference/Glossary.html">principal</a>
+ * who will be given permission. The principal must have an AWS account,
+ * but does not need to be signed up for Amazon SQS.
  */
 @property (nonatomic, retain) NSMutableArray *aWSAccountIds;
 
@@ -67,15 +71,31 @@
  * Constructs a new AddPermissionRequest object.
  * Callers should use properties to initialize any additional object members.
  *
- * @param theQueueUrl
- * @param theLabel
- * @param theAWSAccountIds The AWS account number of the principal who
- * will be given permission. The principal must have an AWS account, but
- * does not need to be signed up for Amazon SQS.
+ * @param theQueueUrl The URL of the SQS queue to take action on.
+ * @param theLabel The unique identification of the permission you're
+ * setting (e.g., <code>AliceSendMessage</code>). Constraints: Maximum 80
+ * characters; alphanumeric characters, hyphens (-), and underscores (_)
+ * are allowed.
+ * @param theAWSAccountIds The AWS account number of the <a
+ * AWSSimpleQueueService/latest/APIReference/Glossary.html">principal</a>
+ * who will be given permission. The principal must have an AWS account,
+ * but does not need to be signed up for Amazon SQS.
  * @param theActions The action the client wants to allow for the
  * specified principal.
  */
 -(id)initWithQueueUrl:(NSString *)theQueueUrl andLabel:(NSString *)theLabel andAWSAccountIds:(NSMutableArray *)theAWSAccountIds andActions:(NSMutableArray *)theActions;
+
+/**
+ * Adds a single object to aWSAccountIds.
+ * This function will alloc and init aWSAccountIds if not already done.
+ */
+-(void)addAWSAccountId:(NSString *)aWSAccountIdObject;
+
+/**
+ * Adds a single object to actions.
+ * This function will alloc and init actions if not already done.
+ */
+-(void)addAction:(NSString *)actionObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

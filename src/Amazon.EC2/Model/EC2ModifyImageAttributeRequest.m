@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -25,18 +25,22 @@
 @synthesize userGroups;
 @synthesize productCodes;
 @synthesize value;
+@synthesize launchPermission;
+@synthesize descriptionValue;
 
 
 -(id)init
 {
     if (self = [super init]) {
-        imageId       = nil;
-        attribute     = nil;
-        operationType = nil;
-        userIds       = [[NSMutableArray alloc] initWithCapacity:1];
-        userGroups    = [[NSMutableArray alloc] initWithCapacity:1];
-        productCodes  = [[NSMutableArray alloc] initWithCapacity:1];
-        value         = nil;
+        imageId          = nil;
+        attribute        = nil;
+        operationType    = nil;
+        userIds          = [[NSMutableArray alloc] initWithCapacity:1];
+        userGroups       = [[NSMutableArray alloc] initWithCapacity:1];
+        productCodes     = [[NSMutableArray alloc] initWithCapacity:1];
+        value            = nil;
+        launchPermission = nil;
+        descriptionValue = nil;
     }
 
     return self;
@@ -53,6 +57,33 @@
 }
 
 
+-(void)addUserId:(NSString *)userIdObject
+{
+    if (userIds == nil) {
+        userIds = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [userIds addObject:userIdObject];
+}
+
+-(void)addUserGroup:(NSString *)userGroupObject
+{
+    if (userGroups == nil) {
+        userGroups = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [userGroups addObject:userGroupObject];
+}
+
+-(void)addProductCode:(NSString *)productCodeObject
+{
+    if (productCodes == nil) {
+        productCodes = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [productCodes addObject:productCodeObject];
+}
+
 
 -(NSString *)description
 {
@@ -66,6 +97,8 @@
     [buffer appendString:[[[NSString alloc] initWithFormat:@"UserGroups: %@,", userGroups] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"ProductCodes: %@,", productCodes] autorelease]];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"Value: %@,", value] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"LaunchPermission: %@,", launchPermission] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"Description: %@,", descriptionValue] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -83,6 +116,8 @@
     [userGroups release];
     [productCodes release];
     [value release];
+    [launchPermission release];
+    [descriptionValue release];
 
     [super dealloc];
 }

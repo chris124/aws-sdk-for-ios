@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@
 
 
 
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -53,7 +54,7 @@
 /**
  * A list of policy names or policy ARNs to be described. If this list is
  * omitted, all policy names are described. If an auto scaling group name
- * is provided, the results are limited to that group.The list of
+ * is provided, the results are limited to that group. The list of
  * requested policy names cannot contain more than 50 items. If unknown
  * policy names are requested, they are ignored with no error.
  */
@@ -75,6 +76,12 @@
  * <b>Range: </b>1 - 50<br/>
  */
 @property (nonatomic, retain) NSNumber *maxRecords;
+
+/**
+ * Adds a single object to policyNames.
+ * This function will alloc and init policyNames if not already done.
+ */
+-(void)addPolicyName:(NSString *)policyNameObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

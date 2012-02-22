@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@
 
 
 
+
 /**
  * Default constructor for a new  object.  Callers should use the
  * property methods to initialize this object after creating it.
@@ -38,7 +39,7 @@
 -(id)init;
 
 /**
- * If true, instance monitoring is enabled.
+ * If <code>True</code>, instance monitoring is enabled.
  */
 @property (nonatomic) bool           enabled;
 

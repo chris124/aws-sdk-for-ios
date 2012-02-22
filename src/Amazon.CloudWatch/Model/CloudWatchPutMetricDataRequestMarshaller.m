@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@
     [request setDelegate:[putMetricDataRequest delegate]];
     [request setCredentials:[putMetricDataRequest credentials]];
     [request setEndpoint:[putMetricDataRequest requestEndpoint]];
+    [request setRequestTag:[putMetricDataRequest requestTag]];
 
     if (putMetricDataRequest != nil) {
         if (putMetricDataRequest.namespace != nil) {

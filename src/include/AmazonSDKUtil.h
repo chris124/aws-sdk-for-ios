@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -17,11 +17,13 @@
 #import <UIKit/UIKit.h>
 #import "AmazonClientException.h"
 
-#define AWS_SDK_VERSION              @"0.2.3"
+#define AWS_SDK_VERSION              @"1.2.0"
 #define AWS_SDK_USER_AGENT_FORMAT    @"aws-sdk-iOS/%@ %@/%@ %@"
 #define kISO8061DateFormat           @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 #define kISO8601DateFormat           @"yyyy-MM-dd'T'HH:mm:ss'Z'"
 #define kRFC822DateFormat            @"EEE, dd MMM yyyy HH:mm:ss z"
+#define kDateStampFormat             @"yyyyMMdd"
+#define kDateTimeFormat              @"yyyyMMdd'T'HHmmss'Z'"
 
 @interface AmazonSDKUtil:NSObject {
 }
@@ -29,9 +31,13 @@
 +(NSString *)userAgentString;
 +(NSString *)MIMETypeForExtension:(NSString *)extension;
 +(NSString *)urlEncode:(NSString *)input;
++(NSData *)hexDecode:(NSString *)hexString;
++(NSString *)hexEncode:(NSString *)string;
++(NSString *)hexEncodeData:(NSData *)data;
 +(NSNumber *)convertStringToNumber:(NSString *)string;
 +(NSDate *)convertStringToDate:(NSString *)string;
 +(NSDate *)convertStringToDate:(NSString *)string usingFormat:(NSString *)dateFormat;
++(NSDate *)millisSinceEpochToDate:(NSNumber *)millisSinceEpoch;
 +(NSURL *)URLWithURL:(NSURL *)theURL andProtocol:(NSString *)theProtocol;
 +(NSLocale *)timestampLocale;
 @end
@@ -43,6 +49,10 @@
 -(NSString *)stringWithRFC822Format;
 +(NSDate *)dateWithISO8061Format:(NSString *)dateString;
 +(NSString *)ISO8061FormattedCurrentTimestamp;
+-(NSString *)dateStamp;
+-(NSString *)dateTime;
+
+
 
 @end
 
@@ -52,7 +62,6 @@
 -(NSString *)stringWithURLEncoding;
 
 @end
-
 
 /*! \category NSData(WithBase64)
  *  \abstract Adds Base64 encoding to the NSData class.
@@ -66,4 +75,10 @@
  */
 -(NSString *) base64EncodedString;
 
+/**
+ * Decode a base-64 encoded string into a new NSData object.
+ *
+ * @return NSData with the data represented by the encoded string.
+ */
++(NSData *) dataWithBase64EncodedString:(NSString *)encodedString;
 @end

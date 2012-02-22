@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -41,22 +41,31 @@
 }
 
 
--(void)addGroup:(EC2GroupIdentifier *)group
+-(void)addGroup:(EC2GroupIdentifier *)groupObject
 {
     if (groups == nil) {
         groups = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [groups addObject:group];
+    [groups addObject:groupObject];
 }
 
--(void)addInstance:(EC2Instance *)instance
+-(void)addGroupName:(NSString *)groupNameObject
+{
+    if (groupNames == nil) {
+        groupNames = [[NSMutableArray alloc] initWithCapacity:1];
+    }
+
+    [groupNames addObject:groupNameObject];
+}
+
+-(void)addInstance:(EC2Instance *)instanceObject
 {
     if (instances == nil) {
         instances = [[NSMutableArray alloc] initWithCapacity:1];
     }
 
-    [instances addObject:instance];
+    [instances addObject:instanceObject];
 }
 
 

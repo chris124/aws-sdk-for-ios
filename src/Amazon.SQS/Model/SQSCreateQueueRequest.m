@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -19,14 +19,14 @@
 @implementation SQSCreateQueueRequest
 
 @synthesize queueName;
-@synthesize defaultVisibilityTimeout;
+@synthesize attributes;
 
 
 -(id)init
 {
     if (self = [super init]) {
-        queueName                = nil;
-        defaultVisibilityTimeout = nil;
+        queueName  = nil;
+        attributes = [[NSMutableDictionary alloc] initWithCapacity:1];
     }
 
     return self;
@@ -41,16 +41,15 @@
     return self;
 }
 
--(id)initWithQueueName:(NSString *)theQueueName andDefaultVisibilityTimeout:(NSNumber *)theDefaultVisibilityTimeout
+
+-(void)setAttributesValue:(NSString *)theValue forKey:(NSString *)theKey
 {
-    if (self = [self init]) {
-        self.queueName                = theQueueName;
-        self.defaultVisibilityTimeout = theDefaultVisibilityTimeout;
+    if (attributes == nil) {
+        attributes = [[NSMutableDictionary alloc] initWithCapacity:1];
     }
 
-    return self;
+    [attributes setValue:theValue forKey:theKey];
 }
-
 
 
 -(NSString *)description
@@ -59,7 +58,7 @@
 
     [buffer appendString:@"{"];
     [buffer appendString:[[[NSString alloc] initWithFormat:@"QueueName: %@,", queueName] autorelease]];
-    [buffer appendString:[[[NSString alloc] initWithFormat:@"DefaultVisibilityTimeout: %@,", defaultVisibilityTimeout] autorelease]];
+    [buffer appendString:[[[NSString alloc] initWithFormat:@"Attributes: %@,", attributes] autorelease]];
     [buffer appendString:[super description]];
     [buffer appendString:@"}"];
 
@@ -71,7 +70,7 @@
 -(void)dealloc
 {
     [queueName release];
-    [defaultVisibilityTimeout release];
+    [attributes release];
 
     [super dealloc];
 }

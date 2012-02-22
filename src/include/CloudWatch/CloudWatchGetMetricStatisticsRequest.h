@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@
     NSMutableArray *statistics;
     NSString       *unit;
 }
+
 
 
 
@@ -119,7 +120,13 @@
  * Adds a single object to dimensions.
  * This function will alloc and init dimensions if not already done.
  */
--(void)addDimension:(CloudWatchDimension *)dimension;
+-(void)addDimension:(CloudWatchDimension *)dimensionObject;
+
+/**
+ * Adds a single object to statistics.
+ * This function will alloc and init statistics if not already done.
+ */
+-(void)addStatistic:(NSString *)statisticObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

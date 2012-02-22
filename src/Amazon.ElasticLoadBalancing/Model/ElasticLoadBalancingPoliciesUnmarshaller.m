@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,6 +22,15 @@
 {
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qName attributes:attributeDict];
 
+
+    if ([elementName isEqualToString:@"OtherPolicies"]) {
+        AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.otherPolicies withSetter:@selector(addObjectsFromArray:)] autorelease];
+        listUnmarshaller.endListElementName = @"OtherPolicies";
+        listUnmarshaller.entryElementName   = @"member";
+        listUnmarshaller.delegateClass      = [AmazonValueUnmarshaller class];
+
+        [parser setDelegate:listUnmarshaller];
+    }
 
     if ([elementName isEqualToString:@"AppCookieStickinessPolicies"]) {
         AmazonListUnmarshaller *listUnmarshaller = [[[AmazonListUnmarshaller alloc] initWithCaller:self withParentObject:self.response.appCookieStickinessPolicies withSetter:@selector(addObjectsFromArray:)] autorelease];

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -14,8 +14,9 @@
  */
 
 #import "EC2GroupIdentifier.h"
-#import "EC2Placement.h"
+#import "EC2SpotPlacement.h"
 #import "EC2BlockDeviceMapping.h"
+#import "EC2InstanceNetworkInterfaceSpecification.h"
 
 
 
@@ -28,21 +29,23 @@
 @interface EC2LaunchSpecification:NSObject
 
 {
-    NSString       *imageId;
-    NSString       *keyName;
-    NSMutableArray *allSecurityGroups;
-    NSMutableArray *securityGroups;
-    NSString       *userData;
-    NSString       *addressingType;
-    NSString       *instanceType;
-    EC2Placement   *placement;
-    NSString       *kernelId;
-    NSString       *ramdiskId;
-    NSMutableArray *blockDeviceMappings;
-    bool           monitoringEnabled;
-    bool           monitoringEnabledIsSet;
-    NSString       *subnetId;
+    NSString         *imageId;
+    NSString         *keyName;
+    NSMutableArray   *allSecurityGroups;
+    NSMutableArray   *securityGroups;
+    NSString         *userData;
+    NSString         *addressingType;
+    NSString         *instanceType;
+    EC2SpotPlacement *placement;
+    NSString         *kernelId;
+    NSString         *ramdiskId;
+    NSMutableArray   *blockDeviceMappings;
+    bool             monitoringEnabled;
+    bool             monitoringEnabledIsSet;
+    NSString         *subnetId;
+    NSMutableArray   *networkInterfaces;
 }
+
 
 
 
@@ -63,12 +66,12 @@
 @property (nonatomic, retain) NSString *keyName;
 
 /**
- *
+ * The value of the AllSecurityGroups property for this object.
  */
 @property (nonatomic, retain) NSMutableArray *allSecurityGroups;
 
 /**
- *
+ * The value of the SecurityGroups property for this object.
  */
 @property (nonatomic, retain) NSMutableArray *securityGroups;
 
@@ -89,14 +92,14 @@
  * Specifies the instance type.
  * <p>
  * <b>Constraints:</b><br/>
- * <b>Allowed Values: </b>t1.micro, m1.small, m1.large, m1.xlarge, m2.xlarge, m2.2xlarge, m2.4xlarge, c1.medium, c1.xlarge, cc1.4xlarge, cg1.4xlarge
+ * <b>Allowed Values: </b>t1.micro, m1.small, m1.large, m1.xlarge, m2.xlarge, m2.2xlarge, m2.4xlarge, c1.medium, c1.xlarge, cc1.4xlarge, cc2.8xlarge, cg1.4xlarge
  */
 @property (nonatomic, retain) NSString *instanceType;
 
 /**
  * Defines a placement item.
  */
-@property (nonatomic, retain) EC2Placement *placement;
+@property (nonatomic, retain) EC2SpotPlacement *placement;
 
 /**
  * Specifies the ID of the kernel to select.
@@ -131,16 +134,33 @@
 @property (nonatomic, retain) NSString *subnetId;
 
 /**
+ * The value of the NetworkInterfaces property for this object.
+ */
+@property (nonatomic, retain) NSMutableArray *networkInterfaces;
+
+/**
  * Adds a single object to allSecurityGroups.
  * This function will alloc and init allSecurityGroups if not already done.
  */
--(void)addAllSecurityGroup:(EC2GroupIdentifier *)allSecurityGroup;
+-(void)addAllSecurityGroup:(EC2GroupIdentifier *)allSecurityGroupObject;
+
+/**
+ * Adds a single object to securityGroups.
+ * This function will alloc and init securityGroups if not already done.
+ */
+-(void)addSecurityGroup:(NSString *)securityGroupObject;
 
 /**
  * Adds a single object to blockDeviceMappings.
  * This function will alloc and init blockDeviceMappings if not already done.
  */
--(void)addBlockDeviceMapping:(EC2BlockDeviceMapping *)blockDeviceMapping;
+-(void)addBlockDeviceMapping:(EC2BlockDeviceMapping *)blockDeviceMappingObject;
+
+/**
+ * Adds a single object to networkInterfaces.
+ * This function will alloc and init networkInterfaces if not already done.
+ */
+-(void)addNetworkInterface:(EC2InstanceNetworkInterfaceSpecification *)networkInterfaceObject;
 
 /**
  * Returns a string representation of this object; useful for testing and

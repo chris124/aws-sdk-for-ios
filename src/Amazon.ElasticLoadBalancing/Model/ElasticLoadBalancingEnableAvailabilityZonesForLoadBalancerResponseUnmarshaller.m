@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -42,11 +42,6 @@
 -(void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
     [super parser:parser didEndElement:elementName namespaceURI:namespaceURI qualifiedName:qName];
-
-
-    if ([elementName isEqualToString:@"AvailabilityZones/member"]) {
-        [self.response.availabilityZones addObject:self.currentText];
-    }
 
 
     if ([elementName isEqualToString:@"EnableAvailabilityZonesForLoadBalancerResult"]) {

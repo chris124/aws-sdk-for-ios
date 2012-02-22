@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,23 +22,26 @@
     AmazonServiceRequest *request = [[ElasticLoadBalancingRequest alloc] init];
 
     [request setParameterValue:@"EnableAvailabilityZonesForLoadBalancer"           forKey:@"Action"];
-    [request setParameterValue:@"2010-07-01"   forKey:@"Version"];
+    [request setParameterValue:@"2011-11-15"   forKey:@"Version"];
 
     [request setDelegate:[enableAvailabilityZonesForLoadBalancerRequest delegate]];
     [request setCredentials:[enableAvailabilityZonesForLoadBalancerRequest credentials]];
     [request setEndpoint:[enableAvailabilityZonesForLoadBalancerRequest requestEndpoint]];
+    [request setRequestTag:[enableAvailabilityZonesForLoadBalancerRequest requestTag]];
 
     if (enableAvailabilityZonesForLoadBalancerRequest != nil) {
         if (enableAvailabilityZonesForLoadBalancerRequest.loadBalancerName != nil) {
             [request setParameterValue:[NSString stringWithFormat:@"%@", enableAvailabilityZonesForLoadBalancerRequest.loadBalancerName] forKey:[NSString stringWithFormat:@"%@", @"LoadBalancerName"]];
         }
     }
+
     if (enableAvailabilityZonesForLoadBalancerRequest != nil) {
         int availabilityZonesListIndex = 1;
         for (NSString *availabilityZonesListValue in enableAvailabilityZonesForLoadBalancerRequest.availabilityZones) {
             if (availabilityZonesListValue != nil) {
                 [request setParameterValue:[NSString stringWithFormat:@"%@", availabilityZonesListValue] forKey:[NSString stringWithFormat:@"%@.member.%d", @"AvailabilityZones", availabilityZonesListIndex]];
             }
+
             availabilityZonesListIndex++;
         }
     }
